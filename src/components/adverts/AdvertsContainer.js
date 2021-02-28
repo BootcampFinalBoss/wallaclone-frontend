@@ -18,7 +18,7 @@ import {
 const lastUsedFilters = storage.get('lastUsedFilters');
 
 const AdvertsContainer = ({ loadAdverts, loading, error, adverts, tags }) => {
-  const [filters, setFilters] = useState(lastUsedFilters || defaultFilters);
+  const [filters, setFilters] = useState(lastUsedFilters || []);
   const [isAdvancedFilters, setIsAdvancedFilters] = useState(false);
 
   const handleLoadAdverts = () => {
