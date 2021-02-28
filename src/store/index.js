@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
+import { createBrowserHistory } from 'history';
 
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
