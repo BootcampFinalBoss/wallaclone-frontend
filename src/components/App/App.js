@@ -1,21 +1,29 @@
-import React from 'react';
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from 'react-router-dom';
+  useHistory,
+} from "react-router-dom";
 
-import { PrivateRoute, RegisterPage, LoginPage } from '../auth';
+import {
+  PrivateRoute,
+  RegisterPage,
+  LoginPage,
+  ForgotPasswordPage,
+} from "../auth";
 // import { AdvertPage, AdvertsPage, NewAdvertPage } from '../adverts';
-import NotFoundPage from './NotFoundPage';
-import Header from '../layout/Header';
-import Footer from '../layout/Footer';
-import AdvertsContainer from '../adverts/AdvertsContainer';
-// asdasdsdsad
+import NotFoundPage from "./NotFoundPage";
+import Header from "../layout/Header";
+import Footer from "../layout/Footer";
+import AdvertsContainer from "../adverts/AdvertsContainer";
+
 const App = () => {
-  let HideHeader = location.pathname.match('/login') ? null : <Header />;
-  let HideFooter = location.pathname.match('/login') ? null : <Footer />;
+  const history = useHistory();
+  let HideHeader = history.location.pathname !== "/login" ? <Header /> : null;
+  console.log(HideHeader);
+  let HideFooter = history.location.pathname !== "/login" ? <Footer /> : null;
   return (
     <>
       {HideHeader}
@@ -26,6 +34,9 @@ const App = () => {
         <Route path="/register" exact component={RegisterPage}></Route>
         <Route path="/login" exact>
           {(routerProps) => <LoginPage {...routerProps} />}
+        </Route>
+        <Route path="/forgot-password" exact>
+          <ForgotPasswordPage />
         </Route>
         <Route path="/adverts" exact>
           <AdvertsContainer />

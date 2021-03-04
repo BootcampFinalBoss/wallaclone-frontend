@@ -1,8 +1,8 @@
-import * as types from './types';
+import * as types from "./types";
 
 // import { getLoggedUserToken } from './selectors';
 
-import { auth, adverts } from '../api';
+import { auth, adverts } from "../api";
 
 /* REGISTER */
 
@@ -26,7 +26,7 @@ export const authRegister = (newUserData) => {
     try {
       const token = await api.auth.register(newUserData);
       dispatch(authRegisterSuccess(token));
-      history.push('/login');
+      history.push("/login");
     } catch (error) {
       dispatch(authRegisterFailure(error));
     }
@@ -56,10 +56,11 @@ export const authLogin = (crendentials) => {
     try {
       const token = await auth.login(crendentials);
       dispatch(authLoginSuccess(token));
-      history.push('/adverts');
+      history.push("/adverts");
     } catch (error) {
       console.error(error);
-      dispatch(authLoginFailure(error));
+      dispatch(authLoginFailure(error.response.data));
+      console.log("Aqui", error.response.data);
     }
   };
 };
@@ -117,7 +118,7 @@ export const advertCreated = (advert) => {
 export const createAdvert = (advertData) => async (
   dispatch,
   getState,
-  { history, api },
+  { history, api }
 ) => {
   try {
     const fetchedAdvert = await adverts.createAdvert(advertData);
