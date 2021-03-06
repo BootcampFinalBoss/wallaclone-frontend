@@ -1,15 +1,18 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./footer.css";
 
 class Footer extends React.Component {
   render() {
     return (
-      <Card className="text-center">
-        <Card.Footer className="text-muted">
-          Wallaclone @ {new Date().getFullYear()}
-        </Card.Footer>
-      </Card>
+      <div className="footer-container">
+        <Card className="text-center">
+          <Card.Footer className="text-muted">
+            Wallaclone @ {new Date().getFullYear()}
+          </Card.Footer>
+        </Card>
+      </div>
     );
   }
 }

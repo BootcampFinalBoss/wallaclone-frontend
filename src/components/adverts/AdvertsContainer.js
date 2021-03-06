@@ -1,69 +1,70 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
 import AdvertsList from './AdvertsList';
 import AdvertsFilters from './AdvertsFilters';
 // import BasicFilters from './BasicFilters';
 
-import { storage, formatFilters } from '../../utils/';
-import { getTags, getAdverts } from '../../api/adverts';
-import { loadAdverts } from '../../store/actions';
+import { loadTags } from '../../store/actions';
 import {
   getAdvertsOnState,
   getUi,
   getTagsOnState,
 } from '../../store/selectors';
+import { Row, Typography, Col } from 'antd';
+import { useHistory } from 'react-router';
 
-const lastUsedFilters = storage.get('lastUsedFilters');
+const { Title, Paragraph } = Typography;
 
-const AdvertsContainer = ({ loadAdverts, loading, error, adverts, tags }) => {
-  const [filters, setFilters] = useState(lastUsedFilters || []);
+const AdvertsContainer = () => {
+  const tags = useSelector((state) => getTagsOnState(state));
+  const adverts = useSelector((state) => getAdvertsOnState(state));
+  const ui = useSelector((state) => getUi(state));
+  const history = useHistory();
   const [isAdvancedFilters, setIsAdvancedFilters] = useState(false);
 
-  const handleLoadAdverts = () => {
-    // loadAdverts(formatFilters(filters));
-  };
+  const dispatch = useDispatch();
+
+  if (ui.error) {
+    console.log('redirect to error page');
+    history.push('/500');
+  }
 
   useEffect(() => {
-    handleLoadAdverts();
-  }, []);
-
-  const handleGetTags = async () => {
-    const fetchedTags = await getTags();
-    setTags(fetchedTags.result);
-  };
+    dispatch(loadTags());
+  }, [loadTags]);
 
   useEffect(() => {
-    handleGetTags();
-  }, []);
+    console.log('ui, adverts', ui, adverts);
+  }, [ui, adverts]);
 
   return (
-    <div className="adverts__container">
-      <h2 className="adverts__title text-center my-4">Adverts page</h2>
-      {error ? (
-        <p className="general-error-text">{error}</p>
-      ) : (
-        <>
+    <Row
+      className="adverts__container"
+      justify="center"
+      align="middle"
+      gutter={[0, 24]}>
+      <Col span={24}>
+        <Title type="h2" className="text-center">
+          Adverts page
+        </Title>
+      </Col>
+      <Col span={24}>
+        <Row justify="center" align="middle">
           <AdvertsFilters tags={tags} />
-          {/* {!loading && <AdvertsList adverts={adverts} />} */}
-        </>
-      )}
-    </div>
+          {ui.loading ? (
+            <Paragraph className="general-error-text">Loading...</Paragraph>
+          ) : (
+            <AdvertsList adverts={adverts} />
+          )}
+        </Row>
+      </Col>
+    </Row>
   );
 };
 
-const mapStateToProps = (state) => {
-  return {
-    tags: getTagsOnState(state),
-    adverts: getAdvertsOnState(state),
-    ui: getUi(state),
-  };
-};
-
-export default connect(mapStateToProps, (dispatch) => ({
-  loadAdverts: (filters) => dispatch(loadAdverts(filters)),
-}))(AdvertsContainer);
+export default AdvertsContainer;
 
 // TODO: Add basic filters as extra
 

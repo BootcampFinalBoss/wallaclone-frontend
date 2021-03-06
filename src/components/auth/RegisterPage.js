@@ -8,20 +8,23 @@ import {
   Row,
   Col,
   PageHeader,
+  Alert,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import "./RegisterPage.css";
 import { authRegister } from "../../store/actions";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const RegisterPage = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const state = useSelector((state) => state.ui);
+  console.log(state);
 
   const onFinish = async (data) => {
-    console.log('submit', data)
-    await dispatch(authRegister(data))
+    console.log("submit", data);
+    await dispatch(authRegister(data));
   };
 
   return (
@@ -50,7 +53,7 @@ const RegisterPage = () => {
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            <Form.Item name="surname" label="Surname" >
+            <Form.Item name="surname" label="Surname">
               <Input />
             </Form.Item>
           </Col>
@@ -67,6 +70,12 @@ const RegisterPage = () => {
             >
               <Input />
             </Form.Item>
+            {state.error &&
+              state.error.errors.map((error) => {
+                if (error.param === "username") {
+                  return <Alert message={error.msg} type="error" showIcon />;
+                }
+              })}
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Form.Item
@@ -85,6 +94,12 @@ const RegisterPage = () => {
             >
               <Input />
             </Form.Item>
+            {state.error &&
+              state.error.errors.map((error) => {
+                if (error.param === "email") {
+                  return <Alert message={error.msg} type="error" showIcon />;
+                }
+              })}
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Form.Item

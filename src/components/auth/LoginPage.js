@@ -8,14 +8,15 @@ import {
   Segment,
 } from 'semantic-ui-react';
 import './LoginPage.css';
-import { Form, Input } from 'antd';
-import { login } from '../../api/auth';
-import { useDispatch } from 'react-redux';
+import { Form, Input, Alert, Switch } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
 import { authLogin } from '../../store/actions';
 
 const LoginPage = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const state = useSelector((state) => state.ui);
+  console.log(state);
 
   const onFinish = async (data) => {
     await dispatch(authLogin(data));
@@ -33,6 +34,10 @@ const LoginPage = () => {
           name="normal_login"
           className="login-form"
           onFinish={onFinish}>
+          {state.error && (
+            <Alert message={state.error.message} type="error" showIcon />
+          )}
+
           <Segment stacked>
             <Form.Item
               name="username"
@@ -58,13 +63,19 @@ const LoginPage = () => {
               hasFeedback>
               <Input.Password />
             </Form.Item>
+            <Form.Item
+              className="login__remember-me"
+              name="remember"
+              label="Remember me">
+              <Switch />
+            </Form.Item>
             <Button color="teal" fluid size="large">
               Login
             </Button>
           </Segment>
         </Form>
         <Message>
-          <a href="#">Forgot Password</a>
+          <a href="/forgot-password">Forgot Password</a>
           <br />
           You do not have an account yet?
           <a href="/register">Register now, its free!</a>

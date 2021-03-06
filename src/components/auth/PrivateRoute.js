@@ -1,18 +1,17 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Redirect, Route, useLocation } from 'react-router-dom';
 
 import { getLoggedUserToken } from '../../store/selectors';
 
-const PrivateRoute = ({ token, ...props }) => {
+const PrivateRoute = ({ ...props }) => {
+  const token = useSelector((state) => getLoggedUserToken(state));
   const location = useLocation();
-  return token ? <Route {...props} /> : <Redirect to={{ pathname: '/login', state: { from: location } }} />;
+  return token ? (
+    <Route {...props} />
+  ) : (
+    <Redirect to={{ pathname: '/login', state: { from: location } }} />
+  );
 };
 
-export default connect(state => ({ token: getLoggedUserToken(state) }))(
-  PrivateRoute
-);
-
-PrivateRoute.propTypes = {
-  token: PropTypes.string
-}
+export default PrivateRoute;
