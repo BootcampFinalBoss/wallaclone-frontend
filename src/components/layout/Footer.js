@@ -5,11 +5,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 class Footer extends React.Component {
   render() {
     return (
-      <Card className="text-center position-fixed fixed-bottom">
-        <Card.Footer className="text-muted">
-          Wallaclone @ {new Date().getFullYear()}
-        </Card.Footer>
-      </Card>
+      <div className="footer-container">
+        <Card className="text-center">
+          <Card.Footer className="text-muted">
+            Wallaclone @ {new Date().getFullYear()}
+          </Card.Footer>
+        </Card>
+      </div>
     );
   }
 }
