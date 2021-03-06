@@ -42,6 +42,12 @@ client.logout = () =>
     resolve();
   });
 
+/*client.forgot = (data) => {
+  client.post("/user/forgot-password", data).then((response) => {
+    return response;
+  });
+};*/
+
 // TODO: Backend needs to improve the response
 // Intercepts response
 // client.interceptors.response.use(
