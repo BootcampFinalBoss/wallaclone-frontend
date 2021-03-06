@@ -1,8 +1,8 @@
-import * as types from "./types";
+import * as types from './types';
 
 // import { getLoggedUserToken } from './selectors';
 
-import { auth, adverts } from "../api";
+import { auth, adverts } from '../api';
 
 /* REGISTER */
 
@@ -27,7 +27,7 @@ export const authRegister = (newUserData) => {
       const token = await api.auth.register(newUserData);
       dispatch(authRegisterSuccess(token));
       dispatch(resetError());
-      history.push("/login");
+      history.push('/login');
     } catch (error) {
       dispatch(authRegisterFailure(error.response.data));
     }
@@ -57,7 +57,7 @@ export const authLogin = (crendentials) => {
     try {
       const token = await auth.login(crendentials);
       dispatch(authLoginSuccess(token));
-      history.push("/adverts");
+      history.push('/adverts');
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
@@ -121,8 +121,9 @@ export const advertsLoaded = (adverts) => {
 };
 
 export const loadAdverts = (filters) => async (dispatch, getState) => {
+  console.log(filters);
   const fetchedAdverts = await adverts.getAdverts(filters);
-  dispatch(advertsLoaded(fetchedAdverts?.result?.rows));
+  dispatch(advertsLoaded(fetchedAdverts?.result?.rows || []));
 };
 
 export const advertLoaded = (advert) => {
@@ -150,7 +151,7 @@ export const advertCreated = (advert) => {
 export const createAdvert = (advertData) => async (
   dispatch,
   getState,
-  { history, api }
+  { history, api },
 ) => {
   try {
     const fetchedAdvert = await adverts.createAdvert(advertData);
@@ -192,5 +193,6 @@ export const tagsLoaded = (tags) => {
 
 export const loadTags = () => async (dispatch, getState) => {
   const fetchedTags = await adverts.getTags();
-  dispatch(tagsLoaded(fetchedTags.result));
+  console.log(fetchedTags);
+  dispatch(tagsLoaded(fetchedTags.data.result || null));
 };
