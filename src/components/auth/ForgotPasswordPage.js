@@ -1,18 +1,8 @@
 import React from "react";
-import {
-  Form,
-  Button,
-  Upload,
-  Checkbox,
-  Input,
-  Row,
-  Col,
-  PageHeader,
-} from "antd";
-import { UploadOutlined } from "@ant-design/icons";
+import { Form, Button, Input, Row, Col, PageHeader } from "antd";
 import "antd/dist/antd.css";
 import "./RegisterPage.css";
-//import { authRegister } from "../../store/actions";
+import { authForgotPassword } from "../../store/actions";
 import { useDispatch } from "react-redux";
 
 const ForgotPasswordPage = () => {
@@ -21,7 +11,7 @@ const ForgotPasswordPage = () => {
 
   const onFinish = async (data) => {
     console.log("submit", data);
-    await dispatch(authRegister(data));
+    await dispatch(authForgotPassword(data.email));
   };
 
   return (
@@ -29,7 +19,7 @@ const ForgotPasswordPage = () => {
       <PageHeader className="site-page-header" title="Forgot-Password" />,
       <Form
         form={form}
-        name="register"
+        name="forgot"
         onFinish={onFinish}
         scrollToFirstError
         //style={{ border: "1px solid gray" }}
@@ -55,7 +45,7 @@ const ForgotPasswordPage = () => {
           </Col>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Send
+              Reset Password
             </Button>
           </Form.Item>
         </Row>
