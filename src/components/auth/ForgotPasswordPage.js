@@ -11,7 +11,7 @@ const ForgotPasswordPage = () => {
 
   const onFinish = async (data) => {
     console.log("submit", data);
-    await dispatch(authForgotPassword(data.email));
+    //await dispatch(authForgotPassword(data.email));
   };
 
   return (
