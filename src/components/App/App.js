@@ -4,6 +4,7 @@ import {
   Switch,
   Route,
   Redirect,
+  useLocation,
   useHistory,
 } from "react-router-dom";
 
@@ -12,6 +13,7 @@ import {
   RegisterPage,
   LoginPage,
   ForgotPasswordPage,
+  ResetPassword,
 } from "../auth";
 // import { AdvertPage, AdvertsPage, NewAdvertPage } from '../adverts';
 import NotFoundPage from "./NotFoundPage";
@@ -20,10 +22,9 @@ import Footer from "../layout/Footer";
 import AdvertsContainer from "../adverts/AdvertsContainer";
 
 const App = () => {
-  const history = useHistory();
-  let HideHeader = history.location.pathname !== "/login" ? <Header /> : null;
-  console.log(HideHeader);
-  let HideFooter = history.location.pathname !== "/login" ? <Footer /> : null;
+  const location = useLocation();
+  let HideHeader = location.pathname.match("/login") ? null : <Header />;
+  let HideFooter = location.pathname.match("/login") ? null : <Footer />;
   return (
     <>
       {HideHeader}
@@ -40,6 +41,9 @@ const App = () => {
         </Route>
         <Route path="/adverts" exact>
           <AdvertsContainer />
+        </Route>
+        <Route path="/reset/:id">
+          <ResetPassword />
         </Route>
         {/* <PrivateRoute path="/adverts/new" exact component={NewAdvertPage} />
         <PrivateRoute path="/adverts/:id" exact component={AdvertPage} /> */}
