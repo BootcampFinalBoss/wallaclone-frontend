@@ -26,9 +26,10 @@ export const authRegister = (newUserData) => {
     try {
       const token = await api.auth.register(newUserData);
       dispatch(authRegisterSuccess(token));
+      dispatch(resetError());
       history.push("/login");
     } catch (error) {
-      dispatch(authRegisterFailure(error));
+      dispatch(authRegisterFailure(error.response.data));
     }
   };
 };
@@ -60,7 +61,6 @@ export const authLogin = (crendentials) => {
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
-      console.log("Aqui", error.response.data);
     }
   };
 };
@@ -70,6 +70,38 @@ export const authLogout = () => {
     type: types.AUTH_LOGOUT,
   };
 };
+
+/*RESET PASSWORD */
+
+/*export const authForgotPasswordRequest = () => ({
+  type: types.AUTH_FORGOT_REQUEST,
+});
+
+export const authForgotPasswordFailure = (error) => ({
+  type: types.AUTH_FORGOT_FAILURE,
+  error: true,
+  payload: error,
+});
+
+export const authForgotPasswordSuccess = () => ({
+  type: types.AUTH_FORGOT_SUCCESS,
+});*/
+
+/*export const authForgotPassword = (email) => {
+  return async function (dispatch, getState, { history, api }) {
+    dispatch(authForgotPasswordRequest());
+    try {
+      await api.auth.forgot(email);
+      dispatch(authForgotPasswordSuccess(email));
+      console.log("Aqui", email);
+      //history.push("/adverts");
+    } catch (error) {
+      console.log(email);
+      console.log("Aqui", error);
+      dispatch(authForgotPasswordFailure(error));
+    }
+  };
+};*/
 
 /* ADVERTS */
 
