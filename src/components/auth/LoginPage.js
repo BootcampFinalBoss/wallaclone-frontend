@@ -11,23 +11,20 @@ import "./LoginPage.css";
 import { Form, Input, Alert, notification } from "antd";
 import { login } from "../../api/auth";
 import { useDispatch, useSelector } from "react-redux";
-import { authLogin, authLoginFailure } from "../../store/actions";
+import {
+  authLogin,
+  authLoginFailure,
+  authLoginSuccess,
+} from "../../store/actions";
+import * as types from "../../store/types";
 
 const LoginPage = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const state = useSelector((state) => state.ui);
-
-  const openNotificationWithIcon = (type) => {
-    notification[type]({
-      message: "Bienvenido.",
-      description: "Acceso correcto.",
-      duration: 1,
-    });
-  };
+  console.log(state);
 
   const onFinish = async (data) => {
-    openNotificationWithIcon("success");
     await dispatch(authLogin(data));
   };
 
@@ -47,6 +44,7 @@ const LoginPage = () => {
           {state.error && (
             <Alert message={state.error.message} type="error" showIcon />
           )}
+
           <Segment stacked>
             <Form.Item
               name="username"
