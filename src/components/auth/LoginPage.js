@@ -8,7 +8,7 @@ import {
   Segment,
 } from 'semantic-ui-react';
 import './LoginPage.css';
-import { Form, Input, Alert, notification } from 'antd';
+import { Form, Input, Alert, Switch } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { authLogin } from '../../store/actions';
 
@@ -62,6 +62,12 @@ const LoginPage = () => {
               ]}
               hasFeedback>
               <Input.Password />
+            </Form.Item>
+            <Form.Item
+              className="login__remember-me"
+              name="remember"
+              label="Remember me">
+              <Switch />
             </Form.Item>
             <Button color="teal" fluid size="large">
               Login
