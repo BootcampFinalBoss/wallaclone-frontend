@@ -8,6 +8,7 @@ import {
   Row,
   Col,
   PageHeader,
+  Alert,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
@@ -69,6 +70,12 @@ const RegisterPage = () => {
             >
               <Input />
             </Form.Item>
+            {state.error &&
+              state.error.errors.map((error) => {
+                if (error.param === "username") {
+                  return <Alert message={error.msg} type="error" showIcon />;
+                }
+              })}
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Form.Item
@@ -87,6 +94,12 @@ const RegisterPage = () => {
             >
               <Input />
             </Form.Item>
+            {state.error &&
+              state.error.errors.map((error) => {
+                if (error.param === "email") {
+                  return <Alert message={error.msg} type="error" showIcon />;
+                }
+              })}
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Form.Item
