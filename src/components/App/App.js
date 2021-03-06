@@ -17,12 +17,10 @@ import {
   ForgotPasswordPage,
   ResetPassword,
 } from '../auth';
-// import { AdvertPage, AdvertsPage, NewAdvertPage } from '../adverts';
+import { AdvertsContainer, AdvertsNew } from '../adverts';
 import NotFoundPage from '../errors/NotFoundPage';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
-import AdvertsContainer from '../adverts/AdvertsContainer';
-import AdvertsNew from '../adverts/AdvertsNew';
 import { Content } from 'antd/lib/layout/layout';
 import CommonErrorPage from '../errors/CommonErrorPage';
 
@@ -55,14 +53,11 @@ const App = () => {
           <Route path="/adverts" exact>
             <AdvertsContainer />
           </Route>
-          <Route path="/adverts/new" exact>
-            <AdvertsNew />
-          </Route>
           <Route path="/reset/:id">
             <ResetPassword />
           </Route>
-          {/* <PrivateRoute path="/adverts/new" exact component={NewAdvertPage} />
-        <PrivateRoute path="/adverts/:id" exact component={AdvertPage} /> */}
+          <PrivateRoute path="/adverts/new" exact component={AdvertsNew} />
+          {/* <PrivateRoute path="/adverts/:id" exact component={AdvertPage} /> */}
           <Route path="/error" exact>
             {CommonErrorPage}
           </Route>
