@@ -1,0 +1,6 @@
+.footer-container{
+    position: sticky;
+    bottom: 0;
+    height: 150px;
+    width: 100%;
+}
