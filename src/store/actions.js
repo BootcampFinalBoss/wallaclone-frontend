@@ -123,7 +123,7 @@ export const advertsLoaded = (adverts) => {
 export const loadAdverts = (filters) => async (dispatch, getState) => {
   console.log(filters);
   const fetchedAdverts = await adverts.getAdverts(filters);
-  dispatch(advertsLoaded(fetchedAdverts?.result?.rows || []));
+  dispatch(advertsLoaded(fetchedAdverts?.data?.result || []));
 };
 
 export const advertLoaded = (advert) => {

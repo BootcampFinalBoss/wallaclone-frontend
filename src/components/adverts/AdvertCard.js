@@ -4,7 +4,7 @@ import { Row, Col, Typography, Card, Avatar } from 'antd';
 import { DeleteOutlined, EyeOutlined, StarOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 
-const { REACT_APP_API_HOST: IMAGE_BASE_URL } = process.env;
+const { REACT_APP_IMAGE_BASE_URL: IMAGE_BASE_URL } = process.env;
 const { Paragraph } = Typography;
 const { Meta } = Card;
 
@@ -28,24 +28,34 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
     console.log('delete advert', ad._id);
   };
 
+  const image = () => {
+    // TODO: Check if image exists
+    if ((ad.image || ad.photo) && `${IMAGE_BASE_URL}${ad.image || ad.photo}`) {
+      return (
+        <img
+          src={`${IMAGE_BASE_URL}${ad.image || ad.photo}`}
+          className="card-img-top"
+          alt={ad?.name}
+        />
+      );
+    } else {
+      return (
+        <img
+          src="https://placedog.net/800"
+          className="card-img-top"
+          alt={ad?.name}
+        />
+      );
+    }
+  };
+
   return (
-    <Col key={ad._id} span={6} className="mx-auto">
+    <Col key={ad._id} xs={24} md={12} lg={6} className="mx-auto">
       <Card
-        title={ad.sale ? 'Sell' : 'Buy'}
-        headStyle={getHeadStyle(sale)}
+        title={ad?.type === 'sell' ? 'Sell' : 'Buy'}
+        headStyle={getHeadStyle(ad?.type === 'sell' ? true : false)}
         hoverable
-        className="mb-3"
-        cover={
-          <img
-            src={
-              ad.image || ad.photo
-                ? `${IMAGE_BASE_URL}${ad.image || ad.photo}`
-                : 'https://placedog.net/800'
-            }
-            className="card-img-top"
-            alt={ad?.name}
-          />
-        }
+        cover={image()}
         actions={[
           <StarOutlined key="favorite" />,
           <DeleteOutlined onClick={() => handleDelete()} key="edit" />,
@@ -56,22 +66,18 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
         ]}>
         <Meta
           title={ad.title || ad?.name}
-          description={() => AdvertContent(ad)}
+          description={
+            <>
+              <p className="card-text d-flex justify-content-between card-price font-weight-bold">
+                {ad?.price} €.
+                <i>{ad?.sale ? 'For sale' : 'To buy'}</i>
+              </p>
+              <p>Tags: {ad?.tags && ad?.tags?.join(', ')}</p>
+            </>
+          }
         />
       </Card>
     </Col>
-  );
-};
-
-const AdvertContent = ({ ad }) => {
-  return (
-    <>
-      <p className="card-text d-flex justify-content-between card-price font-weight-bold">
-        {ad.price} €.
-        <i>{ad.sale ? 'For sale' : 'To buy'}</i>
-      </p>
-      <p>Tags: {ad.tags && ad.tags.join(', ')}</p>
-    </>
   );
 };
 

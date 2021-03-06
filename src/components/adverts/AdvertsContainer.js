@@ -6,9 +6,7 @@ import AdvertsList from './AdvertsList';
 import AdvertsFilters from './AdvertsFilters';
 // import BasicFilters from './BasicFilters';
 
-import { storage, formatFilters } from '../../utils/';
-import { getTags, getAdverts } from '../../api/adverts';
-import { loadAdverts, loadTags, tagsLoaded } from '../../store/actions';
+import { loadTags } from '../../store/actions';
 import {
   getAdvertsOnState,
   getUi,
@@ -19,21 +17,14 @@ import { useHistory } from 'react-router';
 
 const { Title, Paragraph } = Typography;
 
-const lastUsedFilters = storage.get('lastUsedFilters');
-
 const AdvertsContainer = () => {
   const tags = useSelector((state) => getTagsOnState(state));
   const adverts = useSelector((state) => getAdvertsOnState(state));
   const ui = useSelector((state) => getUi(state));
   const history = useHistory();
-  const [filters, setFilters] = useState(lastUsedFilters || []);
   const [isAdvancedFilters, setIsAdvancedFilters] = useState(false);
 
   const dispatch = useDispatch();
-
-  const handleLoadAdverts = () => {
-    // loadAdverts(formatFilters(filters));
-  };
 
   if (ui.error) {
     console.log('redirect to error page');
@@ -41,9 +32,12 @@ const AdvertsContainer = () => {
   }
 
   useEffect(() => {
-    handleLoadAdverts();
     dispatch(loadTags());
   }, [loadTags]);
+
+  useEffect(() => {
+    console.log('ui, adverts', ui, adverts);
+  }, [ui, adverts]);
 
   return (
     <Row
@@ -58,13 +52,11 @@ const AdvertsContainer = () => {
       </Col>
       <Col span={24}>
         <Row justify="center" align="middle">
-          {ui.error ? (
-            <Paragraph className="general-error-text">{error}</Paragraph>
+          <AdvertsFilters tags={tags} />
+          {ui.loading ? (
+            <Paragraph className="general-error-text">Loading...</Paragraph>
           ) : (
-            <>
-              <AdvertsFilters tags={tags} />
-              {/* {!loading && <AdvertsList adverts={adverts} />} */}
-            </>
+            <AdvertsList adverts={adverts} />
           )}
         </Row>
       </Col>

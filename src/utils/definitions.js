@@ -1,7 +1,7 @@
 export const saleOptions = {
   sell: { label: 'Sell', value: 'sell' },
   buy: { label: 'Buy', value: 'buy' },
-  all: { label: 'All', value: 'all' },
+  all: { label: 'All', value: null },
 };
 
 export const MIN_PRICE = 0;

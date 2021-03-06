@@ -62,12 +62,7 @@ const AdvertsFilters = () => {
                   </Paragraph>
                 </>
               }>
-              <Slider
-                range
-                defaultValue={filters.price}
-                min={MIN_PRICE}
-                max={MAX_PRICE}
-              />
+              <Slider range min={MIN_PRICE} max={MAX_PRICE} />
             </Form.Item>
           </Col>
           <Col span={12}>
