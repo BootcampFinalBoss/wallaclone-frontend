@@ -49,11 +49,10 @@ const AdvertsContainer = () => {
       <Col span={24}>
         <Row justify="center" align="middle">
           <AdvertsFilters tags={tags} />
-          {ui.loading === true ? (
+          {ui.loading === true && (
             <Paragraph className="general-error-text">Loading...</Paragraph>
-          ) : (
-            <AdvertsList adverts={adverts} />
           )}
+          {adverts && !ui.loading && <AdvertsList adverts={adverts} />}
         </Row>
       </Col>
     </Row>
