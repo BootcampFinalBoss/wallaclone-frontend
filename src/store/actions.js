@@ -1,8 +1,8 @@
-import * as types from './types';
+import * as types from "./types";
 
 // import { getLoggedUserToken } from './selectors';
 
-import { auth, adverts } from '../api';
+import { auth, adverts } from "../api";
 
 /* REGISTER */
 
@@ -27,7 +27,7 @@ export const authRegister = (newUserData) => {
       const token = await api.auth.register(newUserData);
       dispatch(authRegisterSuccess(token));
       dispatch(resetError());
-      history.push('/login');
+      history.push("/login");
     } catch (error) {
       dispatch(authRegisterFailure(error.response.data));
     }
@@ -46,9 +46,10 @@ export const authLoginFailure = (error) => ({
   payload: error,
 });
 
-export const authLoginSuccess = (token) => ({
+export const authLoginSuccess = (token, username) => ({
   type: types.AUTH_LOGIN_SUCCESS,
   payload: token,
+  username,
 });
 
 export const authLogin = (crendentials) => {
@@ -57,7 +58,7 @@ export const authLogin = (crendentials) => {
     try {
       const token = await auth.login(crendentials);
       dispatch(authLoginSuccess(token));
-      history.push('/adverts');
+      history.push("/adverts");
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
@@ -66,8 +67,14 @@ export const authLogin = (crendentials) => {
 };
 
 export const authLogout = () => {
-  return {
-    type: types.AUTH_LOGOUT,
+  return async function (dispatch, getState, { history, api }) {
+    try {
+      await auth.logout();
+      history.push("/login");
+    } catch (error) {
+      console.error(error);
+      dispatch(authLoginFailure(error.response.data));
+    }
   };
 };
 
@@ -135,8 +142,7 @@ export const advertLoaded = (advert) => {
 
 export const loadAdvert = (advertId) => async (dispatch, getState) => {
   const fetchedAdvert = await adverts.getAdvert(advertId);
-  dispatch(advertLoaded(fetchedAdvert?.result));
-  s;
+  dispatch(advertLoaded(fetchedAdvert?.data.result));
 };
 
 export const advertCreated = (advert) => {
@@ -151,12 +157,12 @@ export const advertCreated = (advert) => {
 export const createAdvert = (advertData) => async (
   dispatch,
   getState,
-  { history, api },
+  { history, api }
 ) => {
   try {
     const fetchedAdvert = await adverts.createAdvert(advertData);
-    dispatch(advertCreated(fetchedAdvert.result));
-    history.push(`/adverts/${fetchedAdvert.result._id}`);
+    dispatch(advertCreated(fetchedAdvert?.data?.result));
+    history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
   } catch (error) {
     dispatch(generateAdvertError(error));
   }
