@@ -66,8 +66,14 @@ export const authLogin = (crendentials) => {
 };
 
 export const authLogout = () => {
-  return {
-    type: types.AUTH_LOGOUT,
+  return async function (dispatch, getState, { history, api }) {
+    try {
+      await auth.logout();
+      history.push('/login');
+    } catch (error) {
+      console.error(error);
+      dispatch(authLoginFailure(error.response.data));
+    }
   };
 };
 
