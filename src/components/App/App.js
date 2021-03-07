@@ -62,7 +62,7 @@ const App = () => {
             {CommonErrorPage}
           </Route>
           <Route path="/404" exact>
-            {NotFoundPage}
+            <NotFoundPage ui={ui} history={history} />
           </Route>
           <Route>
             <Redirect to="/404" />

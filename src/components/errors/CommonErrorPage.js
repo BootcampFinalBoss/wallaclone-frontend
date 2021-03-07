@@ -1,23 +1,18 @@
-import React from 'react';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Row, Col, Typography, Button } from 'antd';
 import { getUi } from '../../store/selectors';
 import { useHistory } from 'react-router';
 const { Title, Paragraph } = Typography;
 
-const CommonErrorPage = () => {
-  const ui = useSelector((state) => getUi(state));
-  const history = useHistory();
-  if (!ui.error) {
-    history.push('/');
-  }
+const CommonErrorPage = ({ ui, history }) => {
   const goBackToHome = () => history.push('/');
-
   return (
-    <Row>
-      <Col>
+    <Row justify="center" align="middle" style={{ height: '70vh' }}>
+      <Col className="text-center">
         <Title level={2}>Error page</Title>
-        <Paragraph>{ui.error}</Paragraph>
+        <Paragraph>{ui?.error}</Paragraph>
         <Button onClick={goBackToHome}>Go back to home page</Button>
       </Col>
     </Row>

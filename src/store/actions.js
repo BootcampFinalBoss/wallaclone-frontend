@@ -155,8 +155,8 @@ export const createAdvert = (advertData) => async (
 ) => {
   try {
     const fetchedAdvert = await adverts.createAdvert(advertData);
-    dispatch(advertCreated(fetchedAdvert.result));
-    history.push(`/adverts/${fetchedAdvert.result._id}`);
+    dispatch(advertCreated(fetchedAdvert?.data?.result));
+    history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
   } catch (error) {
     dispatch(generateAdvertError(error));
   }
