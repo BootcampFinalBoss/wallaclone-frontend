@@ -1,13 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { Row, Col, Typography, Button } from 'antd';
+import { Row, Col, Typography, Button, Divider } from 'antd';
 import AdvertCard from './AdvertCard';
 import { useHistory } from 'react-router';
 import { getLoggedUserToken } from '../../store/selectors';
-import Paragraph from 'antd/lib/skeleton/Paragraph';
 
-const { Title } = Typography;
+const { Title, Paragraph } = Typography;
 
 const AdvertsList = ({ adverts, ui }) => {
   return (
@@ -41,6 +40,9 @@ const CreateNew = () => {
   const goRegister = () => {
     history.push('/register');
   };
+  const goLogin = () => {
+    history.push('/login');
+  };
   const isLoggedUser = useSelector((state) => getLoggedUserToken(state));
 
   if (isLoggedUser) {
@@ -51,8 +53,11 @@ const CreateNew = () => {
     );
   }
   return (
-    <Col>
-      <Paragraph>You are not a member?</Paragraph>
+    <Col className="text-center">
+      <Paragraph>Have an account?</Paragraph>
+      <Button onClick={goLogin}>Go login and create one!</Button>
+      <Divider></Divider>
+      <Paragraph>You are not a member yet?</Paragraph>
       <Button onClick={goRegister}>Go register and create one!</Button>
     </Col>
   );

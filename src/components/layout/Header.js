@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Menu,
   Button,
@@ -10,6 +10,7 @@ import {
   Header as Logo,
 } from 'semantic-ui-react';
 import { getLoggedUserToken } from '../../store/selectors';
+import { authLogout } from '../../store/actions';
 
 const friendOptions = [
   {
@@ -82,6 +83,10 @@ PublicHeader.propTypes = {
 };
 
 const PrivateHeader = ({ menuActiveItem, handleItemClick, loggedUser }) => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(authLogout());
+  };
   return (
     <>
       <Menu.Item
@@ -103,7 +108,10 @@ const PrivateHeader = ({ menuActiveItem, handleItemClick, loggedUser }) => {
             <Dropdown.Item
               icon="newspaper outline"
               text="Adverts"></Dropdown.Item>
-            <Dropdown.Item icon="power off" text="Logout"></Dropdown.Item>
+            <Dropdown.Item
+              icon="power off"
+              text="Logout"
+              onClick={handleLogout}></Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Item>
