@@ -1,8 +1,8 @@
-import * as types from './types';
+import * as types from "./types";
 
 // import { getLoggedUserToken } from './selectors';
 
-import { auth, adverts } from '../api';
+import { auth, adverts } from "../api";
 
 /* REGISTER */
 
@@ -27,7 +27,7 @@ export const authRegister = (newUserData) => {
       const token = await api.auth.register(newUserData);
       dispatch(authRegisterSuccess(token));
       dispatch(resetError());
-      history.push('/login');
+      history.push("/login");
     } catch (error) {
       dispatch(authRegisterFailure(error.response.data));
     }
@@ -46,9 +46,10 @@ export const authLoginFailure = (error) => ({
   payload: error,
 });
 
-export const authLoginSuccess = (token) => ({
+export const authLoginSuccess = (token, username) => ({
   type: types.AUTH_LOGIN_SUCCESS,
   payload: token,
+  username,
 });
 
 export const authLogin = (crendentials) => {
@@ -57,7 +58,7 @@ export const authLogin = (crendentials) => {
     try {
       const token = await auth.login(crendentials);
       dispatch(authLoginSuccess(token));
-      history.push('/adverts');
+      history.push("/adverts");
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
@@ -69,7 +70,7 @@ export const authLogout = () => {
   return async function (dispatch, getState, { history, api }) {
     try {
       await auth.logout();
-      history.push('/login');
+      history.push("/login");
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
@@ -156,7 +157,7 @@ export const advertCreated = (advert) => {
 export const createAdvert = (advertData) => async (
   dispatch,
   getState,
-  { history, api },
+  { history, api }
 ) => {
   try {
     const fetchedAdvert = await adverts.createAdvert(advertData);
