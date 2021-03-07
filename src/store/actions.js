@@ -135,8 +135,7 @@ export const advertLoaded = (advert) => {
 
 export const loadAdvert = (advertId) => async (dispatch, getState) => {
   const fetchedAdvert = await adverts.getAdvert(advertId);
-  dispatch(advertLoaded(fetchedAdvert?.result));
-  s;
+  dispatch(advertLoaded(fetchedAdvert?.data.result));
 };
 
 export const advertCreated = (advert) => {
