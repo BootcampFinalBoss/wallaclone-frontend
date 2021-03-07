@@ -6,7 +6,7 @@ export const login = (credentials) =>
     if (credentials.remember) {
       storage.set("auth", auth);
     }
-    return auth.token;
+    return auth;
   });
 
 export const register = (data) =>
