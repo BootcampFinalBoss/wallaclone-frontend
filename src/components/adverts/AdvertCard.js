@@ -22,7 +22,6 @@ const getHeadStyle = (sale) =>
 const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
   const history = useHistory();
   if (!ad) return;
-  console.log(ad);
 
   const handleDelete = () => {
     console.log('delete advert', ad._id);

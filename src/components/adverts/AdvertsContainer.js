@@ -22,7 +22,7 @@ const AdvertsContainer = () => {
   const adverts = useSelector((state) => getAdvertsOnState(state));
   const ui = useSelector((state) => getUi(state));
   const history = useHistory();
-  const [isAdvancedFilters, setIsAdvancedFilters] = useState(false);
+  // const [isAdvancedFilters, setIsAdvancedFilters] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -34,10 +34,6 @@ const AdvertsContainer = () => {
   useEffect(() => {
     dispatch(loadTags());
   }, [loadTags]);
-
-  useEffect(() => {
-    console.log('ui, adverts', ui, adverts);
-  }, [ui, adverts]);
 
   return (
     <Row
@@ -53,7 +49,7 @@ const AdvertsContainer = () => {
       <Col span={24}>
         <Row justify="center" align="middle">
           <AdvertsFilters tags={tags} />
-          {ui.loading ? (
+          {ui.loading === true ? (
             <Paragraph className="general-error-text">Loading...</Paragraph>
           ) : (
             <AdvertsList adverts={adverts} />
