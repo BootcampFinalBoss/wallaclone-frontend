@@ -9,7 +9,7 @@ export const getAdverts = (filters) => {
 
 export const getAdvert = (id) =>
   client.get(`/adverts/${id}`).then((response) => {
-    response.result.photoUrl = `${host}${response.result.photo}`;
+    response.data.result.image = `${host}${response.data.result.image}`;
     return response;
   });
 

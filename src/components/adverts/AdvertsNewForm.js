@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Row, Col, Button, Input, InputNumber, Radio } from 'antd';
 // import NewAdvertForm from './NewAdvertForm';
 import { createAdvert } from '../../store/actions';
@@ -12,33 +12,42 @@ const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
 const NewAdvertForm = () => {
   const ui = useSelector((state) => getUi(state));
+  const dispatch = useDispatch();
+
+  const handleCreateAdvert = async (data) => {
+    console.log(data);
+    dispatch(createAdvert(data));
+  };
 
   const canSubmit = () => {
-    return false;
+    return true;
   };
 
   return (
-    <Form>
-      <Row>
+    <Form onFinish={handleCreateAdvert}>
+      <Row style={{ marginBottom: '3em' }}>
         <Col span={11}>
-          <Form.Item label="Name">
+          <Form.Item name="name" label="Name">
             <Input placeholder="Name" />
           </Form.Item>
-          <Form.Item label="Price">
+          <Form.Item name="price" label="Price">
             <InputNumber min={MIN_PRICE} max={MAX_PRICE} />
           </Form.Item>
         </Col>
         <Col span={11} offset={2}>
-          <Form.Item label="Tags">
+          <Form.Item name="tags" label="Tags">
             <TagsSelect />
           </Form.Item>
-          <Form.Item label="Type">
+          <Form.Item name="type" label="Type">
             <Radio.Group options={[saleOptions.sell, saleOptions.buy]} />
           </Form.Item>
         </Col>
         <Col span={24}>
-          <Form.Item label="Photo">
-            <InputImage type="file" />
+          <Form.Item name="description" label="Description">
+            <Input maxLength={150} placeholder="Name" />
+          </Form.Item>
+          <Form.Item name="image" label="Image">
+            <input type="file" />
           </Form.Item>
           <Button
             type="primary"

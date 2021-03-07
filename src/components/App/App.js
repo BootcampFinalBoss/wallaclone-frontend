@@ -17,7 +17,7 @@ import {
   ForgotPasswordPage,
   ResetPassword,
 } from '../auth';
-import { AdvertsContainer, AdvertsNew } from '../adverts';
+import { AdvertsContainer, AdvertsNew, AdvertPage } from '../adverts';
 import NotFoundPage from '../errors/NotFoundPage';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
@@ -57,12 +57,12 @@ const App = () => {
             <ResetPassword />
           </Route>
           <PrivateRoute path="/adverts/new" exact component={AdvertsNew} />
-          {/* <PrivateRoute path="/adverts/:id" exact component={AdvertPage} /> */}
+          <PrivateRoute path="/adverts/:id" exact component={AdvertPage} />
           <Route path="/error" exact>
             {CommonErrorPage}
           </Route>
           <Route path="/404" exact>
-            {NotFoundPage}
+            <NotFoundPage ui={ui} history={history} />
           </Route>
           <Route>
             <Redirect to="/404" />
