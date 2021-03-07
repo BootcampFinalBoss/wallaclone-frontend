@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Row, Col, Typography, Button, Divider } from 'antd';
 import AdvertCard from './AdvertCard';
 import { useHistory } from 'react-router';
-import { getLoggedUserToken } from '../../store/selectors';
+import { getLoggedUserToken } from '../../../store/selectors';
 
 const { Title, Paragraph } = Typography;
 

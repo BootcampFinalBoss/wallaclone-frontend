@@ -1,8 +1,9 @@
-import * as types from './types';
+import * as types from "./types";
 
 // import { getLoggedUserToken } from './selectors';
 
 import { auth, adverts } from '../api';
+import { formatFilters, storage } from '../utils';
 
 /* REGISTER */
 
@@ -27,7 +28,7 @@ export const authRegister = (newUserData) => {
       const token = await api.auth.register(newUserData);
       dispatch(authRegisterSuccess(token));
       dispatch(resetError());
-      history.push('/login');
+      history.push("/login");
     } catch (error) {
       dispatch(authRegisterFailure(error.response.data));
     }
@@ -46,9 +47,10 @@ export const authLoginFailure = (error) => ({
   payload: error,
 });
 
-export const authLoginSuccess = (token) => ({
+export const authLoginSuccess = (token, username) => ({
   type: types.AUTH_LOGIN_SUCCESS,
   payload: token,
+  username,
 });
 
 export const authLogin = (crendentials) => {
@@ -57,7 +59,7 @@ export const authLogin = (crendentials) => {
     try {
       const token = await auth.login(crendentials);
       dispatch(authLoginSuccess(token));
-      history.push('/adverts');
+      history.push("/adverts");
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
@@ -69,7 +71,7 @@ export const authLogout = () => {
   return async function (dispatch, getState, { history, api }) {
     try {
       await auth.logout();
-      history.push('/login');
+      history.push("/login");
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
@@ -127,8 +129,9 @@ export const advertsLoaded = (adverts) => {
 };
 
 export const loadAdverts = (filters) => async (dispatch, getState) => {
-  console.log(filters);
-  const fetchedAdverts = await adverts.getAdverts(filters);
+  storage.set('filters', filters);
+  const formattedFilters = formatFilters(filters);
+  const fetchedAdverts = await adverts.getAdverts(formattedFilters);
   dispatch(advertsLoaded(fetchedAdverts?.data?.result || []));
 };
 
@@ -139,8 +142,15 @@ export const advertLoaded = (advert) => {
   };
 };
 
-export const loadAdvert = (advertId) => async (dispatch, getState) => {
+export const loadAdvert = (advertId) => async (
+  dispatch,
+  getState,
+  { history, api },
+) => {
   const fetchedAdvert = await adverts.getAdvert(advertId);
+  if (!fetchedAdvert) {
+    history.push('/404');
+  }
   dispatch(advertLoaded(fetchedAdvert?.data.result));
 };
 
@@ -156,7 +166,7 @@ export const advertCreated = (advert) => {
 export const createAdvert = (advertData) => async (
   dispatch,
   getState,
-  { history, api },
+  { history, api }
 ) => {
   try {
     const fetchedAdvert = await adverts.createAdvert(advertData);

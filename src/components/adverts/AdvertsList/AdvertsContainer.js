@@ -6,12 +6,12 @@ import AdvertsList from './AdvertsList';
 import AdvertsFilters from './AdvertsFilters';
 // import BasicFilters from './BasicFilters';
 
-import { loadTags } from '../../store/actions';
+import { loadTags } from '../../../store/actions';
 import {
   getAdvertsOnState,
   getUi,
   getTagsOnState,
-} from '../../store/selectors';
+} from '../../../store/selectors';
 import { Row, Typography, Col } from 'antd';
 import { useHistory } from 'react-router';
 

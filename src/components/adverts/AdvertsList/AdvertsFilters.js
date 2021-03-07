@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Row, Typography, Col, Input, Slider, Radio, Button, Form } from 'antd';
 
-import removeEmptyFields from '../../utils/removeEmptyFields';
-import { definitions, storage } from '../../utils';
-import TagsSelect from '../Tags/TagSelect';
+import removeEmptyFields from '../../../utils/removeEmptyFields';
+import { definitions, storage } from '../../../utils';
+import TagsSelect from '../../Tags/TagSelect';
 import { useDispatch } from 'react-redux';
-import { loadAdverts } from '../../store/actions';
+import { loadAdverts } from '../../../store/actions';
 
 const { Title, Paragraph } = Typography;
 const { MIN_PRICE, MAX_PRICE, saleOptions } = definitions;
@@ -24,28 +24,27 @@ const AdvertsFilters = () => {
     storage.get('filters') || defaultFilters,
   );
 
-  const formatFilters = (filters) => {
-    if (filters.tags)
-      filters.tags = filters.tags.map((tag) => tag.toLowerCase()).join(',');
-    if (filters.price)
-      filters.price = `${filters.price[0]}-${filters.price[1]}`;
-    return removeEmptyFields(filters);
-  };
-
   const onValuesChange = (changedValues, allValues) => {
     setFilters(allValues);
   };
 
   const onFinish = async (filtersData) => {
-    dispatch(loadAdverts(formatFilters(filtersData)));
+    dispatch(loadAdverts(filtersData));
   };
+
+  // TODO: Automatically fetch for adverts
+  // useEffect(() => {
+  //   if (filters) {
+  //     onFinish(filters);
+  //   }
+  // }, []);
 
   return (
     <Col span={12} className="adverts__filters">
       <Form
         className="adverts__form"
         onFinish={onFinish}
-        initialValues={defaultFilters}
+        initialValues={filters}
         onValuesChange={onValuesChange}>
         <Row gutter={[24, 24]}>
           <Col span={12}>

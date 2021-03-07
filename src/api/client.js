@@ -23,7 +23,7 @@ const removeAuthorizationHeader = () => {
 client.login = (credentials) => {
   return client.post("/user/login", credentials).then((auth) => {
     // Set Authorization header for future requests
-    setAuthorizationHeader(auth.data.token);
+    setAuthorizationHeader(auth.data.token, auth.data.username);
     return auth.data;
   });
 };

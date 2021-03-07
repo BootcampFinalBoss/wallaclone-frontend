@@ -3,7 +3,6 @@ import client from './client';
 const { REACT_APP_API_HOST: host } = process.env;
 
 export const getAdverts = (filters) => {
-  console.log(filters);
   return client.get(`/adverts`, { params: filters });
 };
 

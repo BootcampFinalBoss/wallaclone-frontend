@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect, Route, useLocation } from 'react-router-dom';
@@ -8,7 +9,7 @@ const PrivateRoute = ({ ...props }) => {
   const token = useSelector((state) => getLoggedUserToken(state));
   const location = useLocation();
   return token ? (
-    <Route {...props} />
+    <Route {...props}>{props.children}</Route>
   ) : (
     <Redirect to={{ pathname: '/login', state: { from: location } }} />
   );
