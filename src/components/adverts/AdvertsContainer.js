@@ -52,7 +52,7 @@ const AdvertsContainer = () => {
           {ui.loading === true && (
             <Paragraph className="general-error-text">Loading...</Paragraph>
           )}
-          {adverts && !ui.loading && <AdvertsList adverts={adverts} />}
+          <AdvertsList adverts={adverts} ui={ui} />
         </Row>
       </Col>
     </Row>
