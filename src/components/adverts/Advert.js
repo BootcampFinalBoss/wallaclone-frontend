@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Divider, Image, Typography, Statistic, Row, Col } from 'antd';
+import { Divider, Image, Typography, Statistic, Row, Col, Button } from 'antd';
 
 import { DeleteOutlined } from '@ant-design/icons';
 import placeholder from '../../assets/photo-placeholder.png';
@@ -13,7 +13,7 @@ import Modal from 'antd/lib/modal/Modal';
 
 const { Title, Paragraph } = Typography;
 
-const AdvertPage = ({ ...props }) => {
+const AdvertPage = ({ history, ...props }) => {
   const dispatch = useDispatch();
   const ui = useSelector((state) => getUi(state));
   const getAdvertId = () => props.match.params.id;
@@ -28,13 +28,17 @@ const AdvertPage = ({ ...props }) => {
     dispatch(loadAdvert(getAdvertId()));
   };
 
+  const goToEditAdvert = () => {
+    history.push('/adverts/edit/' + getAdvertId());
+  };
+
   const renderAdvert = () => {
     if (ui?.error) {
       return <Redirect to="/500" />;
     }
 
     if (!advert && !ui?.loading) {
-      return <Redirect to="/404" />;
+      return null;
     }
 
     const { name, description, price, tags, sale, image } = advert;
@@ -62,6 +66,9 @@ const AdvertPage = ({ ...props }) => {
             height={300}
             fallback={placeholder}
           />
+        </Col>
+        <Col span={24}>
+          <Button onClick={goToEditAdvert}>Edit advert</Button>
         </Col>
       </Row>
     );

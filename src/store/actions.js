@@ -3,6 +3,7 @@ import * as types from './types';
 // import { getLoggedUserToken } from './selectors';
 
 import { auth, adverts } from '../api';
+import { formatFilters, storage } from '../utils';
 
 /* REGISTER */
 
@@ -127,8 +128,9 @@ export const advertsLoaded = (adverts) => {
 };
 
 export const loadAdverts = (filters) => async (dispatch, getState) => {
-  console.log(filters);
-  const fetchedAdverts = await adverts.getAdverts(filters);
+  storage.set('filters', filters);
+  const formattedFilters = formatFilters(filters);
+  const fetchedAdverts = await adverts.getAdverts(formattedFilters);
   dispatch(advertsLoaded(fetchedAdverts?.data?.result || []));
 };
 
@@ -139,8 +141,15 @@ export const advertLoaded = (advert) => {
   };
 };
 
-export const loadAdvert = (advertId) => async (dispatch, getState) => {
+export const loadAdvert = (advertId) => async (
+  dispatch,
+  getState,
+  { history, api },
+) => {
   const fetchedAdvert = await adverts.getAdvert(advertId);
+  if (!fetchedAdvert) {
+    history.push('/404');
+  }
   dispatch(advertLoaded(fetchedAdvert?.data.result));
 };
 
