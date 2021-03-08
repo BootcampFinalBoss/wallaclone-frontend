@@ -2,13 +2,14 @@ import * as types from "./types";
 
 // import { getLoggedUserToken } from './selectors';
 
-import { auth, adverts } from '../api';
-import { formatFilters, storage } from '../utils';
+import { auth, adverts, user } from "../api";
+import { formatFilters, storage } from "../utils";
 
 /* REGISTER */
 
 export const authRegisterRequest = () => ({
   type: types.AUTH_REGISTER_REQUEST,
+  payload: "tu puta madre",
 });
 
 export const authRegisterFailure = (error) => ({
@@ -17,8 +18,9 @@ export const authRegisterFailure = (error) => ({
   payload: error,
 });
 
-export const authRegisterSuccess = () => ({
+export const authRegisterSuccess = (token) => ({
   type: types.AUTH_REGISTER_SUCCESS,
+  payload: token,
 });
 
 export const authRegister = (newUserData) => {
@@ -26,6 +28,8 @@ export const authRegister = (newUserData) => {
     dispatch(authRegisterRequest());
     try {
       const token = await api.auth.register(newUserData);
+      console.log(token);
+      getState(token);
       dispatch(authRegisterSuccess(token));
       dispatch(resetError());
       history.push("/login");
@@ -51,6 +55,7 @@ export const authLoginSuccess = (token, username) => ({
   type: types.AUTH_LOGIN_SUCCESS,
   payload: token,
   username,
+  user,
 });
 
 export const authLogin = (crendentials) => {
@@ -111,6 +116,25 @@ export const authForgotPasswordSuccess = () => ({
   };
 };*/
 
+/* USERS */
+
+export const userLoaded = (user) => ({
+  type: types.USER_LOADED,
+  payload: user,
+});
+
+export const getUser = (userId) => async (
+  dispatch,
+  getState,
+  { history, api }
+) => {
+  const getUser = await user.getUser(userId);
+  if (!getUser) {
+    history.push("/login");
+  }
+  dispatch(userLoaded(getUser?.data.result));
+};
+
 /* ADVERTS */
 
 export const generateAdvertError = (error) => {
@@ -129,7 +153,7 @@ export const advertsLoaded = (adverts) => {
 };
 
 export const loadAdverts = (filters) => async (dispatch, getState) => {
-  storage.set('filters', filters);
+  storage.set("filters", filters);
   const formattedFilters = formatFilters(filters);
   const fetchedAdverts = await adverts.getAdverts(formattedFilters);
   dispatch(advertsLoaded(fetchedAdverts?.data?.result || []));
@@ -145,11 +169,11 @@ export const advertLoaded = (advert) => {
 export const loadAdvert = (advertId) => async (
   dispatch,
   getState,
-  { history, api },
+  { history, api }
 ) => {
   const fetchedAdvert = await adverts.getAdvert(advertId);
   if (!fetchedAdvert) {
-    history.push('/404');
+    history.push("/404");
   }
   dispatch(advertLoaded(fetchedAdvert?.data.result));
 };

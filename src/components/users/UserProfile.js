@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, PageHeader, Image, Row, Col, Button } from "antd";
 import {
   CloseOutlined,
@@ -7,7 +7,7 @@ import {
 } from "@ant-design/icons";
 import "antd/dist/antd.css";
 //import "./RegisterPage.css";
-import { authRegister } from "../../store/actions";
+import { getUser, loadAdvert } from "../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
 
 const dataExample = {
@@ -16,14 +16,14 @@ const dataExample = {
   email: "user@user.com",
 };
 
-const UserProfile = () => {
+// eslint-disable-next-line react/prop-types
+const UserProfile = ({ history, ...props }) => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.ui);
-  console.log(state);
-
-  const onFinish = async (data) => {
-    console.log("submit", data);
-    await dispatch(authRegister(data));
+  const state = useSelector((state) => state.user);
+  // eslint-disable-next-line react/prop-types
+  const getUserId = () => props.match.params.id;
+  const handleGetUser = async () => {
+    dispatch(getUser(getUserId()));
   };
 
   return (
@@ -63,5 +63,9 @@ const UserProfile = () => {
       </Card>
     </div>
   );
+  useEffect(() => {
+    handleGetUser();
+    // eslint-disable-next-line react/prop-types
+  }, [props.match.params.id]);
 };
 export default UserProfile;

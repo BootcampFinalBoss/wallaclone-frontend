@@ -9,8 +9,9 @@ import {
   Dropdown,
   Header as Logo,
 } from "semantic-ui-react";
-import { getLoggedUserToken } from "../../store/selectors";
+import { getLoggedUserToken, getUser } from "../../store/selectors";
 import { authLogout } from "../../store/actions";
+import { EyeOutlined } from "@ant-design/icons";
 
 let friendOptions = [
   /* {
@@ -20,6 +21,8 @@ let friendOptions = [
     image: { avatar: true, src: "/logo192.png" },
   },*/
 ];
+
+//let userId = {};
 
 const Header = () => {
   const [menuActiveItem, setMenuActiveItem] = useState("");
@@ -131,7 +134,8 @@ const PrivateHeader = ({ menuActiveItem, handleItemClick, loggedUser }) => {
             <Dropdown.Item
               icon="user"
               text="Your Profile"
-              href="/my-profile"
+              href="/my-profile/"
+              key="user detail"
             ></Dropdown.Item>
             <Dropdown.Item
               icon="newspaper outline"

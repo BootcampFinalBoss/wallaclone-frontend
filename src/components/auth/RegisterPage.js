@@ -11,6 +11,7 @@ import {
   Alert,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
+import Swal from "sweetalert2";
 import "antd/dist/antd.css";
 import "./RegisterPage.css";
 import { authRegister } from "../../store/actions";
@@ -20,6 +21,7 @@ const RegisterPage = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const state = useSelector((state) => state.ui);
+
   console.log(state);
 
   const onFinish = async (data) => {

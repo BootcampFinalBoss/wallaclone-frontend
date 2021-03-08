@@ -29,9 +29,9 @@ client.login = (credentials) => {
 };
 
 client.register = (data) =>
-  client.post("/user/", data).then((newUser) => {
-    console.log(newUser);
-    return newUser;
+  client.post("/user/", data).then((res) => {
+    console.log(res);
+    return res;
   });
 
 // Logout method

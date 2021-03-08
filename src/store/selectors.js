@@ -1,9 +1,12 @@
-export const getLoggedUserToken = state => state.auth;
+export const getLoggedUserToken = (state) => state.auth;
 
-export const getAdvertsOnState = state => state.adverts ? state.adverts : null
+export const getAdvertsOnState = (state) =>
+  state.adverts ? state.adverts : null;
 
-export const getAdvertOnState = state => state.advert ? state.advert : null;
+export const getAdvertOnState = (state) => (state.advert ? state.advert : null);
 
-export const getTagsOnState = state => state.tags ? state.tags : null;
+export const getTagsOnState = (state) => (state.tags ? state.tags : null);
 
-export const getUi = state => state.ui;
+export const getUi = (state) => state.ui;
+
+export const getUser = (state) => state.user;

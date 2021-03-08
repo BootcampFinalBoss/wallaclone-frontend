@@ -10,8 +10,8 @@ export const login = (credentials) =>
   });
 
 export const register = (data) =>
-  client.register(data).then((newUser) => {
-    return newUser;
+  client.register(data).then((res) => {
+    return res;
   });
 
 export const logout = () =>

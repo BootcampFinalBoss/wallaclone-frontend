@@ -1,6 +1,7 @@
 import * as types from "./types";
 
 const initialState = {
+  user: null,
   auth: null,
   adverts: null,
   advert: null,
@@ -8,6 +9,7 @@ const initialState = {
   ui: {
     loading: false,
     error: null,
+    success: null,
   },
 };
 
@@ -46,6 +48,15 @@ export const adverts = (state = initialState.adverts, action) => {
   }
 };
 
+export const user = (state = initialState.user, action) => {
+  switch (action.type) {
+    case types.USER_LOADED:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
 export const advert = (state = initialState.advert, action) => {
   switch (action.type) {
     case types.ADVERT_LOADED:
@@ -72,11 +83,11 @@ export const ui = (state = initialState.ui, action) => {
     case types.AUTH_LOGIN_REQUEST ||
       types.AUTH_REGISTER_REQUEST ||
       types.AUTH_FORGOT_REQUEST:
-      return { ...state, loading: true };
+      return { ...state, loading: true, success: action.payload };
     case types.AUTH_LOGIN_SUCCESS ||
       types.AUTH_REGISTER_SUCCESS ||
       types.AUTH_FORGOT_SUCCESS:
-      return { ...state, error: null, loading: false };
+      return { ...state, error: null, loading: false, success: action.payload };
     case types.UI_RESET_ERROR:
       return { ...state, error: null, loading: false };
     case types.ADVERTS_REQUEST:
