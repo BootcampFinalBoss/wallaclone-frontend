@@ -41,37 +41,39 @@ const AdvertPage = ({ history, ...props }) => {
       return null;
     }
 
-    const { name, description, price, tags, sale, image } = advert;
+    if (advert && advert.name) {
+      const { name, description, price, tags, sale, image } = advert;
 
-    return (
-      <Row style={{ marginBottom: '3em' }}>
-        <Col span={12}>
-          <Title level={2}>
-            {name} - {sale ? 'Sell' : 'Buy'}
-          </Title>
-          <Paragraph>{description}</Paragraph>
-          <Statistic title="Price" value={price} />
-          <Row style={{ marginTop: 20 }}>
-            <Paragraph style={{ marginRight: 5, marginBottom: 0 }}>
-              Tags
-            </Paragraph>
-            <Tags tags={tags} />
-          </Row>
-        </Col>
-        <Col span={12}>
-          <Image
-            src={image}
-            alt={name}
-            width={300}
-            height={300}
-            fallback={placeholder}
-          />
-        </Col>
-        <Col span={24}>
-          <Button onClick={goToEditAdvert}>Edit advert</Button>
-        </Col>
-      </Row>
-    );
+      return (
+        <Row style={{ marginBottom: '3em' }}>
+          <Col span={12}>
+            <Title level={2}>
+              {name} - {sale ? 'Sell' : 'Buy'}
+            </Title>
+            <Paragraph>{description}</Paragraph>
+            <Statistic title="Price" value={price} />
+            <Row style={{ marginTop: 20 }}>
+              <Paragraph style={{ marginRight: 5, marginBottom: 0 }}>
+                Tags
+              </Paragraph>
+              <Tags tags={tags} />
+            </Row>
+          </Col>
+          <Col span={12}>
+            <Image
+              src={image}
+              alt={name}
+              width={300}
+              height={300}
+              fallback={placeholder}
+            />
+          </Col>
+          <Col span={24}>
+            <Button onClick={goToEditAdvert}>Edit advert</Button>
+          </Col>
+        </Row>
+      );
+    }
   };
 
   useEffect(() => {
