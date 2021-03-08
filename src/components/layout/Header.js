@@ -9,21 +9,23 @@ import {
   Dropdown,
   Header as Logo,
 } from 'semantic-ui-react';
-import { getLoggedUserToken } from '../../store/selectors';
+import { getLoggedUser } from '../../store/selectors';
 import { authLogout } from '../../store/actions';
+import { useHistory } from 'react-router';
 
-const friendOptions = [
-  {
-    key: 'Jenny Hess',
-    text: 'Jenny Hess',
-    value: 'Jenny Hess',
+const userOptions = (userData) => {
+  return {
+    key: userData.username,
+    text: userData.username,
+    value: userData.username,
     image: { avatar: true, src: '/logo192.png' },
-  },
-];
+  };
+};
 
 const Header = () => {
   const [menuActiveItem, setMenuActiveItem] = useState('');
-  const isLoggedUser = useSelector((state) => getLoggedUserToken(state));
+  const userData = useSelector((state) => getLoggedUser(state));
+  const history = useHistory();
 
   const handleItemClick = (e, { name }) => setMenuActiveItem(name);
 
@@ -35,10 +37,12 @@ const Header = () => {
         </Logo>
       </Menu.Item>
       <Menu.Menu position="right">
-        {isLoggedUser ? (
+        {userData ? (
           <PrivateHeader
             menuActiveItem={menuActiveItem}
             handleItemClick={handleItemClick}
+            loggedUser={userData}
+            history={history}
           />
         ) : (
           <PublicHeader
@@ -82,11 +86,20 @@ PublicHeader.propTypes = {
   handleItemClick: PropTypes.func.isRequired,
 };
 
-const PrivateHeader = ({ menuActiveItem, handleItemClick, loggedUser }) => {
+const PrivateHeader = ({
+  menuActiveItem,
+  handleItemClick,
+  loggedUser,
+  history,
+}) => {
   const dispatch = useDispatch();
   const handleLogout = () => {
     dispatch(authLogout());
   };
+  const goToMyProfile = () => {
+    history.push('/profile/' + loggedUser?.id);
+  };
+  console.log(userOptions(loggedUser));
   return (
     <>
       <Menu.Item
@@ -101,10 +114,13 @@ const PrivateHeader = ({ menuActiveItem, handleItemClick, loggedUser }) => {
       <Menu.Item>
         <Dropdown
           inline
-          text={friendOptions[0].text}
-          defaultValue={friendOptions[0].value}>
+          text={userOptions(loggedUser).text}
+          defaultValue={userOptions(loggedUser).value}>
           <Dropdown.Menu>
-            <Dropdown.Item icon="user" text="Your Profile"></Dropdown.Item>
+            <Dropdown.Item
+              icon="user"
+              text="Your Profile"
+              onClick={goToMyProfile}></Dropdown.Item>
             <Dropdown.Item
               icon="newspaper outline"
               text="Adverts"></Dropdown.Item>
@@ -123,6 +139,7 @@ PrivateHeader.propTypes = {
   menuActiveItem: PropTypes.string,
   handleItemClick: PropTypes.func.isRequired,
   loggedUser: PropTypes.object,
+  history: PropTypes.any,
 };
 
 export default Header;

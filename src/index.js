@@ -11,13 +11,13 @@ import { configureClient } from './api/client';
 import { configureStore, history } from './store';
 
 // Read token from storage
-const { token } = storage.get('auth') || { token: null };
+const auth = storage.get('auth') || { token: null, username: null };
 
 // Configure api client
-configureClient(token);
+configureClient(auth.token);
 
 // Create and configure a redux store
-const store = configureStore({ auth: token });
+const store = configureStore({ auth: auth });
 
 ReactDOM.render(
   <Provider store={store}>

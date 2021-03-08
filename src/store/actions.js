@@ -56,8 +56,8 @@ export const authLogin = (crendentials) => {
   return async function (dispatch, getState, { history, api }) {
     dispatch(authLoginRequest());
     try {
-      const token = await auth.login(crendentials);
-      dispatch(authLoginSuccess(token));
+      const userData = await auth.login(crendentials);
+      dispatch(authLoginSuccess(userData));
       history.push('/adverts');
     } catch (error) {
       console.error(error);

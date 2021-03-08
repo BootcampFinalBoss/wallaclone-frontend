@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { getUi } from '../../store/selectors';
 import {
@@ -36,9 +36,11 @@ const App = () => {
   let HideHeader = location.pathname.match('/login') ? null : <Header />;
   let HideFooter = location.pathname.match('/login') ? null : <Footer />;
 
-  if (ui.error) {
-    history.push('/error');
-  }
+  useEffect(() => {
+    if (ui.error?.code === 500) {
+      history.push('/error');
+    }
+  }, [ui]);
 
   return (
     <>
