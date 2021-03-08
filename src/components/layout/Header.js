@@ -1,6 +1,6 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   Menu,
   Button,
@@ -61,19 +61,17 @@ const PublicHeader = ({ menuActiveItem, handleItemClick }) => {
       <Menu.Item
         href="/register"
         name="register"
-        active={menuActiveItem === "register"}
+        active={menuActiveItem === 'register'}
         onClick={handleItemClick}
-        color="teal"
-      >
+        color="teal">
         Registro
       </Menu.Item>
 
       <Menu.Item
         href="/login"
         name="login"
-        active={menuActiveItem === "login"}
-        onClick={handleItemClick}
-      >
+        active={menuActiveItem === 'login'}
+        onClick={handleItemClick}>
         <Button icon color="teal">
           <Icon name="user circle" />
           Login
@@ -99,7 +97,7 @@ const PrivateHeader = ({
     dispatch(authLogout());
   };
   const goToMyProfile = () => {
-    history.push('/profile/' + loggedUser?.id);
+    history.push('/my-profile');
   };
   console.log(userOptions(loggedUser));
   return (
@@ -107,10 +105,9 @@ const PrivateHeader = ({
       <Menu.Item
         href="/adverts/new"
         name="advertsNew"
-        active={menuActiveItem === "advertsNew"}
+        active={menuActiveItem === 'advertsNew'}
         onClick={handleItemClick}
-        color="teal"
-      >
+        color="teal">
         Create advert
       </Menu.Item>
 
@@ -126,13 +123,11 @@ const PrivateHeader = ({
               onClick={goToMyProfile}></Dropdown.Item>
             <Dropdown.Item
               icon="newspaper outline"
-              text="Adverts"
-            ></Dropdown.Item>
+              text="Adverts"></Dropdown.Item>
             <Dropdown.Item
               icon="power off"
               text="Logout"
-              onClick={handleLogout}
-            ></Dropdown.Item>
+              onClick={handleLogout}></Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
       </Menu.Item>
