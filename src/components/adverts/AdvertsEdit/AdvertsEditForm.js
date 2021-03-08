@@ -13,6 +13,7 @@ const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
 const AdvertsEditForm = ({ advert }) => {
   const advertData = { name: advert?.name };
+  const dispatch = useDispatch();
 
   const canSubmit = () => {
     return true;
@@ -24,6 +25,7 @@ const AdvertsEditForm = ({ advert }) => {
 
   const onFinish = async (data) => {
     console.log(data);
+    dispatch(editAdvert({ ...data, _id: advert._id }));
   };
 
   return (
@@ -31,7 +33,7 @@ const AdvertsEditForm = ({ advert }) => {
       initialValues={advert}
       onFinish={onFinish}
       onValuesChange={onValuesChange}>
-      <Row>
+      <Row style={{ marginBottom: '3em' }}>
         <Col span={11}>
           <Form.Item
             name="name"
