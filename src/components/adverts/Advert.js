@@ -1,7 +1,17 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Divider, Image, Typography, Statistic, Row, Col, Button } from 'antd';
+import {
+  Divider,
+  Image,
+  Typography,
+  Statistic,
+  Row,
+  Col,
+  Button,
+  Space,
+  Modal,
+} from 'antd';
 
 import { DeleteOutlined } from '@ant-design/icons';
 import placeholder from '../../assets/photo-placeholder.png';
@@ -9,7 +19,9 @@ import Tags from '../Tags/Tags';
 import { loadAdvert, deleteAdvert } from '../../store/actions';
 import { getAdvertOnState, getUi } from '../../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import Modal from 'antd/lib/modal/Modal';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+const { confirm } = Modal;
 
 const { Title, Paragraph } = Typography;
 
@@ -30,6 +42,25 @@ const AdvertPage = ({ history, ...props }) => {
 
   const goToEditAdvert = () => {
     history.push('/adverts/edit/' + getAdvertId());
+  };
+
+  const handleDeleteAdvert = () => {
+    dispatch(deleteAdvert(getAdvertId()));
+  };
+
+  const showConfirmDelete = () => {
+    confirm({
+      title: 'Are you sure delete this advert?',
+      icon: <ExclamationCircleOutlined />,
+      content: "This action can't be reversed",
+      okText: 'Yes, delete this advert',
+      okType: 'danger',
+      cancelText: 'No!!!!',
+      onOk() {
+        handleDeleteAdvert();
+      },
+      onCancel() {},
+    });
   };
 
   const renderAdvert = () => {
@@ -68,8 +99,11 @@ const AdvertPage = ({ history, ...props }) => {
               fallback={placeholder}
             />
           </Col>
-          <Col span={24}>
+          <Col span={24} style={{ justifyContent: 'space-between' }}>
             <Button onClick={goToEditAdvert}>Edit advert</Button>
+            <Button danger onClick={showConfirmDelete}>
+              Delete advert
+            </Button>
           </Col>
         </Row>
       );

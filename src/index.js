@@ -9,6 +9,7 @@ import storage from './utils/storage';
 
 import { configureClient } from './api/client';
 import { configureStore, history } from './store';
+import './css/styles.css';
 
 // Read token from storage
 const auth = storage.get('auth') || { token: null, username: null };
