@@ -28,6 +28,7 @@ import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import { Content } from 'antd/lib/layout/layout';
 import CommonErrorPage from '../errors/CommonErrorPage';
+import { UserProfile } from '../users';
 
 const App = () => {
   const location = useLocation();
@@ -56,6 +57,9 @@ const App = () => {
           </Route>
           <Route path="/forgot-password" exact>
             <ForgotPasswordPage />
+          </Route>
+          <Route path="/my-profile">
+            <UserProfile />
           </Route>
           <Route path="/adverts" exact>
             <AdvertsContainer />
