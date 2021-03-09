@@ -24,7 +24,7 @@ const RegisterPage = () => {
 
   const onFinish = async (data) => {
     console.log("submit", data);
-    await dispatch(authRegister(data));
+    const res = await dispatch(authRegister(data));
   };
 
   return (
