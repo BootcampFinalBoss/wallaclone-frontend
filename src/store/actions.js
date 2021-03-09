@@ -1,4 +1,4 @@
-import * as types from "./types";
+import * as types from './types';
 
 // import { getLoggedUserToken } from './selectors';
 
@@ -28,7 +28,7 @@ export const authRegister = (newUserData) => {
       const token = await api.auth.register(newUserData);
       dispatch(authRegisterSuccess(token));
       dispatch(resetError());
-      history.push("/login");
+      history.push('/login');
     } catch (error) {
       dispatch(authRegisterFailure(error.response.data));
     }
@@ -57,9 +57,9 @@ export const authLogin = (crendentials) => {
   return async function (dispatch, getState, { history, api }) {
     dispatch(authLoginRequest());
     try {
-      const token = await auth.login(crendentials);
-      dispatch(authLoginSuccess(token));
-      history.push("/adverts");
+      const userData = await auth.login(crendentials);
+      dispatch(authLoginSuccess(userData));
+      history.push('/adverts');
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
@@ -71,7 +71,7 @@ export const authLogout = () => {
   return async function (dispatch, getState, { history, api }) {
     try {
       await auth.logout();
-      history.push("/login");
+      history.push('/login');
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
@@ -148,7 +148,7 @@ export const loadAdvert = (advertId) => async (
   { history, api },
 ) => {
   const fetchedAdvert = await adverts.getAdvert(advertId);
-  if (!fetchedAdvert) {
+  if (!fetchedAdvert.data?.result?.name) {
     history.push('/404');
   }
   dispatch(advertLoaded(fetchedAdvert?.data.result));
@@ -166,11 +166,34 @@ export const advertCreated = (advert) => {
 export const createAdvert = (advertData) => async (
   dispatch,
   getState,
-  { history, api }
+  { history, api },
 ) => {
   try {
     const fetchedAdvert = await adverts.createAdvert(advertData);
     dispatch(advertCreated(fetchedAdvert?.data?.result));
+    history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
+  } catch (error) {
+    dispatch(generateAdvertError(error));
+  }
+};
+
+export const advertEdited = (advert) => {
+  return {
+    type: types.ADVERT_CREATED,
+    payload: {
+      advert,
+    },
+  };
+};
+
+export const editAdvert = (advertData) => async (
+  dispatch,
+  getState,
+  { history, api },
+) => {
+  try {
+    const fetchedAdvert = await adverts.editAdvert(advertData);
+    dispatch(advertEdited(fetchedAdvert?.data?.result));
     history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
   } catch (error) {
     dispatch(generateAdvertError(error));
@@ -186,9 +209,14 @@ export const advertDeleted = (advert) => {
   };
 };
 
-export const deleteAdvert = (advertId) => async (dispatch, getState) => {
+export const deleteAdvert = (advertId) => async (
+  dispatch,
+  getState,
+  { history, api },
+) => {
   const fetchedAdvert = await adverts.deleteAdvert(advertId);
   dispatch(advertDeleted(fetchedAdvert.result));
+  history.push('/adverts');
 };
 
 export const resetError = () => {

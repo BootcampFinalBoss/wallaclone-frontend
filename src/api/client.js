@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 
 const {
   REACT_APP_API_HOST: host,
@@ -12,16 +12,16 @@ const client = axios.create({
 });
 
 const setAuthorizationHeader = (token) => {
-  client.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+  client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
 const removeAuthorizationHeader = () => {
-  delete client.defaults.headers.common["Authorization"];
+  delete client.defaults.headers.common['Authorization'];
 };
 
 // Login method
 client.login = (credentials) => {
-  return client.post("/user/login", credentials).then((auth) => {
+  return client.post('/user/login', credentials).then((auth) => {
     // Set Authorization header for future requests
     setAuthorizationHeader(auth.data.token, auth.data.username);
     return auth.data;
@@ -29,9 +29,9 @@ client.login = (credentials) => {
 };
 
 client.register = (data) =>
-  client.post("/user/", data).then((newUser) => {
-    console.log(newUser);
-    return newUser;
+  client.post('/user/', data).then((res) => {
+    console.log(res, res.status);
+    return res;
   });
 
 // Logout method

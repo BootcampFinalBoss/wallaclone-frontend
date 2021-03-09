@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Row, Col, Typography, Button, Divider } from 'antd';
 import AdvertCard from './AdvertCard';
 import { useHistory } from 'react-router';
-import { getLoggedUserToken } from '../../../store/selectors';
+import { getLoggedUser } from '../../../store/selectors';
 
 const { Title, Paragraph } = Typography;
 
@@ -43,7 +43,7 @@ const CreateNew = () => {
   const goLogin = () => {
     history.push('/login');
   };
-  const isLoggedUser = useSelector((state) => getLoggedUserToken(state));
+  const { token: isLoggedUser } = useSelector((state) => getLoggedUser(state));
 
   if (isLoggedUser) {
     return (
