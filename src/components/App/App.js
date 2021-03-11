@@ -23,12 +23,13 @@ import {
   AdvertPage,
   AdvertsEdit,
 } from '../adverts';
+import { UserProfile, UserEdit } from '../users';
+// import { AdvertsContainer, AdvertsNew, AdvertPage } from '../adverts';
 import NotFoundPage from '../errors/NotFoundPage';
 import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import { Content } from 'antd/lib/layout/layout';
 import CommonErrorPage from '../errors/CommonErrorPage';
-import { UserProfile } from '../users';
 
 const App = () => {
   const location = useLocation();
@@ -66,6 +67,9 @@ const App = () => {
           </Route>
           <Route path="/reset/:id">
             <ResetPassword />
+          </Route>
+          <Route path="/user-edit">
+            <UserEdit />
           </Route>
           <PrivateRoute path="/adverts/new" exact component={AdvertsNew} />
           <PrivateRoute path="/adverts/edit/:id" exact>

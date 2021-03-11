@@ -11,11 +11,12 @@ import {
   getAdvertsOnState,
   getUi,
   getTagsOnState,
-} from "../../../store/selectors";
-import { Row, Typography, Col } from "antd";
-import { useHistory } from "react-router";
+} from '../../../store/selectors';
+import { Row, Typography, Col, PageHeader } from 'antd';
+import { useHistory } from 'react-router';
 
-//import '../../assets/styles/styles.css'
+import '../../../assets/styles/styles.css';
+
 
 const { Title, Paragraph } = Typography;
 
@@ -46,9 +47,10 @@ const AdvertsContainer = () => {
         gutter={[0, 24]}
       >
         <Col span={24}>
-          <Title type="h2" className="text-center">
+          {/*           <Title type="h2" className="text-center">
             Adverts page
-          </Title>
+          </Title> */}
+          <PageHeader className="site-page-header" title="Adverts Page" />,
         </Col>
         <Col span={24}>
           <Row justify="center" align="middle">
