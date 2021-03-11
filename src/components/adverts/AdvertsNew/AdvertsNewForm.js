@@ -2,11 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Row, Col, Button, Input, InputNumber, Radio } from 'antd';
 // import NewAdvertForm from './NewAdvertForm';
-import { createAdvert } from '../../../store/actions';
-import { getUi } from '../../../store/selectors';
-import TagsSelect from '../../Tags/TagSelect';
-import { InputImage } from '../../globals';
-import { definitions } from '../../../utils';
+import { createAdvert } from '../../store/actions';
+import { getUi } from '../../store/selectors';
+import TagsSelect from '../Tags/TagSelect';
+import { InputImage } from '../globals';
+import { definitions } from '../../utils';
+import { UploadOutlined } from "@ant-design/icons";
 
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
@@ -88,8 +89,11 @@ const NewAdvertForm = () => {
             type="primary"
             htmlType="submit"
             disabled={!canSubmit()}
-            block>
-            Up!
+            shape="round"
+            icon={ < UploadOutlined /> }
+
+            >
+            Create!
           </Button>
         </Col>
       </Row>

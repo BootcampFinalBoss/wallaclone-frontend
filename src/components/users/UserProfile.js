@@ -36,7 +36,7 @@ const UserProfile = () => {
           <Button key="advert" type="default" size={64}>
             Adverts
           </Button>,
-          <Button key="edit" type="primary" size={64}>
+          <Button key="edit" href="/user-edit" type="primary" size={64}>
             Edit
           </Button>,
           <Button key="delete" type="danger" size={64}>

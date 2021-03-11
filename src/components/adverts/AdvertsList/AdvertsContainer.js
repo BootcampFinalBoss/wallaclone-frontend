@@ -11,9 +11,12 @@ import {
   getAdvertsOnState,
   getUi,
   getTagsOnState,
-} from '../../../store/selectors';
-import { Row, Typography, Col } from 'antd';
+
+} from '../../store/selectors';
+import { Row, Typography, Col, PageHeader } from 'antd';
 import { useHistory } from 'react-router';
+
+import '../../assets/styles/styles.css';
 
 const { Title, Paragraph } = Typography;
 
@@ -36,26 +39,30 @@ const AdvertsContainer = () => {
   }, [loadTags]);
 
   return (
-    <Row
-      className="adverts__container"
-      justify="center"
-      align="middle"
-      gutter={[0, 24]}>
-      <Col span={24}>
-        <Title type="h2" className="text-center">
-          Adverts page
-        </Title>
-      </Col>
-      <Col span={24}>
-        <Row justify="center" align="middle">
-          <AdvertsFilters tags={tags} />
-          {ui.loading === true && (
-            <Paragraph className="general-error-text">Loading...</Paragraph>
-          )}
-          <AdvertsList adverts={adverts} ui={ui} />
-        </Row>
-      </Col>
-    </Row>
+    <div className="containerPrincipal">
+      <Row
+        className="adverts__container"
+        justify="center"
+        align="middle"
+        gutter={[0, 24]}
+      >
+        <Col span={24}>
+          {/*           <Title type="h2" className="text-center">
+            Adverts page
+          </Title> */}
+          <PageHeader className="site-page-header" title="Adverts Page" />,
+        </Col>
+        <Col span={24}>
+          <Row justify="center" align="middle">
+            <AdvertsFilters tags={tags} />
+            {ui.loading === true && (
+              <Paragraph className="general-error-text">Loading...</Paragraph>
+            )}
+            <AdvertsList adverts={adverts} ui={ui} />
+          </Row>
+        </Col>
+      </Row>
+    </div>
   );
 };
 
