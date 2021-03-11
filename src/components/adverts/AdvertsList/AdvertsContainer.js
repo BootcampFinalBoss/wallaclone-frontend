@@ -12,11 +12,11 @@ import {
   getUi,
   getTagsOnState,
 
-} from '../../store/selectors';
+} from '../../../store/selectors';
 import { Row, Typography, Col, PageHeader } from 'antd';
 import { useHistory } from 'react-router';
 
-import '../../assets/styles/styles.css';
+import '../../../assets/styles/styles.css';
 
 const { Title, Paragraph } = Typography;
 
