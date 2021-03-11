@@ -7,6 +7,7 @@ import { getUi } from '../../store/selectors';
 import TagsSelect from '../Tags/TagSelect';
 import { InputImage } from '../globals';
 import { definitions } from '../../utils';
+import { UploadOutlined } from "@ant-design/icons";
 
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
@@ -53,8 +54,11 @@ const NewAdvertForm = () => {
             type="primary"
             htmlType="submit"
             disabled={!canSubmit()}
-            block>
-            Up!
+            shape="round"
+            icon={ < UploadOutlined /> }
+
+            >
+            Create!
           </Button>
         </Col>
       </Row>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { Row, Col, Divider, Typography } from 'antd';
+import { Row, Col, Divider, Typography, PageHeader } from 'antd';
 const { Title } = Typography;
 
 import AdvertsNewForm from './AdvertsNewForm';
@@ -13,7 +13,9 @@ const AdvertsNew = () => {
   return (
     <Row>
       <Col span={16} offset={4}>
-        <Divider>Create an advert</Divider>
+        {/* <Divider>Create an advert</Divider> */}
+        <PageHeader className="site-page-header" title="Create An Advert" />,
+
         <AdvertsNewForm />
       </Col>
     </Row>

@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
-import { Row, Col, Typography, Button, Divider } from 'antd';
+import { Row, Col, Typography, Button, Divider, PageHeader } from 'antd';
 import AdvertCard from './AdvertCard';
 import { useHistory } from 'react-router';
 import { getLoggedUserToken } from '../../store/selectors';
@@ -11,9 +11,11 @@ const { Title, Paragraph } = Typography;
 const AdvertsList = ({ adverts, ui }) => {
   return (
     <Col xs={20} lg={16} className="adverts">
-      <Title type="h2" className="adverts__title text-center my-4">
+{/*       <Title type="h2" className="adverts__title text-center my-4">
         Adverts List
-      </Title>
+      </Title> */}
+            <PageHeader className="site-page-header" title="Adverts List" />,
+
       <Row gutter={[24, 24]} style={{ marginBottom: '2em' }} justify="center">
         {!ui.loading && adverts?.length > 0 ? (
           adverts?.map((ad) => {
