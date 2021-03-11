@@ -1,22 +1,22 @@
-import client from "./client";
-import storage from "../utils/storage";
+import client from './client';
+import storage from '../utils/storage';
 
 export const login = (credentials) =>
   client.login(credentials).then((auth) => {
     if (credentials.remember) {
-      storage.set("auth", auth);
+      storage.set('auth', auth);
     }
     return auth;
   });
 
 export const register = (data) =>
-  client.register(data).then((newUser) => {
-    return newUser;
+  client.register(data).then((res) => {
+    return res;
   });
 
 export const logout = () =>
   client.logout().then(() => {
-    storage.remove("auth");
+    storage.remove('auth');
   });
 
 /*
