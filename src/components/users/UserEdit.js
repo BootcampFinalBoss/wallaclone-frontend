@@ -2,10 +2,9 @@ import React from 'react';
 import { Form, Button, Upload, Input, Row, Col, PageHeader, Alert } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
-import './RegisterPage.css';
-import { authRegister } from '../../store/actions';
+// import { authRegister } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
-import FormItem from 'antd/lib/form/FormItem';
+import "../../assets/styles/styles.css"
 
 const UserEdit = () => {
   const [form] = Form.useForm();
@@ -19,13 +18,12 @@ const UserEdit = () => {
 
   return (
     <div className="containerPrincipalRegister">
-      <PageHeader className="site-page-header" title="Edit User" />,
+      <PageHeader className="site-page-header" title="Edit User" />
       <Form
         form={form}
         name="editUser"
         onFinish={onFinish}
         scrollToFirstError
-        style={{ border: '1px solid gray' }}
       >
         <Row type="flex" justify="space-between" gutter={16}>
           <Col xs={24} md={12} lg={12} xl={12}>
@@ -89,6 +87,50 @@ const UserEdit = () => {
               })}
           </Col>
 
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Form.Item
+              name="password"
+              label="Password"
+              rules={[
+                {
+                  min: 8,
+                  required: true,
+                  message: "Please input your password!",
+                },
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Form.Item>
+          </Col>
+          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
+            <Form.Item
+              name="confirm"
+              label="Confirm Password"
+              dependencies={["password"]}
+              hasFeedback
+              rules={[
+                {
+                  min: 8,
+                  required: true,
+                  message: "Please confirm your password!",
+                },
+                ({ getFieldValue }) => ({
+                  validator(_, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject(
+                      "The two passwords that you entered do not match!"
+                    );
+                  },
+                }),
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+          </Col>
+
           <Col span={24}>
             <Form.Item
               name="newAvatar"
@@ -103,7 +145,7 @@ const UserEdit = () => {
           </Col>
 
           <Form.Item>
-            <Button type="primary" htmlType="submit">
+            <Button type="primary" htmlType="submit" className="align-center">
               Update
             </Button>
           </Form.Item>
