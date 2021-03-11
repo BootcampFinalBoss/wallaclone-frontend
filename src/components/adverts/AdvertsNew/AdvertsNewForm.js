@@ -28,23 +28,58 @@ const NewAdvertForm = () => {
     <Form onFinish={handleCreateAdvert}>
       <Row style={{ marginBottom: '3em' }}>
         <Col span={11}>
-          <Form.Item name="name" label="Name">
+          <Form.Item
+            name="name"
+            label="Name"
+            rules={[
+              {
+                required: true,
+              },
+            ]}>
             <Input placeholder="Name" />
           </Form.Item>
-          <Form.Item name="price" label="Price">
+          <Form.Item
+            name="price"
+            label="Price"
+            rules={[
+              {
+                required: true,
+              },
+            ]}>
             <InputNumber min={MIN_PRICE} max={MAX_PRICE} />
           </Form.Item>
         </Col>
         <Col span={11} offset={2}>
-          <Form.Item name="tags" label="Tags">
+          <Form.Item
+            name="tags"
+            label="Tags"
+            rules={[
+              {
+                required: true,
+              },
+            ]}>
             <TagsSelect />
           </Form.Item>
-          <Form.Item name="type" label="Type">
+          <Form.Item
+            name="type"
+            label="Type"
+            rules={[
+              {
+                required: true,
+              },
+            ]}>
             <Radio.Group options={[saleOptions.sell, saleOptions.buy]} />
           </Form.Item>
         </Col>
         <Col span={24}>
-          <Form.Item name="description" label="Description">
+          <Form.Item
+            name="description"
+            label="Description"
+            rules={[
+              {
+                required: true,
+              },
+            ]}>
             <Input maxLength={150} placeholder="Name" />
           </Form.Item>
           <Form.Item name="image" label="Image">

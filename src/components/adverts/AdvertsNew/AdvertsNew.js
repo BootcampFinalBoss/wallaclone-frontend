@@ -4,8 +4,8 @@ import { Row, Col, Divider, Typography, PageHeader } from 'antd';
 const { Title } = Typography;
 
 import AdvertsNewForm from './AdvertsNewForm';
-import { createAdvert } from '../../store/actions';
-import { getUi } from '../../store/selectors';
+import { createAdvert } from '../../../store/actions';
+import { getUi } from '../../../store/selectors';
 
 const AdvertsNew = () => {
   const ui = useSelector((state) => getUi(state));

@@ -1,12 +1,12 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { connect, useDispatch, useSelector } from "react-redux";
 
-import AdvertsList from './AdvertsList';
-import AdvertsFilters from './AdvertsFilters';
+import AdvertsList from "./AdvertsList";
+import AdvertsFilters from "./AdvertsFilters";
 // import BasicFilters from './BasicFilters';
 
-import { loadTags } from '../../store/actions';
+import { loadTags } from "../../../store/actions";
 import {
   getAdvertsOnState,
   getUi,
@@ -29,8 +29,8 @@ const AdvertsContainer = () => {
   const dispatch = useDispatch();
 
   if (ui.error) {
-    console.log('redirect to error page');
-    history.push('/500');
+    console.log("redirect to error page");
+    history.push("/500");
   }
 
   useEffect(() => {

@@ -1,7 +1,17 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
-import { Divider, Image, Typography, Statistic, Row, Col } from 'antd';
+import {
+  Divider,
+  Image,
+  Typography,
+  Statistic,
+  Row,
+  Col,
+  Button,
+  Space,
+  Modal,
+} from 'antd';
 
 import { DeleteOutlined } from '@ant-design/icons';
 import placeholder from '../../assets/photo-placeholder.png';
@@ -9,11 +19,13 @@ import Tags from '../Tags/Tags';
 import { loadAdvert, deleteAdvert } from '../../store/actions';
 import { getAdvertOnState, getUi } from '../../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import Modal from 'antd/lib/modal/Modal';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+
+const { confirm } = Modal;
 
 const { Title, Paragraph } = Typography;
 
-const AdvertPage = ({ ...props }) => {
+const AdvertPage = ({ history, ...props }) => {
   const dispatch = useDispatch();
   const ui = useSelector((state) => getUi(state));
   const getAdvertId = () => props.match.params.id;
@@ -28,43 +40,74 @@ const AdvertPage = ({ ...props }) => {
     dispatch(loadAdvert(getAdvertId()));
   };
 
+  const goToEditAdvert = () => {
+    history.push('/adverts/edit/' + getAdvertId());
+  };
+
+  const handleDeleteAdvert = () => {
+    dispatch(deleteAdvert(getAdvertId()));
+  };
+
+  const showConfirmDelete = () => {
+    confirm({
+      title: 'Are you sure delete this advert?',
+      icon: <ExclamationCircleOutlined />,
+      content: "This action can't be reversed",
+      okText: 'Yes, delete this advert',
+      okType: 'danger',
+      cancelText: 'No!!!!',
+      onOk() {
+        handleDeleteAdvert();
+      },
+      onCancel() {},
+    });
+  };
+
   const renderAdvert = () => {
     if (ui?.error) {
       return <Redirect to="/500" />;
     }
 
     if (!advert && !ui?.loading) {
-      return <Redirect to="/404" />;
+      return null;
     }
 
-    const { name, description, price, tags, sale, image } = advert;
+    if (advert && advert.name) {
+      const { name, description, price, tags, sale, image } = advert;
 
-    return (
-      <Row style={{ marginBottom: '3em' }}>
-        <Col span={12}>
-          <Title level={2}>
-            {name} - {sale ? 'Sell' : 'Buy'}
-          </Title>
-          <Paragraph>{description}</Paragraph>
-          <Statistic title="Price" value={price} />
-          <Row style={{ marginTop: 20 }}>
-            <Paragraph style={{ marginRight: 5, marginBottom: 0 }}>
-              Tags
-            </Paragraph>
-            <Tags tags={tags} />
-          </Row>
-        </Col>
-        <Col span={12}>
-          <Image
-            src={image}
-            alt={name}
-            width={300}
-            height={300}
-            fallback={placeholder}
-          />
-        </Col>
-      </Row>
-    );
+      return (
+        <Row style={{ marginBottom: '3em' }}>
+          <Col span={12}>
+            <Title level={2}>
+              {name} - {sale ? 'Sell' : 'Buy'}
+            </Title>
+            <Paragraph>{description}</Paragraph>
+            <Statistic title="Price" value={price} />
+            <Row style={{ marginTop: 20 }}>
+              <Paragraph style={{ marginRight: 5, marginBottom: 0 }}>
+                Tags
+              </Paragraph>
+              <Tags tags={tags} />
+            </Row>
+          </Col>
+          <Col span={12}>
+            <Image
+              src={image}
+              alt={name}
+              width={300}
+              height={300}
+              fallback={placeholder}
+            />
+          </Col>
+          <Col span={24} style={{ justifyContent: 'space-between' }}>
+            <Button onClick={goToEditAdvert}>Edit advert</Button>
+            <Button danger onClick={showConfirmDelete}>
+              Delete advert
+            </Button>
+          </Col>
+        </Row>
+      );
+    }
   };
 
   useEffect(() => {
