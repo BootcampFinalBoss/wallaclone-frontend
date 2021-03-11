@@ -24,6 +24,7 @@ export const createAdvert = (advert) =>{
             'Content-Type': 'multipart/form-data'
         }
     });
+
 }
 
 export const editAdvert = (advert) =>
