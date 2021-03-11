@@ -28,21 +28,19 @@ const RegisterPage = () => {
     console.log("submit", data);
     const res = await dispatch(authRegister(data));
     if(res){
-      if (res.status === 200 && res.status !== undefined){
+      if (res.status === 200){
         Swal.fire({
           position: 'center',
           icon: 'success',
           title: res.data.message,
           showConfirmButton: false,
           timer: 2800
-        })
+        });
+        return;
       }
     }
 
   };
-
-
-
   return (
     <div className="containerPrincipalRegister">
       <PageHeader className="site-page-header" title="Register" />,
