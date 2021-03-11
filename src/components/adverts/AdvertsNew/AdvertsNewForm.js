@@ -7,6 +7,7 @@ import { getUi } from '../../../store/selectors';
 import TagsSelect from '../../Tags/TagSelect';
 import { InputImage } from '../../globals';
 import { definitions } from '../../../utils';
+import Swal from 'sweetalert2';
 
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
@@ -26,7 +27,19 @@ const NewAdvertForm = () => {
     console.log(data);
     /*console.log('File', fileList);*/
     data.image = fileList[0];
-    dispatch(createAdvert(data));
+    const res = await dispatch(createAdvert(data));
+    if(res){
+      if (res.status === 200){
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: res.data.message,
+          showConfirmButton: false,
+          timer: 2800
+        });
+        return;
+      }
+    }
   };
 
   const canSubmit = () => {
