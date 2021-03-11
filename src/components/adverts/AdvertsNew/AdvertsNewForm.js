@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Row, Col, Button, Input, InputNumber, Radio } from 'antd';
+import { Form, Row, Col, Button, Input, InputNumber, Radio, Upload } from 'antd';
 // import NewAdvertForm from './NewAdvertForm';
 import { createAdvert } from '../../../store/actions';
 import { getUi } from '../../../store/selectors';
@@ -13,9 +13,19 @@ const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 const NewAdvertForm = () => {
   const ui = useSelector((state) => getUi(state));
   const dispatch = useDispatch();
+  const fileList = [];
+
+  const uploadProps ={
+    beforeUpload: file => {
+      fileList.push(file)
+      return false;
+    }
+  };
 
   const handleCreateAdvert = async (data) => {
     console.log(data);
+    /*console.log('File', fileList);*/
+    data.image = fileList[0];
     dispatch(createAdvert(data));
   };
 
@@ -82,7 +92,9 @@ const NewAdvertForm = () => {
             <Input maxLength={150} placeholder="Name" />
           </Form.Item>
           <Form.Item name="image" label="Image">
-            <input type="file" />
+            <Upload {...uploadProps}>
+              <Button>Select File</Button>
+            </Upload>
           </Form.Item>
           <Button
             type="primary"

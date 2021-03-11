@@ -13,6 +13,8 @@ import {
 import { UploadOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import "./RegisterPage.css";
+import Swal from 'sweetalert2'
+
 import { authRegister } from "../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -25,7 +27,21 @@ const RegisterPage = () => {
   const onFinish = async (data) => {
     console.log("submit", data);
     const res = await dispatch(authRegister(data));
+    if(res){
+      if (res.status === 200 && res.status !== undefined){
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: res.data.message,
+          showConfirmButton: false,
+          timer: 2800
+        })
+      }
+    }
+
   };
+
+
 
   return (
     <div className="containerPrincipalRegister">

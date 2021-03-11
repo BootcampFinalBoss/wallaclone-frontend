@@ -16,7 +16,15 @@ export const getAdvert = (id) =>
 
 export const getTags = () => client.get('/tags');
 
-export const createAdvert = (advert) => client.post(`/adverts`, advert);
+export const createAdvert = (advert) =>{
+    const formData = new FormData();
+    Object.entries(advert).forEach(([key, value]) => formData.append(key, value));
+    return client.post(`/adverts`, formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    });
+}
 
 export const editAdvert = (advert) =>
   client.put(`/adverts/${advert._id}`, advert);

@@ -30,7 +30,9 @@ export const authRegister = (data) => {
       dispatch(authRegisterSuccess(res));
       console.log(res);
       dispatch(resetError());
-      history.push("/login");
+      setTimeout(() => {
+        history.push("/login");
+      }, 3000)
       return res;
     } catch (error) {
       dispatch(authRegisterFailure(error.response.data));
