@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Form,
   Button,
@@ -9,12 +9,12 @@ import {
   Col,
   PageHeader,
   Alert,
-} from "antd";
-import { UploadOutlined } from "@ant-design/icons";
-import "antd/dist/antd.css";
-import "./RegisterPage.css";
-import { authRegister } from "../../store/actions";
-import { useDispatch, useSelector } from "react-redux";
+} from 'antd';
+import { UploadOutlined } from '@ant-design/icons';
+import 'antd/dist/antd.css';
+import './RegisterPage.css';
+import { authRegister } from '../../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 const RegisterPage = () => {
   const [form] = Form.useForm();
@@ -23,7 +23,7 @@ const RegisterPage = () => {
   console.log(state);
 
   const onFinish = async (data) => {
-    console.log("submit", data);
+    console.log('submit', data);
     await dispatch(authRegister(data));
   };
 
@@ -35,7 +35,7 @@ const RegisterPage = () => {
         name="register"
         onFinish={onFinish}
         scrollToFirstError
-        style={{ border: "1px solid gray" }}
+        style={{ border: '1px solid gray' }}
       >
         <Row type="flex" justify="space-between" gutter={16}>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
@@ -45,7 +45,7 @@ const RegisterPage = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input your name!",
+                  message: 'Please input your name!',
                 },
               ]}
             >
@@ -64,7 +64,7 @@ const RegisterPage = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input your username!",
+                  message: 'Please input your username!',
                 },
               ]}
             >
@@ -72,7 +72,7 @@ const RegisterPage = () => {
             </Form.Item>
             {state.error &&
               state.error.errors.map((error) => {
-                if (error.param === "username") {
+                if (error.param === 'username') {
                   return <Alert message={error.msg} type="error" showIcon />;
                 }
               })}
@@ -83,12 +83,12 @@ const RegisterPage = () => {
               label="E-mail"
               rules={[
                 {
-                  type: "email",
-                  message: "The input is not valid E-mail!",
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
                 },
                 {
                   required: true,
-                  message: "Please input your E-mail!",
+                  message: 'Please input your E-mail!',
                 },
               ]}
             >
@@ -96,7 +96,7 @@ const RegisterPage = () => {
             </Form.Item>
             {state.error &&
               state.error.errors.map((error) => {
-                if (error.param === "email") {
+                if (error.param === 'email') {
                   return <Alert message={error.msg} type="error" showIcon />;
                 }
               })}
@@ -109,7 +109,7 @@ const RegisterPage = () => {
                 {
                   min: 8,
                   required: true,
-                  message: "Please input your password!",
+                  message: 'Please input your password!',
                 },
               ]}
               hasFeedback
@@ -121,21 +121,21 @@ const RegisterPage = () => {
             <Form.Item
               name="confirm"
               label="Confirm Password"
-              dependencies={["password"]}
+              dependencies={['password']}
               hasFeedback
               rules={[
                 {
                   min: 8,
                   required: true,
-                  message: "Please confirm your password!",
+                  message: 'Please confirm your password!',
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
+                    if (!value || getFieldValue('password') === value) {
                       return Promise.resolve();
                     }
                     return Promise.reject(
-                      "The two passwords that you entered do not match!"
+                      'The two passwords that you entered do not match!'
                     );
                   },
                 }),
@@ -164,7 +164,7 @@ const RegisterPage = () => {
                 validator: (_, value) =>
                   value
                     ? Promise.resolve()
-                    : Promise.reject("Should accept agreement"),
+                    : Promise.reject('Should accept agreement'),
               },
             ]}
           >

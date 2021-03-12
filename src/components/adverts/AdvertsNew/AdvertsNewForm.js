@@ -7,7 +7,7 @@ import { getUi } from '../../../store/selectors';
 import TagsSelect from '../../Tags/TagSelect';
 import { InputImage } from '../../globals';
 import { definitions } from '../../../utils';
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined } from '@ant-design/icons';
 
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
@@ -35,7 +35,8 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <Input placeholder="Name" />
           </Form.Item>
           <Form.Item
@@ -45,7 +46,8 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <InputNumber min={MIN_PRICE} max={MAX_PRICE} />
           </Form.Item>
         </Col>
@@ -57,7 +59,8 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <TagsSelect />
           </Form.Item>
           <Form.Item
@@ -67,7 +70,8 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <Radio.Group options={[saleOptions.sell, saleOptions.buy]} />
           </Form.Item>
         </Col>
@@ -79,7 +83,8 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <Input maxLength={150} placeholder="Name" />
           </Form.Item>
           <Form.Item name="image" label="Image">
@@ -90,9 +95,8 @@ const NewAdvertForm = () => {
             htmlType="submit"
             disabled={!canSubmit()}
             shape="round"
-            icon={ < UploadOutlined /> }
-
-            >
+            icon={<UploadOutlined />}
+          >
             Create!
           </Button>
         </Col>
