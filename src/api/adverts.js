@@ -1,6 +1,6 @@
 import client from './client';
 
-const { REACT_APP_API_HOST: host } = process.env;
+const { REACT_APP_API_HOST: host, REACT_APP_IMAGE_BASE_URL } = process.env;
 
 export const getAdverts = (filters) => {
   return client.get(`/adverts`, { params: filters });
@@ -9,7 +9,11 @@ export const getAdverts = (filters) => {
 export const getAdvert = (id) =>
   client.get(`/adverts/${id}`).then((response) => {
     if (response.data.result) {
-      response.data.result.image = `${host}/images/advert/${response.data.result.image}`;
+      console.log(
+        response.data.result.image,
+        `${REACT_APP_IMAGE_BASE_URL}/${response.data.result.image}`,
+      );
+      response.data.result.image = `${REACT_APP_IMAGE_BASE_URL}/${response.data.result.image}`;
     }
     return response;
   });
