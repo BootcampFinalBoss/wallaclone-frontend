@@ -8,11 +8,14 @@ export default {
     'subscribe-invite': 'Sure, {name}. I will subscribe your channel!',
     menu: {
       home: 'Home',
+      adverts: 'Adverts',
       createAdvert: 'Create advert',
       editAdvert: 'Edit advert',
       myProfile: 'My profile',
       register: 'Register',
       login: 'Login',
+      logout: 'Logout',
+      langs: 'Change Language',
     },
     ui: {
       loading: 'Loading...',

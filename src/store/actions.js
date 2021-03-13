@@ -255,7 +255,7 @@ export const langLoaded = (locale) => {
   };
 };
 
-export const loadLang = () => async (dispatch, getState) => {
-  const locale = storage.get(STORAGE_KEY || LOCALES.ENGLISH);
-  dispatch(langLoaded(locale));
+export const loadLang = (newLocale) => async (dispatch, getState) => {
+  storage.set(STORAGE_KEY, newLocale);
+  dispatch(langLoaded(newLocale));
 };
