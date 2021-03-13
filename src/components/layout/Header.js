@@ -14,6 +14,7 @@ import { authLogout, loadLang } from '../../store/actions';
 import { useHistory } from 'react-router';
 import translate from '../../intl/translate';
 import { LOCALES } from '../../intl';
+import { Link } from 'react-router-dom';
 
 const userOptions = (userData) => {
   return {
@@ -109,12 +110,11 @@ const PrivateHeader = ({
   return (
     <>
       <Menu.Item
-        href="/adverts/new"
         name="advertsNew"
         active={menuActiveItem === 'advertsNew'}
         onClick={handleItemClick}
         color="teal">
-        {translate('menu.createAdvert')}
+        <Link to={'/adverts/new'}>{translate('menu.createAdvert')}</Link>
       </Menu.Item>
       <Menu.Item
         onClick={() => handleChangeLocale(LOCALES.ENGLISH)}
