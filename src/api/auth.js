@@ -19,14 +19,18 @@ export const logout = () =>
     storage.remove('auth');
   });
 
-/*
-export const forgot = (data) =>
-  client
-    .forgot(data)
-    .then((response) => {
-      return response.data;
-    })
-    .catch((e) => {
-      console.log(e);
-    });
-*/
+
+export const forgot = (data) =>{
+    return client.post('/user/forgot-password',data)
+
+}
+
+export const getResetPassword = (token) =>{
+    return client.get(`/reset/${token}`);
+}
+
+export const updatePasswordReset = (token) =>{
+    return client.put(`/reset-password/${token}`)
+}
+
+

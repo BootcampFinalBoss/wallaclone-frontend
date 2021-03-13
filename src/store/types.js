@@ -9,7 +9,12 @@ export const AUTH_LOGOUT = "auth/LOGOUT";
 export const AUTH_FORGOT_REQUEST = "auth/FORGOT_REQUEST";
 export const AUTH_FORGOT_FAILURE = "auth/FORGOT_FAILURE";
 export const AUTH_FORGOT_SUCCESS = "auth/FORGOT_SUCCESS";
-
+export const AUTH_RESET_REQUEST = "auth/RESET_REQUEST";
+export const AUTH_RESET_FAILURE = "auth/RESET_FAILURE";
+export const AUTH_RESET_SUCCESS = "auth/RESET_SUCCESS";
+export const AUTH_UPDATEPASS_REQUEST = "auth/RESET_REQUEST";
+export const AUTH_UPDATEPASS_SUCCESS = "auth/RESET_SUCCESS";
+export const AUTH_UPDATEPASS_FAILURE = "auth/RESET_FAILURE";
 export const ADVERTS_LOADED = "adverts/LOADED";
 
 export const ADVERTS_REQUEST = "advert/CREATED";

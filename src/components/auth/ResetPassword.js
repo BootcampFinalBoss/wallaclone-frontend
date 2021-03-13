@@ -1,16 +1,26 @@
-import React from "react";
+import  React, {useEffect} from "react";
 import { Form, Button, Input, Row, Col, PageHeader } from "antd";
 import "antd/dist/antd.css";
 import "./RegisterPage.css";
-import { useDispatch } from "react-redux";
+import {useDispatch, useSelector} from 'react-redux';
+import {useParams} from "react-router-dom"
+import {authReset, authUpdatePassword} from '../../store/actions';
+import {getRes} from '../../store/selectors';
 
 const ResetPassword = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
+  const token = useParams();
+
+  useEffect(() => {
+    dispatch(authReset(token.id));
+  })
 
   const onFinish = async (data) => {
-    console.log("submit", data);
-    await dispatch(authRegister(data));
+    console.log(token);
+    console.log('submit', data);
+    const passUpdate = data.password
+    await dispatch(authUpdatePassword(token.id, passUpdate));
   };
 
   return (
