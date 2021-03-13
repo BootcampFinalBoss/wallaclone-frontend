@@ -1,4 +1,4 @@
-import * as types from "./types";
+import * as types from './types';
 
 const initialState = {
   auth: null,
@@ -9,6 +9,7 @@ const initialState = {
     loading: false,
     error: null,
   },
+  locale: null,
 };
 
 export const auth = (state = initialState.auth, action) => {
@@ -58,6 +59,15 @@ export const advert = (state = initialState.advert, action) => {
 export const tags = (state = initialState.tags, action) => {
   switch (action.type) {
     case types.TAGS_LOADED:
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export const locale = (state = initialState.locale, action) => {
+  switch (action.type) {
+    case types.LANGS_LOADED:
       return action.payload;
     default:
       return state;

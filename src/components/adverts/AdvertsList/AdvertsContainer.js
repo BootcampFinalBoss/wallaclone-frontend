@@ -1,12 +1,13 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect, useState } from "react";
-import { connect, useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from 'react';
+import { connect, useDispatch, useSelector } from 'react-redux';
 
-import AdvertsList from "./AdvertsList";
-import AdvertsFilters from "./AdvertsFilters";
+import translate from '../../../intl/translate';
+import AdvertsList from './AdvertsList';
+import AdvertsFilters from './AdvertsFilters';
 // import BasicFilters from './BasicFilters';
 
-import { loadTags } from "../../../store/actions";
+import { loadTags } from '../../../store/actions';
 import {
   getAdvertsOnState,
   getUi,
@@ -16,7 +17,6 @@ import { Row, Typography, Col, PageHeader } from 'antd';
 import { useHistory } from 'react-router';
 
 import '../../../assets/styles/styles.css';
-
 
 const { Title, Paragraph } = Typography;
 
@@ -30,8 +30,8 @@ const AdvertsContainer = () => {
   const dispatch = useDispatch();
 
   if (ui.error) {
-    console.log("redirect to error page");
-    history.push("/500");
+    console.log('redirect to error page');
+    history.push('/500');
   }
 
   useEffect(() => {
@@ -44,19 +44,21 @@ const AdvertsContainer = () => {
         className="adverts__container"
         justify="center"
         align="middle"
-        gutter={[0, 24]}
-      >
+        gutter={[0, 24]}>
         <Col span={24}>
-          {/*           <Title type="h2" className="text-center">
-            Adverts page
-          </Title> */}
-          <PageHeader className="site-page-header" title="Adverts Page" />,
+          <PageHeader
+            className="site-page-header"
+            title={translate('advertsPage.title')}
+          />
+          ,
         </Col>
         <Col span={24}>
           <Row justify="center" align="middle">
             <AdvertsFilters tags={tags} />
             {ui.loading === true && (
-              <Paragraph className="general-error-text">Loading...</Paragraph>
+              <Paragraph className="general-error-text">
+                {translate('ui.loading')}
+              </Paragraph>
             )}
             <AdvertsList adverts={adverts} ui={ui} />
           </Row>
