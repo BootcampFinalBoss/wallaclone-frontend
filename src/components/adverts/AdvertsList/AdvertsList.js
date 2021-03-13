@@ -1,28 +1,54 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router';
 import { useSelector } from 'react-redux';
 import { Row, Col, Typography, Button, Divider, PageHeader } from 'antd';
+import InfiniteScroll from 'react-infinite-scroll-component';
+
 import AdvertCard from './AdvertCard';
-import { useHistory } from 'react-router';
 import { getLoggedUser } from '../../../store/selectors';
+import translate from '../../../intl/translate';
 
 const { Title, Paragraph } = Typography;
 
-const AdvertsList = ({ adverts, ui }) => {
-  return (
-    <Col xs={20} lg={16} className="adverts">
-{/*       <Title type="h2" className="adverts__title text-center my-4">
-        Adverts List
-      </Title> */}
-            <PageHeader className="site-page-header" title="Adverts List" />,
+const AdvertsList = ({ adverts, ui, fetchMore }) => {
+  if (ui.loading) {
+    return (
+      <Col xs={20} className="adverts">
+        <PageHeader className="site-page-header" title="Adverts List" />,
+        <Row gutter={[24, 24]} style={{ marginBottom: '2em' }} justify="center">
+          <Title level={2}>{translate('ui.loading')}</Title>
+        </Row>
+      </Col>
+    );
+  }
 
+  return (
+    <Col xs={20} className="adverts">
+      <PageHeader className="site-page-header" title="Adverts List" />,
       <Row gutter={[24, 24]} style={{ marginBottom: '2em' }} justify="center">
-        {!ui.loading && adverts?.length > 0 ? (
-          adverts?.map((ad) => {
-            return <AdvertCard key={ad._id} ad={ad} checkDetail={true} />;
-          })
-        ) : (
-          <CreateNew />
+        {adverts?.length > 0 && (
+          <InfiniteScroll
+            dataLength={adverts?.length || 10} // This is important field to render the next data
+            next={fetchMore}
+            hasMore={ui.hasMoreAdverts}
+            loader={translate('ui.loading')}
+            // endMessage={}
+          >
+            <Row gutter={[24, 24]}>
+              {adverts?.map((ad) => {
+                return <AdvertCard key={ad._id} ad={ad} checkDetail={true} />;
+              })}
+            </Row>
+          </InfiniteScroll>
+        )}
+        {(!adverts || adverts?.length === 0) && (
+          <Col className="text-center">
+            <Paragraph>
+              No adverts loaded, refine your search or create one!
+            </Paragraph>
+            <CreateNew />
+          </Col>
         )}
       </Row>
     </Col>
@@ -32,6 +58,7 @@ const AdvertsList = ({ adverts, ui }) => {
 AdvertsList.propTypes = {
   adverts: PropTypes.array,
   ui: PropTypes.object,
+  fetchMore: PropTypes.func,
 };
 
 const CreateNew = () => {
@@ -49,19 +76,19 @@ const CreateNew = () => {
 
   if (isLoggedUser) {
     return (
-      <Col>
+      <Row justify="center">
         <Button onClick={goCreateOne}>Go create one!</Button>
-      </Col>
+      </Row>
     );
   }
   return (
-    <Col className="text-center">
+    <Row justify="center">
       <Paragraph>Have an account?</Paragraph>
       <Button onClick={goLogin}>Go login and create one!</Button>
       <Divider></Divider>
       <Paragraph>You are not a member yet?</Paragraph>
       <Button onClick={goRegister}>Go register and create one!</Button>
-    </Col>
+    </Row>
   );
 };
 

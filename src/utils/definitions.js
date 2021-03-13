@@ -6,3 +6,5 @@ export const saleOptions = {
 
 export const MIN_PRICE = 0;
 export const MAX_PRICE = 10000;
+
+export const LIMIT_ADVERTS_API = 10;

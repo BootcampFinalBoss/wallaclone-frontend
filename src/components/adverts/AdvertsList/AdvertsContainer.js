@@ -1,33 +1,50 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect, useState } from 'react';
 import { connect, useDispatch, useSelector } from 'react-redux';
+import { Row, Typography, Col, PageHeader } from 'antd';
+import { useHistory } from 'react-router';
 
 import translate from '../../../intl/translate';
+import { definitions, storage } from '../../../utils';
 import AdvertsList from './AdvertsList';
 import AdvertsFilters from './AdvertsFilters';
 // import BasicFilters from './BasicFilters';
 
-import { loadTags } from '../../../store/actions';
+import { loadMoreAdverts, loadTags } from '../../../store/actions';
 import {
   getAdvertsOnState,
   getUi,
   getTagsOnState,
 } from '../../../store/selectors';
-import { Row, Typography, Col, PageHeader } from 'antd';
-import { useHistory } from 'react-router';
 
 import '../../../assets/styles/styles.css';
 
 const { Title, Paragraph } = Typography;
+
+const { MIN_PRICE, MAX_PRICE, saleOptions } = definitions;
+const pricesRange = [MIN_PRICE, MAX_PRICE];
+
+const defaultFilters = {
+  name: '',
+  price: pricesRange,
+  tags: [],
+  sale: saleOptions.all,
+};
 
 const AdvertsContainer = () => {
   const tags = useSelector((state) => getTagsOnState(state));
   const adverts = useSelector((state) => getAdvertsOnState(state));
   const ui = useSelector((state) => getUi(state));
   const history = useHistory();
-  // const [isAdvancedFilters, setIsAdvancedFilters] = useState(false);
+  const [filters, setFilters] = useState(
+    storage.get('filters') || defaultFilters,
+  );
 
   const dispatch = useDispatch();
+
+  const fetchMore = () => {
+    dispatch(loadMoreAdverts({ ...filters, skip: ui.advertsIndex }));
+  };
 
   if (ui.error) {
     console.log('redirect to error page');
@@ -54,13 +71,13 @@ const AdvertsContainer = () => {
         </Col>
         <Col span={24}>
           <Row justify="center" align="middle">
-            <AdvertsFilters tags={tags} />
+            <AdvertsFilters filters={filters} setFilters={setFilters} />
             {ui.loading === true && (
               <Paragraph className="general-error-text">
                 {translate('ui.loading')}
               </Paragraph>
             )}
-            <AdvertsList adverts={adverts} ui={ui} />
+            <AdvertsList adverts={adverts} ui={ui} fetchMore={fetchMore} />
           </Row>
         </Col>
       </Row>

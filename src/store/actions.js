@@ -141,6 +141,19 @@ export const loadAdverts = (filters) => async (dispatch, getState) => {
   dispatch(advertsLoaded(fetchedAdverts?.data?.result || []));
 };
 
+export const advertsMoreLoaded = (adverts) => {
+  return {
+    type: types.ADVERTS_MORE_LOADED,
+    payload: adverts,
+  };
+};
+
+export const loadMoreAdverts = (filters) => async (dispatch, getState) => {
+  const formattedFilters = formatFilters(filters);
+  const fetchedAdverts = await adverts.getAdverts(formattedFilters);
+  dispatch(advertsMoreLoaded(fetchedAdverts?.data?.result));
+};
+
 export const advertLoaded = (advert) => {
   return {
     type: types.ADVERT_LOADED,
@@ -225,6 +238,8 @@ export const deleteAdvert = (advertId) => async (
   dispatch(advertDeleted(fetchedAdvert.result));
   history.push('/adverts');
 };
+
+/* UI */
 
 export const resetError = () => {
   return {

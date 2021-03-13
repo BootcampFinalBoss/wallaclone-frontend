@@ -11,6 +11,7 @@ export const AUTH_FORGOT_FAILURE = 'auth/FORGOT_FAILURE';
 export const AUTH_FORGOT_SUCCESS = 'auth/FORGOT_SUCCESS';
 
 export const ADVERTS_LOADED = 'adverts/LOADED';
+export const ADVERTS_MORE_LOADED = 'adverts/MORE_LOADED';
 
 export const ADVERTS_REQUEST = 'advert/CREATED';
 export const ADVERTS_SUCCESS = 'advert/CREATED';

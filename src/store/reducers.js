@@ -1,3 +1,4 @@
+import { LIMIT_ADVERTS_API } from '../utils/definitions';
 import * as types from './types';
 
 const initialState = {
@@ -8,6 +9,8 @@ const initialState = {
   ui: {
     loading: false,
     error: null,
+    hasMoreAdverts: true,
+    advertsIndex: 0,
   },
   locale: null,
 };
@@ -28,7 +31,18 @@ export const auth = (state = initialState.auth, action) => {
 export const adverts = (state = initialState.adverts, action) => {
   switch (action.type) {
     case types.ADVERTS_LOADED:
+      initialState.ui.hasMoreAdverts = true;
       return action.payload; // On new load, save the passed adverts on the state
+    case types.ADVERTS_MORE_LOADED:
+      if (
+        action.payload?.length === 0 ||
+        action.payload?.length < LIMIT_ADVERTS_API
+      ) {
+        initialState.ui.hasMoreAdverts = false;
+      } else {
+        initialState.ui.advertsIndex += LIMIT_ADVERTS_API;
+      }
+      return [...state, ...action.payload]; // On new load, save the passed adverts on the state
     case types.ADVERT_CREATED:
       if (!state) {
         // check if there is adverts already on state
