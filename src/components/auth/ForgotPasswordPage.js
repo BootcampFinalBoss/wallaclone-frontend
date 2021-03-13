@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Button, Input, Row, Col, PageHeader } from "antd";
+import Swal from 'sweetalert2';
 import "antd/dist/antd.css";
 import "./RegisterPage.css";
 import { authForgotPassword } from "../../store/actions";
@@ -11,7 +12,20 @@ const ForgotPasswordPage = () => {
 
   const onFinish = async (data) => {
     console.log("submit", data);
-    //await dispatch(authForgotPassword(data.email));
+    const res = await dispatch(authForgotPassword(data));
+      console.log(res);
+    if(res){
+        if(res.status === 200){
+            Swal.fire({
+                position: 'center',
+                icon: 'success',
+                title: res.data.msg,
+                text:'Revisa la bandeja de entrada el correo indicado.',
+                showConfirmButton: true,
+            })
+        }
+        return;
+    }
   };
 
   return (

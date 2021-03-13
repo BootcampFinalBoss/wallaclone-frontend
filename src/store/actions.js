@@ -87,7 +87,7 @@ export const authLogout = () => {
 
 /*RESET PASSWORD */
 
-/*export const authForgotPasswordRequest = () => ({
+export const authForgotPasswordRequest = () => ({
   type: types.AUTH_FORGOT_REQUEST,
 });
 
@@ -99,23 +99,82 @@ export const authForgotPasswordFailure = (error) => ({
 
 export const authForgotPasswordSuccess = () => ({
   type: types.AUTH_FORGOT_SUCCESS,
-});*/
+});
 
-/*export const authForgotPassword = (email) => {
+export const authForgotPassword = (email) => {
   return async function (dispatch, getState, { history, api }) {
     dispatch(authForgotPasswordRequest());
     try {
-      await api.auth.forgot(email);
-      dispatch(authForgotPasswordSuccess(email));
-      console.log("Aqui", email);
+      const res = await auth.forgot(email);
+      dispatch(authForgotPasswordSuccess());
+      console.log(res);
       //history.push("/adverts");
+      return res
+
     } catch (error) {
-      console.log(email);
-      console.log("Aqui", error);
       dispatch(authForgotPasswordFailure(error));
     }
   };
-};*/
+};
+
+export const authResetRequest = () => ({
+  type: types.AUTH_RESET_REQUEST,
+});
+
+export const authResetFailure = (error) => ({
+  type: types.AUTH_RESET_FAILURE,
+  error: true,
+  payload: error,
+});
+
+export const authResetSuccess = (res) => ({
+  type: types.AUTH_RESET_SUCCESS,
+  payload: res,
+});
+
+export const authReset = (token, data) => {
+  return async function (dispatch, getState, { history, api }) {
+    dispatch(authResetRequest(token.id));
+    try {
+      const res = await auth.getResetPassword(token, data);
+      dispatch(authResetSuccess(res));
+    } catch (error) {
+      dispatch(authResetFailure(error));
+      console.log(error);
+    }
+  };
+};
+
+export const authUpdateResetRequest = () => ({
+  type: types.AUTH_UPDATEPASS_REQUEST,
+});
+
+export const authUpdateResetFailure = (error) => ({
+  type: types.AUTH_UPDATEPASS_FAILURE,
+  error: true,
+  payload: error,
+});
+
+export const authUpdateResetSuccess = (res) => ({
+  type: types.AUTH_UPDATEPASS_SUCCESS,
+  payload: res,
+});
+
+export const authUpdatePassword = (token, data) => {
+  return async function (dispatch, getState, { history, api }) {
+    dispatch(authUpdateResetRequest(token.id, data));
+    try {
+      const res = await auth.updatePasswordReset(token, data);
+      console.log(res);
+      dispatch(authUpdateResetSuccess(res));
+      history.push("/login");
+    } catch (error) {
+      dispatch(authUpdateResetFailure(error));
+      console.log(error);
+    }
+  };
+};
+
 
 /* ADVERTS */
 
