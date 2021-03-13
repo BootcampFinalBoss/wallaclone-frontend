@@ -1,26 +1,27 @@
-import  React, {useEffect} from "react";
-import { Form, Button, Input, Row, Col, PageHeader } from "antd";
-import "antd/dist/antd.css";
-import "./RegisterPage.css";
-import {useDispatch, useSelector} from 'react-redux';
-import {useParams} from "react-router-dom"
-import {authReset, authUpdatePassword} from '../../store/actions';
-import {getRes} from '../../store/selectors';
+import React, { useEffect } from 'react';
+import { Form, Button, Input, Row, Col, PageHeader } from 'antd';
+import 'antd/dist/antd.css';
+import './RegisterPage.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import { authReset, authUpdatePassword } from '../../store/actions';
+import { getRes } from '../../store/selectors';
 
 const ResetPassword = () => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
   const token = useParams();
+  const reset = useSelector((state) => getRes(state));
 
   useEffect(() => {
     dispatch(authReset(token.id));
-  })
+  }, []);
 
   const onFinish = async (data) => {
     console.log(token);
     console.log('submit', data);
-    const passUpdate = data.password
-    await dispatch(authUpdatePassword(token.id, passUpdate));
+    const passUpdate = data.password;
+    await dispatch(authUpdatePassword(token.id, { password: passUpdate }));
   };
 
   return (
@@ -41,38 +42,36 @@ const ResetPassword = () => {
               rules={[
                 {
                   required: true,
-                  message: "Please input your password!",
+                  message: 'Please input your password!',
                 },
               ]}
-              hasFeedback
-            >
+              hasFeedback>
               <Input.Password />
             </Form.Item>
 
             <Form.Item
               name="confirm"
               label="Confirm Password"
-              dependencies={["password"]}
+              dependencies={['password']}
               hasFeedback
               rules={[
                 {
                   required: true,
-                  message: "Please confirm your password!",
+                  message: 'Please confirm your password!',
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
+                    if (!value || getFieldValue('password') === value) {
                       return Promise.resolve();
                     }
                     return Promise.reject(
                       new Error(
-                        "The two passwords that you entered do not match!"
-                      )
+                        'The two passwords that you entered do not match!',
+                      ),
                     );
                   },
                 }),
-              ]}
-            >
+              ]}>
               <Input.Password />
             </Form.Item>
           </Col>

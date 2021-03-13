@@ -9,4 +9,4 @@ export const getTagsOnState = (state) => (state.tags ? state.tags : null);
 
 export const getUi = (state) => state.ui;
 
-//export const getRes = (state) => state.reset;
+export const getRes = (state) => state.reset;
