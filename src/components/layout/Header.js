@@ -39,7 +39,7 @@ const Header = () => {
         </Logo>
       </Menu.Item>
       <Menu.Menu position="right">
-        {userData ? (
+        {userData && userData.token ? (
           <PrivateHeader
             menuActiveItem={menuActiveItem}
             handleItemClick={handleItemClick}
