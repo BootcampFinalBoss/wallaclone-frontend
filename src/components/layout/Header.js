@@ -10,8 +10,10 @@ import {
   Header as Logo,
 } from 'semantic-ui-react';
 import { getLoggedUser } from '../../store/selectors';
-import { authLogout } from '../../store/actions';
+import { authLogout, loadLang } from '../../store/actions';
 import { useHistory } from 'react-router';
+import translate from '../../intl/translate';
+import { LOCALES } from '../../intl';
 
 const userOptions = (userData) => {
   return {
@@ -99,7 +101,11 @@ const PrivateHeader = ({
   const goToMyProfile = () => {
     history.push('/my-profile');
   };
-  console.log(userOptions(loggedUser));
+
+  const handleChangeLocale = (newLocale) => {
+    dispatch(loadLang(newLocale));
+  };
+
   return (
     <>
       <Menu.Item
@@ -108,9 +114,18 @@ const PrivateHeader = ({
         active={menuActiveItem === 'advertsNew'}
         onClick={handleItemClick}
         color="teal">
-        Create advert
+        {translate('menu.createAdvert')}
       </Menu.Item>
-
+      <Menu.Item
+        onClick={() => handleChangeLocale(LOCALES.ENGLISH)}
+        name={LOCALES.ENGLISH}
+        active={menuActiveItem === LOCALES.ENGLISH}
+        color="teal"></Menu.Item>
+      <Menu.Item
+        onClick={() => handleChangeLocale(LOCALES.SPANISH)}
+        name={LOCALES.SPANISH}
+        active={menuActiveItem === LOCALES.SPANISH}
+        color="teal"></Menu.Item>
       <Menu.Item>
         <Dropdown
           inline
@@ -119,14 +134,14 @@ const PrivateHeader = ({
           <Dropdown.Menu>
             <Dropdown.Item
               icon="user"
-              text="Your Profile"
+              text={translate('menu.myProfile')}
               onClick={goToMyProfile}></Dropdown.Item>
             <Dropdown.Item
               icon="newspaper outline"
-              text="Adverts"></Dropdown.Item>
+              text={translate('menu.adverts')}></Dropdown.Item>
             <Dropdown.Item
               icon="power off"
-              text="Logout"
+              text={translate('menu.logout')}
               onClick={handleLogout}></Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>

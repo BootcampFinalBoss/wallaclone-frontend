@@ -1,9 +1,10 @@
-import * as types from "./types";
+import * as types from './types';
 
 // import { getLoggedUserToken } from './selectors';
 
-import { auth, adverts } from "../api";
-import { formatFilters, storage } from "../utils";
+import { auth, adverts } from '../api';
+import { formatFilters, storage } from '../utils';
+import { STORAGE_KEY, LOCALES } from '../intl/constants';
 
 /* REGISTER */
 
@@ -31,8 +32,8 @@ export const authRegister = (data) => {
       console.log(res);
       dispatch(resetError());
       setTimeout(() => {
-        history.push("/login");
-      }, 3000)
+        history.push('/login');
+      }, 3000);
       return res;
     } catch (error) {
       dispatch(authRegisterFailure(error.response.data));
@@ -64,7 +65,7 @@ export const authLogin = (crendentials) => {
     try {
       const userData = await auth.login(crendentials);
       dispatch(authLoginSuccess(userData));
-      history.push("/adverts");
+      history.push('/adverts');
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
@@ -76,7 +77,7 @@ export const authLogout = () => {
   return async function (dispatch, getState, { history, api }) {
     try {
       await auth.logout();
-      history.push("/login");
+      history.push('/login');
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
@@ -134,7 +135,7 @@ export const advertsLoaded = (adverts) => {
 };
 
 export const loadAdverts = (filters) => async (dispatch, getState) => {
-  storage.set("filters", filters);
+  storage.set('filters', filters);
   const formattedFilters = formatFilters(filters);
   const fetchedAdverts = await adverts.getAdverts(formattedFilters);
   dispatch(advertsLoaded(fetchedAdverts?.data?.result || []));
@@ -150,11 +151,11 @@ export const advertLoaded = (advert) => {
 export const loadAdvert = (advertId) => async (
   dispatch,
   getState,
-  { history, api }
+  { history, api },
 ) => {
   const fetchedAdvert = await adverts.getAdvert(advertId);
   if (!fetchedAdvert.data?.result?.name) {
-    history.push("/404");
+    history.push('/404');
   }
   dispatch(advertLoaded(fetchedAdvert?.data.result));
 };
@@ -171,13 +172,13 @@ export const advertCreated = (advert) => {
 export const createAdvert = (advertData) => async (
   dispatch,
   getState,
-  { history, api }
+  { history, api },
 ) => {
   try {
     const fetchedAdvert = await adverts.createAdvert(advertData);
     dispatch(advertCreated(fetchedAdvert?.data?.result));
     history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
-    return fetchedAdvert
+    return fetchedAdvert;
   } catch (error) {
     dispatch(generateAdvertError(error));
   }
@@ -195,7 +196,7 @@ export const advertEdited = (advert) => {
 export const editAdvert = (advertData) => async (
   dispatch,
   getState,
-  { history, api }
+  { history, api },
 ) => {
   try {
     const fetchedAdvert = await adverts.editAdvert(advertData);
@@ -218,11 +219,11 @@ export const advertDeleted = (advert) => {
 export const deleteAdvert = (advertId) => async (
   dispatch,
   getState,
-  { history, api }
+  { history, api },
 ) => {
   const fetchedAdvert = await adverts.deleteAdvert(advertId);
   dispatch(advertDeleted(fetchedAdvert.result));
-  history.push("/adverts");
+  history.push('/adverts');
 };
 
 export const resetError = () => {
@@ -242,6 +243,19 @@ export const tagsLoaded = (tags) => {
 
 export const loadTags = () => async (dispatch, getState) => {
   const fetchedTags = await adverts.getTags();
-  console.log(fetchedTags);
   dispatch(tagsLoaded(fetchedTags.data.result || null));
+};
+
+/* LANG - LOCALE */
+
+export const langLoaded = (locale) => {
+  return {
+    type: types.LANGS_LOADED,
+    payload: locale,
+  };
+};
+
+export const loadLang = (newLocale) => async (dispatch, getState) => {
+  storage.set(STORAGE_KEY, newLocale);
+  dispatch(langLoaded(newLocale));
 };

@@ -8,3 +8,5 @@ export const getAdvertOnState = (state) => (state.advert ? state.advert : null);
 export const getTagsOnState = (state) => (state.tags ? state.tags : null);
 
 export const getUi = (state) => state.ui;
+
+export const getLocale = (state) => state.locale;
