@@ -109,8 +109,7 @@ export const authForgotPassword = (email) => {
       dispatch(authForgotPasswordSuccess());
       console.log(res);
       //history.push("/adverts");
-      return res
-
+      return res;
     } catch (error) {
       dispatch(authForgotPasswordFailure(error));
     }
@@ -142,10 +141,9 @@ export const authReset = (token, data) => {
       console.log(error);
       dispatch(authResetFailure(error.response.data));
       setTimeout(() => {
-        dispatch (resetError());
+        dispatch(resetError());
         history.push('/login');
       }, 3000);
-
     }
   };
 };
@@ -175,14 +173,13 @@ export const authUpdatePassword = (token, data) => {
       setTimeout(() => {
         history.push('/login');
       }, 3000);
-      return res
+      return res;
     } catch (error) {
       dispatch(authUpdateResetFailure(error));
       console.log(error);
     }
   };
 };
-
 
 /* ADVERTS */
 
@@ -342,7 +339,6 @@ export const loadLang = (newLocale) => async (dispatch, getState) => {
   dispatch(langLoaded(newLocale));
 };
 
-
 /* USER */
 
 export const userRequest = () => ({
@@ -354,20 +350,3 @@ export const userFailure = (error) => ({
   error: true,
   payload: error,
 });
-
-export const userSuccess = (res) => ({
-  type: types.USER_SUCCESS,
-  payload: res
-});
-
-export const getUserId = (id,token) => {
-  return async function (dispatch, getState, { history, api }) {
-    dispatch(userRequest(id, token.token));
-    try {
-      const res = await user.getUser(id, token);
-      dispatch(userSuccess(res));
-    } catch (error) {
-      dispatch(userFailure(error));
-    }
-  };
-};

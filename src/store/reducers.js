@@ -14,7 +14,6 @@ const initialState = {
   },
   locale: null,
   resReset: null,
-  user: null
 };
 
 export const auth = (state = initialState.auth, action) => {
@@ -117,29 +116,14 @@ export const ui = (state = initialState.ui, action) => {
 
 export const reset = (state = initialState.resReset, action) => {
   switch (action.type) {
-    case types.AUTH_RESET_SUCCESS ||
-    types.AUTH_UPDATEPASS_SUCCESS:
+    case types.AUTH_RESET_SUCCESS || types.AUTH_UPDATEPASS_SUCCESS:
       // login
       return action.payload; // Save the token on redux state
 
-    case types.AUTH_UPDATEPASS_REQUEST ||
-    types.AUTH_RESET_REQUEST:
+    case types.AUTH_UPDATEPASS_REQUEST || types.AUTH_RESET_REQUEST:
       // login
-      return {...state}; // Save the token on redux state
+      return { ...state }; // Save the token on redux state
     default:
       return state;
   }
 };
-
-export const user = (state= initialState.user, action) => {
-  switch (action.type) {
-    case types.USER_SUCCESS:
-      // login
-      return action.payload; // Save the token on redux state
-
-    default:
-      return state;
-  }
-};
-
-
