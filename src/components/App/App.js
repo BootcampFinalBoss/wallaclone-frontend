@@ -59,7 +59,7 @@ const App = () => {
           <Route path="/forgot-password" exact>
             <ForgotPasswordPage />
           </Route>
-          <Route path="/my-profile">
+          <Route path="/my-profile/:id">
             <UserProfile />
           </Route>
           <Route path="/adverts" exact>
