@@ -12,3 +12,5 @@ export const getUi = (state) => state.ui;
 export const getLocale = (state) => state.locale;
 
 export const getRes = (state) => state.reset;
+
+

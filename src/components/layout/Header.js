@@ -30,6 +30,7 @@ const Header = () => {
   const userData = useSelector((state) => getLoggedUser(state));
   const history = useHistory();
 
+
   const handleItemClick = (e, { name }) => setMenuActiveItem(name);
 
   return (
@@ -96,11 +97,13 @@ const PrivateHeader = ({
   history,
 }) => {
   const dispatch = useDispatch();
+  const id = loggedUser.userId;
+  console.log(loggedUser);
   const handleLogout = () => {
     dispatch(authLogout());
   };
   const goToMyProfile = () => {
-    history.push('/my-profile');
+    history.push(`/my-profile/${id?.idUser}`);
   };
 
   const handleChangeLocale = (newLocale) => {
