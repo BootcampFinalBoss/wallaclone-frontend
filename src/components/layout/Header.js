@@ -62,11 +62,11 @@ const PublicHeader = ({ menuActiveItem, handleItemClick }) => {
   return (
     <>
       <Menu.Item
-        href="/register"
         name="register"
         active={menuActiveItem === 'register'}
         onClick={handleItemClick}
         color="teal">
+        <Link to={'/register'}/>
         Registro
       </Menu.Item>
 
