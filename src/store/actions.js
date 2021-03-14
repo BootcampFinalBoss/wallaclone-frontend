@@ -139,8 +139,13 @@ export const authReset = (token, data) => {
       const res = await auth.getResetPassword(token, data);
       dispatch(authResetSuccess(res));
     } catch (error) {
-      dispatch(authResetFailure(error));
       console.log(error);
+      dispatch(authResetFailure(error.response.data));
+      setTimeout(() => {
+        dispatch (resetError());
+        history.push('/login');
+      }, 3000);
+
     }
   };
 };
@@ -167,7 +172,10 @@ export const authUpdatePassword = (token, data) => {
       const res = await auth.updatePasswordReset(token, data);
       console.log(res);
       dispatch(authUpdateResetSuccess(res));
-      history.push("/login");
+      setTimeout(() => {
+        history.push('/login');
+      }, 3000);
+      return res
     } catch (error) {
       dispatch(authUpdateResetFailure(error));
       console.log(error);
