@@ -2,7 +2,7 @@ import * as types from './types';
 
 // import { getLoggedUserToken } from './selectors';
 
-import { auth, adverts } from '../api';
+import { auth, adverts, user } from '../api';
 import { formatFilters, storage } from '../utils';
 import { STORAGE_KEY, LOCALES } from '../intl/constants';
 
@@ -340,4 +340,34 @@ export const langLoaded = (locale) => {
 export const loadLang = (newLocale) => async (dispatch, getState) => {
   storage.set(STORAGE_KEY, newLocale);
   dispatch(langLoaded(newLocale));
+};
+
+
+/* USER */
+
+export const userRequest = () => ({
+  type: types.USER_REQUEST,
+});
+
+export const userFailure = (error) => ({
+  type: types.USER_FAILURE,
+  error: true,
+  payload: error,
+});
+
+export const userSuccess = (res) => ({
+  type: types.USER_SUCCESS,
+  payload: res
+});
+
+export const getUserId = (id,token) => {
+  return async function (dispatch, getState, { history, api }) {
+    dispatch(userRequest(id, token.token));
+    try {
+      const res = await user.getUser(id, token);
+      dispatch(userSuccess(res));
+    } catch (error) {
+      dispatch(userFailure(error));
+    }
+  };
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from 'react';
 import { Card, PageHeader, Image, Row, Col, Button } from "antd";
 import {
   CloseOutlined,
@@ -7,24 +7,34 @@ import {
 } from "@ant-design/icons";
 import "antd/dist/antd.css";
 //import "./RegisterPage.css";
-import { authRegister } from "../../store/actions";
+import {authRegister, getUserId, userRequest} from '../../store/actions';
 import { useDispatch, useSelector } from "react-redux";
+import {useParams} from 'react-router-dom';
+import {getLoggedUser} from '../../store/selectors';
 
-const dataExample = {
-  name: "Usuario1",
-  username: "User",
-  email: "user@user.com",
+let dataExample = {
 };
 
 const UserProfile = () => {
   const dispatch = useDispatch();
-  const state = useSelector((state) => state.ui);
-  console.log(state);
+    const id = useParams();
+    const state = useSelector((state) => state);
 
-  const onFinish = async (data) => {
-    console.log("submit", data);
-    await dispatch(authRegister(data));
-  };
+    const token = state.auth;
+    const dataUser = state.user
+  useEffect(()=> {
+      dispatch(getUserId(id.id, token.token));
+  }, [])
+
+    if(dataUser !== null){
+        console.log(dataUser);
+        dataExample = {
+            name: dataUser.result.name,
+            email: dataUser.result.email,
+            username: dataUser.result.username,
+            avatar: dataUser.result.avatar,
+        }
+    }
 
   return (
     <div className="containerPrincipalRegister">
@@ -56,7 +66,7 @@ const UserProfile = () => {
           <Col span={8}>
             <Image
               style={{ minWidth: 150, padding: "0 1rem" }}
-              src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+              src={`http://localhost:5000/images/avatar/${dataExample.avatar}` }
             />
           </Col>
         </Row>
