@@ -158,18 +158,6 @@ const RegisterPage = () => {
               <Input.Password />
             </Form.Item>
           </Col>
-          <Col span={24}>
-            <Form.Item
-              name="upload"
-              label="Upload"
-              valuePropName="fileList"
-              extra="Sube tu foto de perfil."
-            >
-              <Upload name="logo" action="/upload.do" listType="picture">
-                <Button icon={<UploadOutlined />}>Click to upload</Button>
-              </Upload>
-            </Form.Item>
-          </Col>
           <Form.Item
             name="agreement"
             valuePropName="checked"

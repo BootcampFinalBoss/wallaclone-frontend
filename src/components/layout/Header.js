@@ -67,8 +67,7 @@ const PublicHeader = ({ menuActiveItem, handleItemClick }) => {
         active={menuActiveItem === 'register'}
         onClick={handleItemClick}
         color="teal">
-        <Link to={'/register'}/>
-        Registro
+        <Link to={'/register'}>{translate('menu.register')}</Link>
       </Menu.Item>
 
       <Menu.Item
