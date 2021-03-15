@@ -11,7 +11,7 @@ let dataExample = {
 
 const UserProfile = () => {
     const history = useHistory();
-  const dispatch = useDispatch();
+    const dispatch = useDispatch();
     const id = useParams();
     const state = useSelector((state) => state);
 

@@ -11,7 +11,7 @@ const client = axios.create({
   baseURL,
 });
 
-const setAuthorizationHeader = (token) => {
+export const setAuthorizationHeader = (token) => {
   client.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 };
 
