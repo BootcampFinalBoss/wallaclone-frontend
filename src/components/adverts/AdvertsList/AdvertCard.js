@@ -3,6 +3,8 @@ import React from 'react';
 import { Row, Col, Typography, Card, Avatar } from 'antd';
 import { DeleteOutlined, EyeOutlined, StarOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import translate from '../../../intl/translate';
+
 
 const { REACT_APP_IMAGE_BASE_URL: IMAGE_BASE_URL } = process.env;
 const { Paragraph } = Typography;

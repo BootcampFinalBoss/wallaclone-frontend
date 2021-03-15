@@ -6,7 +6,7 @@ import TagsSelect from '../../Tags/TagSelect';
 import { useDispatch } from 'react-redux';
 import { loadAdverts, loadMoreAdverts } from '../../../store/actions';
 import { definitions, storage } from '../../../utils';
-
+import translate from '../../../intl/translate';
 const { Title, Paragraph } = Typography;
 const { MIN_PRICE, MAX_PRICE, saleOptions } = definitions;
 
@@ -27,30 +27,32 @@ const AdvertsFilters = ({ filters, setFilters }) => {
         className="adverts__form"
         onFinish={onFinish}
         initialValues={filters}
-        onValuesChange={onValuesChange}>
+        onValuesChange={onValuesChange}
+      >
         <Row gutter={[24, 24]}>
           <Col span={12}>
-            <Form.Item name="name" label="By name">
+            <Form.Item name="name" label={translate('advertsPage.byName')}>
               <Input placeholder="Name" value={filters.name} />
             </Form.Item>
             <Form.Item
               name="price"
               label={
                 <>
-                  By price
+                  {translate('advertsPage.byPrice')}
                   <Paragraph type="strong" style={{ margin: '0 5px' }}>
                     {filters.price.join(' - ')}
                   </Paragraph>
                 </>
-              }>
+              }
+            >
               <Slider range min={MIN_PRICE} max={MAX_PRICE} />
             </Form.Item>
           </Col>
           <Col span={12}>
-            <Form.Item name="tags" label="By tags">
+            <Form.Item name="tags" label={translate('advertsPage.byTags')}>
               <TagsSelect value={filters.tags} />
             </Form.Item>
-            <Form.Item name="type" label="By type">
+            <Form.Item name="type" label={translate('advertsPage.byType')}>
               <Radio.Group
                 options={Object.values(saleOptions)}
                 value={filters.sale}
@@ -59,7 +61,7 @@ const AdvertsFilters = ({ filters, setFilters }) => {
           </Col>
           <Col span={24}>
             <Button type="primary" htmlType="submit" block>
-              Search
+              {translate('advertsPage.search')}
             </Button>
           </Col>
         </Row>

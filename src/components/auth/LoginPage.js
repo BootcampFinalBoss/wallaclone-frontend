@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 import {
   Button,
   Grid,
@@ -6,11 +6,12 @@ import {
   Image,
   Message,
   Segment,
-} from "semantic-ui-react";
-import "./LoginPage.css";
-import { Form, Input, Alert, Switch } from "antd";
-import { useDispatch, useSelector } from "react-redux";
-import { authLogin } from "../../store/actions";
+} from 'semantic-ui-react';
+import './LoginPage.css';
+import { Form, Input, Alert, Switch } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { authLogin } from '../../store/actions';
+import translate from '../../intl/translate';
 
 const LoginPage = () => {
   const [form] = Form.useForm();
@@ -22,10 +23,10 @@ const LoginPage = () => {
   };
 
   return (
-    <Grid textAlign="center" style={{ height: "100vh" }} verticalAlign="middle">
+    <Grid textAlign="center" style={{ height: '100vh' }} verticalAlign="middle">
       <Grid.Column style={{ maxWidth: 450 }}>
         <Header as="h2" color="teal" textAlign="center">
-          <Image src="/logo192.png" /> Log-in to your account
+          <Image src="/logo192.png" /> {translate('loginPage.title')}
         </Header>
         <Form
           form={form}
@@ -41,11 +42,11 @@ const LoginPage = () => {
           <Segment stacked>
             <Form.Item
               name="username"
-              label="Username"
+              label={translate('loginPage.username')}
               rules={[
                 {
                   required: true,
-                  message: "Please input your username",
+                  message: 'Please input your username',
                 },
               ]}
             >
@@ -53,12 +54,12 @@ const LoginPage = () => {
             </Form.Item>
             <Form.Item
               name="password"
-              label="Password"
+              label={translate('loginPage.password')}
               rules={[
                 {
                   min: 8,
                   required: true,
-                  message: "Please input your password!",
+                  message: 'Please input your password!',
                 },
               ]}
               hasFeedback
@@ -68,20 +69,20 @@ const LoginPage = () => {
             <Form.Item
               className="login__remember-me"
               name="remember"
-              label="Remember me"
+              label={translate('loginPage.rememberMe')}
             >
               <Switch />
             </Form.Item>
             <Button color="teal" fluid size="large">
-              Login
+              {translate('loginPage.loginBtn')}
             </Button>
           </Segment>
         </Form>
         <Message>
-          <a href="/forgot-password">Forgot Password</a>
+          <a href="/forgot-password">{translate('loginPage.forgotPass')}</a>
           <br />
-          You do not have an account yet?
-          <a href="/register">Register now, its free!</a>
+          {translate('loginPage.account')}
+          <a href="/register">{translate('loginPage.register')}</a>
         </Message>
       </Grid.Column>
     </Grid>

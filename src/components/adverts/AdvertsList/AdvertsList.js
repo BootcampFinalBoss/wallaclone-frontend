@@ -44,8 +44,8 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
         )}
         {(!adverts || adverts?.length === 0) && (
           <Col className="text-center">
-            <Paragraph>
-              No adverts loaded, refine your search or create one!
+            <Paragraph >
+              {translate('advertsPage.pNoAdverts')}
             </Paragraph>
             <CreateNew />
           </Col>
