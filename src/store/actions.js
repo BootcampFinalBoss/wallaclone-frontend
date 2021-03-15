@@ -109,8 +109,7 @@ export const authForgotPassword = (email) => {
       dispatch(authForgotPasswordSuccess());
       console.log(res);
       //history.push("/adverts");
-      return res
-
+      return res;
     } catch (error) {
       dispatch(authForgotPasswordFailure(error));
     }
@@ -142,10 +141,9 @@ export const authReset = (token, data) => {
       console.log(error);
       dispatch(authResetFailure(error.response.data));
       setTimeout(() => {
-        dispatch (resetError());
+        dispatch(resetError());
         history.push('/login');
       }, 3000);
-
     }
   };
 };
@@ -175,14 +173,13 @@ export const authUpdatePassword = (token, data) => {
       setTimeout(() => {
         history.push('/login');
       }, 3000);
-      return res
+      return res;
     } catch (error) {
       dispatch(authUpdateResetFailure(error));
       console.log(error);
     }
   };
 };
-
 
 /* ADVERTS */
 
@@ -357,7 +354,6 @@ export const loadLang = (newLocale) => async (dispatch, getState) => {
   storage.set(STORAGE_KEY, newLocale);
   dispatch(langLoaded(newLocale));
 };
-
 
 /* USER */
 

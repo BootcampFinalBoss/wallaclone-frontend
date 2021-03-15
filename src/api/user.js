@@ -2,13 +2,11 @@ import client, {setAuthorizationHeader} from './client';
 import {useSelector} from 'react-redux';
 import {getLoggedUser} from '../store/selectors';
 
-const { REACT_APP_API_HOST: host } = process.env;
 
-
-export const getUser = (id, token) => {
-        return client.get(`/user/${id}`, client(setAuthorizationHeader(token))).then(res => {
-        return res.data
-    })
+export const getUser = (id) => {
+  return client.get(`/user/${id}`).then((res) => {
+    return res.data.result;
+  });
 };
 
 export const editUser = (id, data, token) => {
