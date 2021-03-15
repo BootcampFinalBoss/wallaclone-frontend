@@ -412,3 +412,28 @@ export const editUser = (id, userData, token) => async (
     dispatch(generateAdvertError(error));
   }
 };
+
+export const userDeleted = (user) => {
+  return {
+    type: types.USER_DELETED,
+    payload: {
+      user,
+    },
+  };
+};
+
+export const deleteUser = (id, token) => async (
+    dispatch,
+    getState,
+    { history, api },
+) => {
+  const fetchedAdvert = await user.deleteUser(id, token);
+  setTimeout(() => {
+    dispatch(authLogout());
+  }, 3000)
+
+
+  return fetchedAdvert;
+
+
+};

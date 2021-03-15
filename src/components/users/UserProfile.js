@@ -1,10 +1,14 @@
 import React, {useEffect} from 'react';
-import { Card, PageHeader, Image, Row, Col, Button } from "antd";
+import { Card, PageHeader, Image, Row, Col, Button, Modal } from "antd";
 import "antd/dist/antd.css";
-import {getUserId} from '../../store/actions';
+import {deleteUser, getUserId} from '../../store/actions';
 import { useDispatch, useSelector } from "react-redux";
 import {useParams, useHistory} from 'react-router-dom';
 import {getLoggedUser} from '../../store/selectors';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
+import Swal from 'sweetalert2';
+
+const { confirm } = Modal;
 
 let dataExample = {
 };
@@ -19,6 +23,7 @@ const UserProfile = () => {
     const {idUser} = token.userId
     console.log(idUser);
     const dataUser = state.user
+
   useEffect(()=> {
       dispatch(getUserId(id.id, token.token));
   }, [])
@@ -32,6 +37,38 @@ const UserProfile = () => {
             avatar: dataUser.result.avatar,
         }
     }
+
+    const handleDeleteAdvert = async () => {
+        const res = await dispatch(deleteUser(id.id, token.token));
+        console.log(res);
+        if(res){
+            if (res.status === 200){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: res.data.msg,
+                    showConfirmButton: false,
+                    timer: 2400
+                });
+                return;
+            }
+        }
+    };
+
+    const showConfirmDelete = () => {
+        confirm({
+            title: 'Are you sure delete the user account?',
+            icon: <ExclamationCircleOutlined />,
+            content: "This action can't be reversed. Your adverts also delete.",
+            okText: 'Yes, delete this userAccount',
+            okType: 'danger',
+            cancelText: 'No!!!!',
+            onOk() {
+                handleDeleteAdvert();
+            },
+            onCancel() {},
+        });
+    };
 
   return (
     <div className="containerPrincipalRegister">
@@ -48,7 +85,7 @@ const UserProfile = () => {
               key="edit" type="primary" size={64}>
             Edit
           </Button>,
-          <Button key="delete" type="danger" size={64}>
+          <Button key="delete" type="danger" onClick={showConfirmDelete} size={64}>
             Delete
           </Button>,
         ]}

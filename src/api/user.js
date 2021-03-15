@@ -16,3 +16,10 @@ export const editUser = (id, data, token) => {
         return res.data;
     })
 };
+
+
+export const deleteUser = (id, token) => {
+    return client.delete(`/user/${id}`, client(setAuthorizationHeader(token))).then(res => {
+        return res;
+    })
+};

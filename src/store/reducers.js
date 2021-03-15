@@ -136,7 +136,8 @@ export const user = (state= initialState.user, action) => {
     case types.USER_SUCCESS:
       // login
       return action.payload; // Save the token on redux state
-
+    case types.USER_DELETED:
+      return action.payload;
     default:
       return state;
   }
