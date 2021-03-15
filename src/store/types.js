@@ -36,3 +36,4 @@ export const UI_RESET_ERROR = 'ui/RESET_ERROR';
 export const USER_REQUEST = 'user/REQUEST';
 export const USER_SUCCESS = 'user/SUCCESS';
 export const USER_FAILURE = 'user/FAILURE';
+export const USER_EDITED = 'user/EDITED';

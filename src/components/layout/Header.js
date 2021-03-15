@@ -105,6 +105,10 @@ const PrivateHeader = ({
     history.push(`/my-profile/${id?.idUser}`);
   };
 
+  const goToAdvertsUser = () => {
+    history.push(`/user-adverts/${id?.idUser}`);
+  };
+
   const handleChangeLocale = (newLocale) => {
     dispatch(loadLang(newLocale));
   };
@@ -140,7 +144,8 @@ const PrivateHeader = ({
               onClick={goToMyProfile}></Dropdown.Item>
             <Dropdown.Item
               icon="newspaper outline"
-              text={translate('menu.adverts')}></Dropdown.Item>
+              text={translate('menu.adverts')}
+            onClick={goToAdvertsUser}></Dropdown.Item>
             <Dropdown.Item
               icon="power off"
               text={translate('menu.logout')}

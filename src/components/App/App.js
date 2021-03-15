@@ -23,7 +23,7 @@ import {
   AdvertPage,
   AdvertsEdit,
 } from '../adverts';
-import { UserProfile, UserEdit } from '../users';
+import { UserProfile, UserEdit, UserAdverts } from '../users';
 // import { AdvertsContainer, AdvertsNew, AdvertPage } from '../adverts';
 import NotFoundPage from '../errors/NotFoundPage';
 import Header from '../layout/Header';
@@ -68,8 +68,11 @@ const App = () => {
           <Route path="/reset/:id">
             <ResetPassword />
           </Route>
-          <Route path="/user-edit">
+          <Route path="/user-edit/:id">
             <UserEdit />
+          </Route>
+          <Route path="/user-adverts/:id">
+            <UserAdverts />
           </Route>
           <PrivateRoute path="/adverts/new" exact component={AdvertsNew} />
           <PrivateRoute path="/adverts/edit/:id" exact>

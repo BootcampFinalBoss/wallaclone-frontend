@@ -1,41 +1,63 @@
-import React from 'react';
+import React, {useEffect}from 'react';
 import { Form, Button, Upload, Input, Row, Col, PageHeader, Alert } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
 import 'antd/dist/antd.css';
-// import { authRegister } from '../../store/actions';
 import { useDispatch, useSelector } from 'react-redux';
 import "../../assets/styles/styles.css"
+import {useParams} from 'react-router-dom';
+import {editUser, getUserId} from '../../store/actions';
 
 const UserEdit = () => {
-  const [form] = Form.useForm();
-  const dispach = useDispatch();
-  const state = useSelector((state) => state.ui);
-  console.log(state);
+  let dataInitials = {};
+  ///const [form] = Form.useForm();
+  const id = useParams();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const token = state.auth;
+  const dataUser = state.user
+
+  const canSubmit = () => {
+    return true;
+  };
+
+
+  if(dataUser !== null){
+    console.log(dataUser);
+    dataInitials = {
+      name: dataUser.result.name,
+      email: dataUser.result.email,
+      username: dataUser.result.username,
+      avatar: dataUser.result.avatar,
+      surname: dataUser.result.surname
+    }
+  }
+
+  useEffect(()=> {
+    dispatch(getUserId(id.id, token.token));
+  },[])
+
+  const onValuesChange = (changedValues) => {
+    console.log(changedValues);
+  };
 
   const onFinish = async (data) => {
     console.log('submit', data);
+    dispatch(editUser(id.id,data, token.token ));
+    console.log(data, id.id, token.token);
   };
 
   return (
     <div className="containerPrincipalRegister">
       <PageHeader className="site-page-header" title="Edit User" />
       <Form
-        form={form}
-        name="editUser"
+          initialValues={dataInitials}
         onFinish={onFinish}
-        scrollToFirstError
+        onValuesChange={onValuesChange}
       >
         <Row type="flex" justify="space-between" gutter={16}>
           <Col xs={24} md={12} lg={12} xl={12}>
             <Form.Item
               name="name"
               label="Name"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your username',
-                },
-              ]}
             >
               <Input />
             </Form.Item>
@@ -51,12 +73,6 @@ const UserEdit = () => {
             <Form.Item
               name="username"
               label="Username"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your username!',
-                },
-              ]}
             >
               <Input />
             </Form.Item>
@@ -70,10 +86,6 @@ const UserEdit = () => {
                 {
                   type: 'email',
                   message: 'The input is not valid E-mail!',
-                },
-                {
-                  required: true,
-                  message: 'Please input your E-mail!',
                 },
               ]}
             >
@@ -94,7 +106,6 @@ const UserEdit = () => {
               rules={[
                 {
                   min: 8,
-                  required: true,
                   message: "Please input your password!",
                 },
               ]}
@@ -112,7 +123,6 @@ const UserEdit = () => {
               rules={[
                 {
                   min: 8,
-                  required: true,
                   message: "Please confirm your password!",
                 },
                 ({ getFieldValue }) => ({
@@ -130,22 +140,8 @@ const UserEdit = () => {
               <Input.Password />
             </Form.Item>
           </Col>
-
-          <Col span={24}>
-            <Form.Item
-              name="newAvatar"
-              label="Avatar"
-              valuePropName="fileList"
-              extra="Upload your new avatar."
-            >
-              <Upload name="logo" action="/upload.do" listType="picture">
-                <Button icon={<UploadOutlined />}>Click to upload</Button>
-              </Upload>
-            </Form.Item>
-          </Col>
-
           <Form.Item>
-            <Button type="primary" htmlType="submit" className="align-center">
+            <Button type="primary" htmlType="submit" className="align-center"  disabled={!canSubmit()}>
               Update
             </Button>
           </Form.Item>

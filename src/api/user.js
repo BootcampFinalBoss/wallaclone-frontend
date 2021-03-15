@@ -1,17 +1,18 @@
-import client from './client';
+import client, {setAuthorizationHeader} from './client';
+import {useSelector} from 'react-redux';
+import {getLoggedUser} from '../store/selectors';
 
 const { REACT_APP_API_HOST: host } = process.env;
 
 
-
 export const getUser = (id, token) => {
-    const header =
-        {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
-        return client.get(`/user/${id}`, header).then(res => {
+        return client.get(`/user/${id}`, client(setAuthorizationHeader(token))).then(res => {
         return res.data
+    })
+};
+
+export const editUser = (id, data, token) => {
+    return client.put(`/user/${id}`, data, client(setAuthorizationHeader(token))).then(res => {
+        return res.data;
     })
 };

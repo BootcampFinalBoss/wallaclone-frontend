@@ -306,6 +306,22 @@ export const deleteAdvert = (advertId) => async (
   history.push('/adverts');
 };
 
+export const advertLoadedUser = (advert) => {
+  return {
+    type: types.ADVERTS_LOADED,
+    payload: advert,
+  };
+};
+
+export const loadAdvertUser = (id) => async (
+    dispatch,
+    getState,
+    { history, api },
+) => {
+  const res = await adverts.getAdvertsUser(id);
+  dispatch(advertLoadedUser(res));
+};
+
 /* UI */
 
 export const resetError = () => {
@@ -370,4 +386,29 @@ export const getUserId = (id,token) => {
       dispatch(userFailure(error));
     }
   };
+};
+
+export const userEdited = (user) => {
+  return {
+    type: types.USER_EDITED,
+    payload: {
+      user,
+    },
+  };
+};
+
+export const editUser = (id, userData, token) => async (
+    dispatch,
+    getState,
+    { history, api },
+) => {
+  try {
+    const res = await user.editUser(id, userData, token);
+    console.log(id,userData, token);
+    dispatch(userEdited(res?.data?.result));
+    //history.push(`/adverts/${res?.data?.result?._id}`);
+    console.log(res);
+  } catch (error) {
+    dispatch(generateAdvertError(error));
+  }
 };

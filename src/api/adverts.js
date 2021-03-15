@@ -34,3 +34,10 @@ export const editAdvert = (advert) =>
   client.put(`/adverts/${advert._id}`, advert);
 
 export const deleteAdvert = (id) => client.delete(`/adverts/${id}`);
+
+export const getAdvertsUser = (id) => {
+    return client.get(`/adverts-user/${id}`).then(res => {
+        console.log(res.data);
+        return res.data;
+    })
+}

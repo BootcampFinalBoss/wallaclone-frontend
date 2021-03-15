@@ -51,7 +51,7 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
   };
 
   return (
-    <Col key={ad._id} xs={24} md={12} lg={6} className="mx-auto">
+    <Col key={ad._id} xs={12} md={8} lg={8} className="mx-auto">
       <Card
         title={ad?.type === 'sell' ? 'Sell' : 'Buy'}
         headStyle={getHeadStyle(ad?.type === 'sell' ? true : false)}
