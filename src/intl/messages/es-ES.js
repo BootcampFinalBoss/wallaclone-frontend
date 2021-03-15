@@ -8,9 +8,16 @@ export default {
       byTags: 'Tags',
       byPrice: 'Precio',
       byName: 'Nombre',
-      byType:'Tipo',
+      byType: 'Tipo',
       search: 'Buscar',
-      buy: 'Se compra',
+      createOne: 'Crea tu anuncio!',
+    },
+    advertsList: {
+      title: 'Lista de Anuncios',
+      haveAccount: 'Tienes una cuenta?',
+      logAndCreateBtn: 'Inicia sesión y crea tu anuncio!',
+      regAndCreateBtn: 'Regístrate y crea tu anuncio!',
+      member: 'Aún no eres miembro?'
 
     },
     advertsCard: {
@@ -26,7 +33,6 @@ export default {
       account: '¿Aún no tiene una cuenta?',
       forgotPass: 'Ha olvidado su contraseña?',
       loginBtn: 'Acceder',
-
     },
     'subscribe-invite': 'Sure, {name}. I will subscribe your channel!',
     menu: {

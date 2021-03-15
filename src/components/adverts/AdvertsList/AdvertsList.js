@@ -15,7 +15,11 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
   if (ui.loading) {
     return (
       <Col xs={20} className="adverts">
-        <PageHeader className="site-page-header" title="Adverts List" />,
+        <PageHeader
+          className="site-page-header"
+          title= {translate('advertsList.title')}
+        />
+        ,
         <Row gutter={[24, 24]} style={{ marginBottom: '2em' }} justify="center">
           <Title level={2}>{translate('ui.loading')}</Title>
         </Row>
@@ -25,7 +29,11 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
 
   return (
     <Col xs={20} className="adverts">
-      <PageHeader className="site-page-header" title="Adverts List" />,
+      <PageHeader
+        className="site-page-header"
+        title={translate('advertsList.title')}
+      />
+      ,
       <Row gutter={[24, 24]} style={{ marginBottom: '2em' }} justify="center">
         {adverts?.length > 0 && (
           <InfiniteScroll
@@ -44,9 +52,7 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
         )}
         {(!adverts || adverts?.length === 0) && (
           <Col className="text-center">
-            <Paragraph >
-              {translate('advertsPage.pNoAdverts')}
-            </Paragraph>
+            <Paragraph>{translate('advertsPage.pNoAdverts')}</Paragraph>
             <CreateNew />
           </Col>
         )}
@@ -77,17 +83,19 @@ const CreateNew = () => {
   if (isLoggedUser) {
     return (
       <Row justify="center">
-        <Button onClick={goCreateOne}>Go create one!</Button>
+        <Button onClick={goCreateOne}>
+          {translate('advertsPage.createOne')}
+        </Button>
       </Row>
     );
   }
   return (
     <Row justify="center">
-      <Paragraph>Have an account?</Paragraph>
-      <Button onClick={goLogin}>Go login and create one!</Button>
+      <Paragraph>{translate('advertsList.haveAccount')}</Paragraph>
+      <Button onClick={goLogin}>{translate('advertsList.logAndCreateBtn')}</Button>
       <Divider></Divider>
-      <Paragraph>You are not a member yet?</Paragraph>
-      <Button onClick={goRegister}>Go register and create one!</Button>
+      <Paragraph>{translate('advertsList.member')}</Paragraph>
+      <Button onClick={goRegister}>{translate('advertsList.regAndCreateBtn')}</Button>
     </Row>
   );
 };

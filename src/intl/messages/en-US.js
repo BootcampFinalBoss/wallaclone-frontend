@@ -10,7 +10,16 @@ export default {
       byName: 'By name',
       byType:'By type',
       search: 'Search',
+      createOne: 'Go create one!',
     },
+    advertsList: {
+      title: 'Lista de Anuncios',
+      haveAccount: 'Have an account?',
+      logAndCreateBtn: 'Go login and create one!',
+      regAndCreateBtn: 'Go register and create one!',
+      member: 'You are not a member yet?'
+    }
+    ,
     userPage: {
 
     },
