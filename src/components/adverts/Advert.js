@@ -20,6 +20,7 @@ import { loadAdvert, deleteAdvert } from '../../store/actions';
 import { getAdvertOnState, getUi } from '../../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
+import Swal from 'sweetalert2';
 
 const { confirm } = Modal;
 
@@ -33,7 +34,10 @@ const AdvertPage = ({ history, ...props }) => {
 
   const handleDeleteClick = async () => {
     dispatch(deleteAdvert(getAdvertId()));
-    await history.push('/');
+
+      await history.push('/');
+
+
   };
 
   const handleGetAdvert = async () => {
@@ -44,8 +48,20 @@ const AdvertPage = ({ history, ...props }) => {
     history.push('/adverts/edit/' + getAdvertId());
   };
 
-  const handleDeleteAdvert = () => {
-    dispatch(deleteAdvert(getAdvertId()));
+  const handleDeleteAdvert = async () => {
+   const res = await dispatch(deleteAdvert(getAdvertId()));
+    if(res){
+      if (res.status === 200){
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: res.data.message,
+          showConfirmButton: false,
+          timer: 2400
+        });
+        return;
+      }
+    }
   };
 
   const showConfirmDelete = () => {
