@@ -8,6 +8,7 @@ import { getAdvertOnState, getUi } from '../../../store/selectors';
 import TagsSelect from '../../Tags/TagSelect';
 import { InputImage } from '../../globals';
 import { definitions } from '../../../utils';
+import Swal from 'sweetalert2';
 
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
@@ -25,7 +26,19 @@ const AdvertsEditForm = ({ advert }) => {
 
   const onFinish = async (data) => {
     console.log(data);
-    dispatch(editAdvert({ ...data, _id: advert._id }));
+    const res = await dispatch(editAdvert({ ...data, _id: advert._id }));
+    if(res){
+      if (res.status === 200){
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: res.data.message,
+          showConfirmButton: false,
+          timer: 2400
+        });
+        return;
+      }
+    }
   };
 
   return (

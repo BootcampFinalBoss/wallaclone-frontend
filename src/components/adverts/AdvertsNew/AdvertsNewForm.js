@@ -9,6 +9,7 @@ import { InputImage } from '../../globals';
 import { definitions } from '../../../utils';
 import { UploadOutlined } from "@ant-design/icons";
 import Swal from 'sweetalert2';
+import TextArea from 'antd/es/input/TextArea';
 
 
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
@@ -109,7 +110,7 @@ const NewAdvertForm = () => {
               },
             ]}
           >
-            <Input maxLength={150} placeholder="Name" />
+            <TextArea maxLength={150} placeholder="Name" />
           </Form.Item>
           <Form.Item name="image" label="Image">
             <Upload {...uploadProps}>

@@ -71,7 +71,7 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
             <>
               <p className="card-text d-flex justify-content-between card-price font-weight-bold">
                 {ad?.price} €.
-                <i>{ad?.sale ? 'For sale' : 'To buy'}</i>
+                <i>{ad?.type === 'sell' ? 'For sale' : 'To buy'}</i>
               </p>
               <p>Tags: {ad?.tags && ad?.tags?.join(', ')}</p>
             </>

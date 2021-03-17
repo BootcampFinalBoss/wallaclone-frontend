@@ -97,16 +97,17 @@ const PrivateHeader = ({
 }) => {
   const dispatch = useDispatch();
   const id = loggedUser.userId;
+  console.log(id);
   console.log(loggedUser);
   const handleLogout = () => {
     dispatch(authLogout());
   };
   const goToMyProfile = () => {
-    history.push(`/my-profile/${id?.idUser}`);
+    history.push(`/my-profile/${id}`);
   };
 
   const goToAdvertsUser = () => {
-    history.push(`/user-adverts/${id?.idUser}`);
+    history.push(`/user-adverts/${id}`);
   };
 
   const handleChangeLocale = (newLocale) => {
