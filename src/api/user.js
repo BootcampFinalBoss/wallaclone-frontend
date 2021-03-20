@@ -1,7 +1,7 @@
 import client, { setAuthorizationHeader } from './client';
 
-export const getUser = (id) => {
-  return client.get(`/user/${id}`).then((res) => {
+export const getUser = (username) => {
+  return client.get(`/user/${username}`).then((res) => {
     return res.data.result;
   });
 };

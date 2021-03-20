@@ -34,10 +34,12 @@ const Header = () => {
 
   return (
     <Menu stackable>
-      <Menu.Item href="/">
-        <Logo as="h4">
-          <Image circular src="/logo192.png" /> Wallaclone
-        </Logo>
+      <Menu.Item>
+        <Link to="/">
+          <Logo as="h4">
+            <Image circular src="/logo192.png" /> Wallaclone
+          </Logo>
+        </Link>
       </Menu.Item>
       <Menu.Menu position="right">
         {userData && userData.token ? (
@@ -95,12 +97,12 @@ const PrivateHeader = ({
   history,
 }) => {
   const dispatch = useDispatch();
-  const id = loggedUser.userId;
+  const username = loggedUser.username;
   const handleLogout = () => {
     dispatch(authLogout());
   };
   const goToMyProfile = () => {
-    history.push(`/profile/${id}`);
+    history.push(`/profile/${username}`);
   };
 
   const handleChangeLocale = (newLocale) => {

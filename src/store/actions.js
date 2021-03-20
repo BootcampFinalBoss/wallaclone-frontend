@@ -311,22 +311,6 @@ export const deleteAdvert = (advertId) => async (
   return fetchedAdvert;
 };
 
-export const advertLoadedUser = (advert) => {
-  return {
-    type: types.ADVERTS_LOADED,
-    payload: advert,
-  };
-};
-
-export const loadAdvertUser = (id) => async (
-  dispatch,
-  getState,
-  { history, api },
-) => {
-  const res = await adverts.getAdvertsUser(id);
-  dispatch(advertLoadedUser(res));
-};
-
 /* UI */
 
 export const resetError = () => {
@@ -444,12 +428,12 @@ export const userDeleted = (user) => {
   };
 };
 
-export const deleteUser = (id, token) => async (
+export const deleteUser = (id) => async (
   dispatch,
   getState,
   { history, api },
 ) => {
-  const fetchedAdvert = await user.deleteUser(id, token);
+  const fetchedAdvert = await user.deleteUser(id);
   setTimeout(() => {
     dispatch(authLogout());
   }, 3000);

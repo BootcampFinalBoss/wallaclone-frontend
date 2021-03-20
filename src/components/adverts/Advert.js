@@ -13,14 +13,15 @@ import {
   Modal,
 } from 'antd';
 
-import { DeleteOutlined } from '@ant-design/icons';
+import { StarOutlined } from '@ant-design/icons';
 import placeholder from '../../assets/photo-placeholder.png';
 import Tags from '../Tags/Tags';
 import { loadAdvert, deleteAdvert } from '../../store/actions';
-import { getAdvertOnState, getUi } from '../../store/selectors';
+import { getAdvertOnState, getLoggedUser, getUi } from '../../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import Swal from 'sweetalert2';
+import { addFavoriteAdvert, removeFavoriteAdvert } from '../../api/adverts';
 
 const { confirm } = Modal;
 
@@ -29,14 +30,10 @@ const { Title, Paragraph } = Typography;
 const AdvertPage = ({ history, ...props }) => {
   const dispatch = useDispatch();
   const ui = useSelector((state) => getUi(state));
+  const userData = useSelector((state) => getLoggedUser(state));
   const getAdvertId = () => props.match.params.nameId?.split('-')[1];
   const advert = useSelector((state) => getAdvertOnState(state));
-
-  const handleDeleteClick = async () => {
-    dispatch(deleteAdvert(getAdvertId()));
-
-    await history.push('/');
-  };
+  const [isFavorited, setIsFavorited] = useState(false);
 
   const handleGetAdvert = async () => {
     dispatch(loadAdvert(getAdvertId()));
@@ -59,6 +56,16 @@ const AdvertPage = ({ history, ...props }) => {
         });
         return;
       }
+    }
+  };
+
+  const handleToggleAdvert = async () => {
+    if (!isFavorited) {
+      await addFavoriteAdvert(advert._id, userData.userId);
+      setIsFavorited(true);
+    } else {
+      await removeFavoriteAdvert(advert._id, userData.userId);
+      setIsFavorited(false);
     }
   };
 
@@ -103,6 +110,14 @@ const AdvertPage = ({ history, ...props }) => {
               </Paragraph>
               <Tags tags={tags} />
             </Row>
+            {advert.favorites && (
+              <Row style={{ marginTop: 20 }}>
+                <Button className="btn-favorites" onClick={handleToggleAdvert}>
+                  {isFavorited ? 'Remove favorite' : 'Add Favorite'}
+                  <StarOutlined />
+                </Button>
+              </Row>
+            )}
           </Col>
           <Col span={12}>
             <Image
@@ -113,12 +128,18 @@ const AdvertPage = ({ history, ...props }) => {
               fallback={placeholder}
             />
           </Col>
-          <Col span={24} style={{ justifyContent: 'space-between' }}>
-            <Button onClick={goToEditAdvert}>Edit advert</Button>
-            <Button danger onClick={showConfirmDelete}>
-              Delete advert
-            </Button>
-          </Col>
+          {userData.userId === advert.user._id && (
+            <>
+              <Col
+                span={5}
+                style={{ justifyContent: 'space-between', display: 'flex' }}>
+                <Button onClick={goToEditAdvert}>Edit advert</Button>
+                <Button danger onClick={showConfirmDelete}>
+                  Delete advert
+                </Button>
+              </Col>
+            </>
+          )}
         </Row>
       );
     }
@@ -127,6 +148,14 @@ const AdvertPage = ({ history, ...props }) => {
   useEffect(() => {
     handleGetAdvert();
   }, [props.match.params.id]);
+
+  useEffect(() => {
+    if (
+      advert?.favorites?.filter((ids) => ids === userData.userId).length > 0
+    ) {
+      setIsFavorited(true);
+    }
+  }, [advert?._id, userData]);
 
   return (
     <Row justify="center">

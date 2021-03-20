@@ -18,22 +18,24 @@ const { confirm } = Modal;
 const UserProfile = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const id = useParams();
+  const params = useParams();
   const loggedUser = useSelector((state) => getLoggedUser(state));
   const [loading, setLoading] = useState(true);
   const [profileData, setProfileData] = useState(null);
-  let pageTitle = loggedUser.userId === id ? 'My Profile' : '';
+  const [showFavorites, setShowFavorites] = useState(false);
+  let pageTitle = loggedUser.username === params.username ? 'My Profile' : '';
 
   const handleGetUserData = async () => {
     setLoading(true);
-    let fetchedUserData = await user.getUser(id.id);
+    let fetchedUserData = await user.getUser(params.username);
     setProfileData(fetchedUserData);
     setLoading(false);
   };
 
   useEffect(() => {
+    console.log(params);
     handleGetUserData();
-  }, [id]);
+  }, [params]);
 
   if (!profileData && !loading) {
     return <Redirect to="/404" />;
@@ -48,7 +50,7 @@ const UserProfile = () => {
   }
 
   const handleDeleteUser = async () => {
-    const res = await dispatch(deleteUser(id.id, token.token));
+    const res = await dispatch(deleteUser(profileData._id));
     if (res) {
       if (res.status === 200) {
         Swal.fire({
@@ -87,11 +89,11 @@ const UserProfile = () => {
         style={{ maxWidth: 1200, textAlign: 'center', padding: '0 1rem' }}
         actions={[
           <Button
-            onClick={() => history.push(`/user-adverts/${id}`)}
+            onClick={() => setShowFavorites((prev) => !prev)}
             key="advert"
             type="default"
             size={64}>
-            Adverts
+            {showFavorites ? 'Show User Adverts' : 'Show User Favorites'}
           </Button>,
           <Button
             onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
@@ -125,18 +127,31 @@ const UserProfile = () => {
           </Col>
         </Row>
       </Card>
-      <Row justify="center">
-        <Col span={20}>
-          <Title level={2}>Adverts</Title>
-          {profileData && (
-            <Row gutter={[24, 24]} justify="center">
-              {profileData?.adverts.map((ad) => {
-                return <AdvertCard key={ad._id} ad={ad} hideSeller={true} />;
-              })}
-            </Row>
-          )}
-        </Col>
-      </Row>
+      {showFavorites ? (
+        <Row justify="center" style={{ marginTop: '2rem' }}>
+          <Col span={20}>
+            {profileData && (
+              <Row gutter={[24, 24]} justify="center">
+                {profileData?.favorites.map((ad) => {
+                  return <AdvertCard key={ad._id} ad={ad} hideSeller={true} />;
+                })}
+              </Row>
+            )}
+          </Col>
+        </Row>
+      ) : (
+        <Row justify="center" style={{ marginTop: '2rem' }}>
+          <Col span={20}>
+            {profileData && (
+              <Row gutter={[24, 24]} justify="center">
+                {profileData?.adverts.map((ad) => {
+                  return <AdvertCard key={ad._id} ad={ad} hideSeller={true} />;
+                })}
+              </Row>
+            )}
+          </Col>
+        </Row>
+      )}
     </div>
   );
 };

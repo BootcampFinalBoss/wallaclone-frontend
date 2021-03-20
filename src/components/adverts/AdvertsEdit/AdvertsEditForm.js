@@ -1,10 +1,9 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Form, Row, Col, Button, Input, InputNumber, Radio } from 'antd';
 // import NewAdvertForm from './NewAdvertForm';
-import { editAdvert, loadAdvert } from '../../../store/actions';
-import { getAdvertOnState, getUi } from '../../../store/selectors';
+import { editAdvert } from '../../../store/actions';
 import TagsSelect from '../../Tags/TagSelect';
 import { InputImage } from '../../globals';
 import { definitions } from '../../../utils';

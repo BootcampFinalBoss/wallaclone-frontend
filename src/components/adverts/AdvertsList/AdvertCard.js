@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Row, Col, Typography, Card, Avatar } from 'antd';
-import { DeleteOutlined, EyeOutlined, StarOutlined } from '@ant-design/icons';
+import { StarFilled, EyeOutlined, StarOutlined } from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
+import { getLoggedUser } from '../../../store/selectors';
 
 const { REACT_APP_IMAGE_BASE_URL: IMAGE_BASE_URL } = process.env;
 const { Paragraph } = Typography;
@@ -21,6 +23,7 @@ const getHeadStyle = (sale) =>
 
 const AdvertCard = ({ ad, hideSeller }) => {
   const history = useHistory();
+  const userData = useSelector((state) => getLoggedUser(state));
 
   if (!ad) return;
 
@@ -47,6 +50,14 @@ const AdvertCard = ({ ad, hideSeller }) => {
     }
   };
 
+  // const hasFavoriteFromLoggedUser =
+  //   ad.favorites?.filter((ids) => ids !== userData.userId) > 0;
+  // const FavoriteButton = hasFavoriteFromLoggedUser ? (
+  //   <StarOutlined />
+  // ) : (
+  //   <StarFilled />
+  // );
+
   return (
     <Col key={ad._id} xs={12} md={8} lg={8} className="mx-auto">
       <Card
@@ -55,8 +66,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
         hoverable
         cover={image()}
         actions={[
-          <StarOutlined key="favorite" />,
-          // <DeleteOutlined onClick={() => handleDelete()} key="edit" />,
+          // <FavoriteButton key="favorite" />,
           <EyeOutlined
             onClick={() => history.push(`/adverts/${ad?.name}-${ad?._id}`)}
             key="check details"
