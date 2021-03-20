@@ -97,8 +97,6 @@ const PrivateHeader = ({
 }) => {
   const dispatch = useDispatch();
   const id = loggedUser.userId;
-  console.log(id);
-  console.log(loggedUser);
   const handleLogout = () => {
     dispatch(authLogout());
   };
