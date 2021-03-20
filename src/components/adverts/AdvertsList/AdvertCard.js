@@ -5,6 +5,7 @@ import { Row, Col, Typography, Card, Avatar } from 'antd';
 import { StarFilled, EyeOutlined, StarOutlined } from '@ant-design/icons';
 import { Link, useHistory } from 'react-router-dom';
 import { getLoggedUser } from '../../../store/selectors';
+import translate from '../../../intl/translate';
 
 const { REACT_APP_IMAGE_BASE_URL: IMAGE_BASE_URL } = process.env;
 const { Paragraph } = Typography;
@@ -71,7 +72,8 @@ const AdvertCard = ({ ad, hideSeller }) => {
             onClick={() => history.push(`/adverts/${ad?.name}-${ad?._id}`)}
             key="check details"
           />,
-        ]}>
+        ]}
+      >
         <Meta
           title={ad.title || ad?.name}
           description={

@@ -19,6 +19,8 @@ import { definitions } from '../../../utils';
 import { UploadOutlined } from '@ant-design/icons';
 import Swal from 'sweetalert2';
 import TextArea from 'antd/es/input/TextArea';
+import translate from '../../../intl/translate';
+
 
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
@@ -63,7 +65,7 @@ const NewAdvertForm = () => {
         <Col span={11}>
           <Form.Item
             name="name"
-            label="Name"
+            label={translate('advertsForm.formName')}
             rules={[
               {
                 required: true,
@@ -77,7 +79,7 @@ const NewAdvertForm = () => {
           </Form.Item>
           <Form.Item
             name="price"
-            label="Price"
+            label={translate('advertsForm.formPrice')}
             rules={[
               {
                 required: true,
@@ -99,7 +101,7 @@ const NewAdvertForm = () => {
           </Form.Item>
           <Form.Item
             name="type"
-            label="Type"
+            label={translate('advertsForm.formType')}
             rules={[
               {
                 required: true,
@@ -111,7 +113,7 @@ const NewAdvertForm = () => {
         <Col span={24}>
           <Form.Item
             name="description"
-            label="Description"
+            label={translate('advertsForm.formDesc')}
             rules={[
               {
                 required: true,
@@ -119,9 +121,9 @@ const NewAdvertForm = () => {
             ]}>
             <TextArea maxLength={150} placeholder="Name" />
           </Form.Item>
-          <Form.Item name="image" label="Image">
+          <Form.Item name="image" label={translate('advertsForm.formImage')}>
             <Upload {...uploadProps}>
-              <Button>Select File</Button>
+              <Button>{translate('advertsForm.formSelectFile')}</Button>
             </Upload>
           </Form.Item>
           <Button
@@ -129,8 +131,9 @@ const NewAdvertForm = () => {
             htmlType="submit"
             disabled={!canSubmit()}
             shape="round"
-            icon={<UploadOutlined />}>
-            Create!
+            icon={<UploadOutlined />}
+          >
+            {translate('advertsForm.createBtn')}
           </Button>
         </Col>
       </Row>
