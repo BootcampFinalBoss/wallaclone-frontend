@@ -59,7 +59,7 @@ const App = () => {
           <Route path="/forgot-password" exact>
             <ForgotPasswordPage />
           </Route>
-          <Route path="/my-profile/:id">
+          <Route path="/profile/:id">
             <UserProfile />
           </Route>
           <Route path="/adverts" exact>
@@ -70,9 +70,6 @@ const App = () => {
           </Route>
           <Route path="/user-edit/:id">
             <UserEdit />
-          </Route>
-          <Route path="/user-adverts/:id">
-            <UserAdverts />
           </Route>
           <PrivateRoute path="/adverts/new" exact component={AdvertsNew} />
           <PrivateRoute path="/adverts/edit/:id" exact>

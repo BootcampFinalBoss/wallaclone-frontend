@@ -30,7 +30,6 @@ const Header = () => {
   const userData = useSelector((state) => getLoggedUser(state));
   const history = useHistory();
 
-
   const handleItemClick = (e, { name }) => setMenuActiveItem(name);
 
   return (
@@ -101,11 +100,7 @@ const PrivateHeader = ({
     dispatch(authLogout());
   };
   const goToMyProfile = () => {
-    history.push(`/my-profile/${id}`);
-  };
-
-  const goToAdvertsUser = () => {
-    history.push(`/user-adverts/${id}`);
+    history.push(`/profile/${id}`);
   };
 
   const handleChangeLocale = (newLocale) => {
@@ -141,10 +136,6 @@ const PrivateHeader = ({
               icon="user"
               text={translate('menu.myProfile')}
               onClick={goToMyProfile}></Dropdown.Item>
-            <Dropdown.Item
-              icon="newspaper outline"
-              text={translate('menu.adverts')}
-            onClick={goToAdvertsUser}></Dropdown.Item>
             <Dropdown.Item
               icon="power off"
               text={translate('menu.logout')}

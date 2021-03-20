@@ -10,7 +10,7 @@ import AdvertsList from './AdvertsList';
 import AdvertsFilters from './AdvertsFilters';
 // import BasicFilters from './BasicFilters';
 
-import { loadMoreAdverts, loadTags } from '../../../store/actions';
+import { loadAdverts, loadMoreAdverts, loadTags } from '../../../store/actions';
 import {
   getAdvertsOnState,
   getUi,
@@ -53,6 +53,7 @@ const AdvertsContainer = () => {
 
   useEffect(() => {
     dispatch(loadTags());
+    dispatch(loadAdverts({ ...filters }));
   }, [loadTags]);
 
   return (
@@ -67,7 +68,6 @@ const AdvertsContainer = () => {
             className="site-page-header"
             title={translate('advertsPage.title')}
           />
-          ,
         </Col>
         <Col span={24}>
           <Row justify="center" align="middle">

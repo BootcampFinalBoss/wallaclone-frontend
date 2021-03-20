@@ -2,7 +2,7 @@
 import React from 'react';
 import { Row, Col, Typography, Card, Avatar } from 'antd';
 import { DeleteOutlined, EyeOutlined, StarOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const { REACT_APP_IMAGE_BASE_URL: IMAGE_BASE_URL } = process.env;
 const { Paragraph } = Typography;
@@ -19,13 +19,10 @@ const getHeadStyle = (sale) =>
         color: '#fa8c16',
       };
 
-const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
+const AdvertCard = ({ ad }) => {
   const history = useHistory();
-  if (!ad) return;
 
-  const handleDelete = () => {
-    console.log('delete advert', ad._id);
-  };
+  if (!ad) return;
 
   const image = () => {
     // TODO: Check if image exists
@@ -70,10 +67,13 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
           description={
             <>
               <p className="card-text d-flex justify-content-between card-price font-weight-bold">
-                {ad?.price} €.
-                <i>{ad?.type === 'sell' ? 'For sale' : 'To buy'}</i>
+                {ad.price} €.
+                <i>{ad.type === 'sell' ? 'For sale' : 'To buy'}</i>
               </p>
-              <p>Tags: {ad?.tags && ad?.tags?.join(', ')}</p>
+              <p>Tags: {ad.tags && ad.tags?.join(', ')}</p>
+              <Link to={`\profile\${ad.user?._id}`}>
+                Seller: {ad.user?.username}
+              </Link>
             </>
           }
         />

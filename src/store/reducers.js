@@ -14,9 +14,8 @@ const initialState = {
   },
   locale: null,
   resReset: null,
-  user:null,
+  user: null,
 };
-
 
 export const auth = (state = initialState.auth, action) => {
   switch (action.type) {
@@ -34,7 +33,15 @@ export const auth = (state = initialState.auth, action) => {
 export const adverts = (state = initialState.adverts, action) => {
   switch (action.type) {
     case types.ADVERTS_LOADED:
-      initialState.ui.hasMoreAdverts = true;
+      if (
+        action.payload?.length === 0 ||
+        action.payload?.length < LIMIT_ADVERTS_API
+      ) {
+        initialState.ui.hasMoreAdverts = false;
+      } else {
+        initialState.ui.hasMoreAdverts = true;
+        iintialState.ui.advertsIndex += LIMIT_ADVERTS_API;
+      }
       return action.payload; // On new load, save the passed adverts on the state
     case types.ADVERTS_MORE_LOADED:
       if (
@@ -42,8 +49,9 @@ export const adverts = (state = initialState.adverts, action) => {
         action.payload?.length < LIMIT_ADVERTS_API
       ) {
         initialState.ui.hasMoreAdverts = false;
+        return [...state];
       } else {
-        initialState.ui.advertsIndex += LIMIT_ADVERTS_API;
+        iintialState.ui.advertsIndex += LIMIT_ADVERTS_API;
       }
       return [...state, ...action.payload]; // On new load, save the passed adverts on the state
     case types.ADVERT_CREATED:
@@ -130,13 +138,10 @@ export const reset = (state = initialState.resReset, action) => {
   }
 };
 
-
-export const user = (state= initialState.user, action) => {
+export const user = (state = initialState.user, action) => {
   switch (action.type) {
-    case  types.USER_EDITED ||
-        types.USER_REQUEST ||
-        types.USER_EDITED_REQUEST:
-      return {...state, loading: true}
+    case types.USER_EDITED || types.USER_REQUEST || types.USER_EDITED_REQUEST:
+      return { ...state, loading: true };
     case types.USER_SUCCESS:
       // login
       return action.payload; // Save the token on redux state
@@ -146,4 +151,3 @@ export const user = (state= initialState.user, action) => {
       return state;
   }
 };
-
