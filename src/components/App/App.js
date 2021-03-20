@@ -23,7 +23,7 @@ import {
   AdvertPage,
   AdvertsEdit,
 } from '../adverts';
-import { UserProfile, UserEdit } from '../users';
+import { UserProfile, UserEdit, UserAdverts } from '../users';
 // import { AdvertsContainer, AdvertsNew, AdvertPage } from '../adverts';
 import NotFoundPage from '../errors/NotFoundPage';
 import Header from '../layout/Header';
@@ -59,7 +59,7 @@ const App = () => {
           <Route path="/forgot-password" exact>
             <ForgotPasswordPage />
           </Route>
-          <Route path="/my-profile/:id">
+          <Route path="/profile/:username">
             <UserProfile />
           </Route>
           <Route path="/adverts" exact>
@@ -68,8 +68,8 @@ const App = () => {
           <Route path="/reset/:id">
             <ResetPassword />
           </Route>
-          <Route path="/user-edit">
-            <UserEdit />
+          <Route path="/user-edit/:id">
+            {(routerProps) => <UserEdit {...routerProps} />}
           </Route>
           <PrivateRoute path="/adverts/new" exact component={AdvertsNew} />
           <PrivateRoute path="/adverts/edit/:id" exact>
@@ -77,7 +77,7 @@ const App = () => {
               <AdvertsEdit history={history} {...routerProps} />
             )}
           </PrivateRoute>
-          <PrivateRoute path="/adverts/:id" exact>
+          <PrivateRoute path="/adverts/:nameId" exact>
             {(routerProps) => <AdvertPage history={history} {...routerProps} />}
           </PrivateRoute>
           <Route path="/error" exact>

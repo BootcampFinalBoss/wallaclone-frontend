@@ -1,17 +1,23 @@
-import client from './client';
+import client, { setAuthorizationHeader } from './client';
 
-const { REACT_APP_API_HOST: host } = process.env;
+export const getUser = (username) => {
+  return client.get(`/user/${username}`).then((res) => {
+    return res.data.result;
+  });
+};
 
+export const editUser = (id, data, token) => {
+  return client
+    .put(`/user/${id}`, data, client(setAuthorizationHeader(token)))
+    .then((res) => {
+      return res;
+    });
+};
 
-
-export const getUser = (id, token) => {
-    const header =
-        {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        }
-        return client.get(`/user/${id}`, header).then(res => {
-        return res.data
-    })
+export const deleteUser = (id, token) => {
+  return client
+    .delete(`/user/${id}`, client(setAuthorizationHeader(token)))
+    .then((res) => {
+      return res;
+    });
 };

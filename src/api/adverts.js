@@ -33,4 +33,10 @@ export const createAdvert = (advert) => {
 export const editAdvert = (advert) =>
   client.put(`/adverts/${advert._id}`, advert);
 
+export const addFavoriteAdvert = (advertId, userId) =>
+  client.post(`/adverts/favorite/${advertId}`, userId);
+
+export const removeFavoriteAdvert = (advertId, userId) =>
+  client.delete(`/adverts/favorite/${advertId}`, userId);
+
 export const deleteAdvert = (id) => client.delete(`/adverts/${id}`);

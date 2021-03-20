@@ -1,156 +1,62 @@
-import React from 'react';
-import { Form, Button, Upload, Input, Row, Col, PageHeader, Alert } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
-import 'antd/dist/antd.css';
-// import { authRegister } from '../../store/actions';
+/* eslint-disable react/prop-types */
+import React, { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import "../../assets/styles/styles.css"
+import { PageHeader } from 'antd';
+import 'antd/dist/antd.css';
+import Swal from 'sweetalert2';
+import '../../assets/styles/styles.css';
+import { editUser, getUserId } from '../../store/actions';
+import UserEditForm from './UserEditForm';
 
-const UserEdit = () => {
-  const [form] = Form.useForm();
-  const dispach = useDispatch();
-  const state = useSelector((state) => state.ui);
-  console.log(state);
+const UserEdit = ({ ...props }) => {
+  let dataInitials = null;
+  const id = useParams();
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state);
+  const token = state.auth;
+  const dataUser = state.user;
+
+  useEffect(() => {
+    dispatch(getUserId(id.id, token.token));
+  }, []);
+
+  useEffect(() => {
+    if (dataUser !== null) {
+      dataInitials = {
+        name: dataUser.name,
+        email: dataUser.email,
+        username: dataUser.username,
+        avatar: dataUser.avatar,
+        surname: dataUser.surname,
+      };
+    }
+    console.log(dataUser, dataInitials);
+  }, [dataUser, id, props.match.params.id]);
 
   const onFinish = async (data) => {
-    console.log('submit', data);
+    const res = await dispatch(editUser(id.id, data, token.token));
+    console.log(res);
+    if (res) {
+      console.log(res);
+      if (res.status === 200) {
+        console.log('Aqui');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: res.data,
+          showConfirmButton: false,
+          timer: 2500,
+        });
+        return;
+      }
+    }
   };
 
   return (
     <div className="containerPrincipalRegister">
       <PageHeader className="site-page-header" title="Edit User" />
-      <Form
-        form={form}
-        name="editUser"
-        onFinish={onFinish}
-        scrollToFirstError
-      >
-        <Row type="flex" justify="space-between" gutter={16}>
-          <Col xs={24} md={12} lg={12} xl={12}>
-            <Form.Item
-              name="name"
-              label="Name"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your username',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            <Form.Item name="surname" label="Surname">
-              <Input />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            <Form.Item
-              name="username"
-              label="Username"
-              rules={[
-                {
-                  required: true,
-                  message: 'Please input your username!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-          </Col>
-
-          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            <Form.Item
-              name="email"
-              label="E-mail"
-              rules={[
-                {
-                  type: 'email',
-                  message: 'The input is not valid E-mail!',
-                },
-                {
-                  required: true,
-                  message: 'Please input your E-mail!',
-                },
-              ]}
-            >
-              <Input />
-            </Form.Item>
-            {state.error &&
-              state.error.errors.map((error) => {
-                if (error.param === 'email') {
-                  return <Alert message={error.msg} type="error" showIcon />;
-                }
-              })}
-          </Col>
-
-          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            <Form.Item
-              name="password"
-              label="Password"
-              rules={[
-                {
-                  min: 8,
-                  required: true,
-                  message: "Please input your password!",
-                },
-              ]}
-              hasFeedback
-            >
-              <Input.Password />
-            </Form.Item>
-          </Col>
-          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            <Form.Item
-              name="confirm"
-              label="Confirm Password"
-              dependencies={["password"]}
-              hasFeedback
-              rules={[
-                {
-                  min: 8,
-                  required: true,
-                  message: "Please confirm your password!",
-                },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      "The two passwords that you entered do not match!"
-                    );
-                  },
-                }),
-              ]}
-            >
-              <Input.Password />
-            </Form.Item>
-          </Col>
-
-          <Col span={24}>
-            <Form.Item
-              name="newAvatar"
-              label="Avatar"
-              valuePropName="fileList"
-              extra="Upload your new avatar."
-            >
-              <Upload name="logo" action="/upload.do" listType="picture">
-                <Button icon={<UploadOutlined />}>Click to upload</Button>
-              </Upload>
-            </Form.Item>
-          </Col>
-
-          <Form.Item>
-            <Button type="primary" htmlType="submit" className="align-center">
-              Update
-            </Button>
-          </Form.Item>
-        </Row>
-      </Form>
+      <UserEditForm dataInitials={dataInitials} onFinish={onFinish} />
     </div>
   );
 };

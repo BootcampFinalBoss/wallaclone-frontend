@@ -109,8 +109,7 @@ export const authForgotPassword = (email) => {
       dispatch(authForgotPasswordSuccess());
       console.log(res);
       //history.push("/adverts");
-      return res
-
+      return res;
     } catch (error) {
       dispatch(authForgotPasswordFailure(error));
     }
@@ -142,10 +141,9 @@ export const authReset = (token, data) => {
       console.log(error);
       dispatch(authResetFailure(error.response.data));
       setTimeout(() => {
-        dispatch (resetError());
+        dispatch(resetError());
         history.push('/login');
       }, 3000);
-
     }
   };
 };
@@ -175,14 +173,13 @@ export const authUpdatePassword = (token, data) => {
       setTimeout(() => {
         history.push('/login');
       }, 3000);
-      return res
+      return res;
     } catch (error) {
       dispatch(authUpdateResetFailure(error));
       console.log(error);
     }
   };
 };
-
 
 /* ADVERTS */
 
@@ -256,6 +253,7 @@ export const createAdvert = (advertData) => async (
 ) => {
   try {
     const fetchedAdvert = await adverts.createAdvert(advertData);
+    console.log('createAdvert', fetchedAdvert);
     dispatch(advertCreated(fetchedAdvert?.data?.result));
     history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
     return fetchedAdvert;
@@ -281,7 +279,11 @@ export const editAdvert = (advertData) => async (
   try {
     const fetchedAdvert = await adverts.editAdvert(advertData);
     dispatch(advertEdited(fetchedAdvert?.data?.result));
-    history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
+    setTimeout(() => {
+      history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
+    }, 2800);
+
+    return fetchedAdvert;
   } catch (error) {
     dispatch(generateAdvertError(error));
   }
@@ -303,7 +305,10 @@ export const deleteAdvert = (advertId) => async (
 ) => {
   const fetchedAdvert = await adverts.deleteAdvert(advertId);
   dispatch(advertDeleted(fetchedAdvert.result));
-  history.push('/adverts');
+  setTimeout(async () => {
+    await history.push('/');
+  }, 2800);
+  return fetchedAdvert;
 };
 
 /* UI */
@@ -342,7 +347,6 @@ export const loadLang = (newLocale) => async (dispatch, getState) => {
   dispatch(langLoaded(newLocale));
 };
 
-
 /* USER */
 
 export const userRequest = () => ({
@@ -357,17 +361,82 @@ export const userFailure = (error) => ({
 
 export const userSuccess = (res) => ({
   type: types.USER_SUCCESS,
-  payload: res
+  payload: res,
 });
 
-export const getUserId = (id,token) => {
+export const getUserId = (id, token) => {
   return async function (dispatch, getState, { history, api }) {
     dispatch(userRequest(id, token.token));
     try {
       const res = await user.getUser(id, token);
       dispatch(userSuccess(res));
+      dispatch(resetError());
     } catch (error) {
-      dispatch(userFailure(error));
+      dispatch(userFailure());
     }
   };
+};
+
+export const userEditedRequest = () => {
+  return {
+    type: types.USER_EDITED_REQUEST,
+  };
+};
+
+export const userEdited = () => {
+  return {
+    type: types.USER_EDITED,
+  };
+};
+
+export const userEditedError = (error) => {
+  return {
+    type: types.USER_EDITED_ERROR,
+    error: true,
+    payload: {
+      error,
+    },
+  };
+};
+
+export const editUser = (id, userData, token) => async (
+  dispatch,
+  getState,
+  { history, api },
+) => {
+  dispatch(userEditedRequest());
+  try {
+    const res = await user.editUser(id, userData, token);
+    console.log(res);
+    await dispatch(userEdited(res));
+    setTimeout(() => {
+      history.push(`/my-profile/${id}`);
+    }, 3000);
+
+    return res;
+  } catch (error) {
+    dispatch(userEditedError(error.response.data));
+  }
+};
+
+export const userDeleted = (user) => {
+  return {
+    type: types.USER_DELETED,
+    payload: {
+      user,
+    },
+  };
+};
+
+export const deleteUser = (id) => async (
+  dispatch,
+  getState,
+  { history, api },
+) => {
+  const fetchedAdvert = await user.deleteUser(id);
+  setTimeout(() => {
+    dispatch(authLogout());
+  }, 3000);
+
+  return fetchedAdvert;
 };

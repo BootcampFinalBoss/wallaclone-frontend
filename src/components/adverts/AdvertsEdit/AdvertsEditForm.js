@@ -1,38 +1,42 @@
 /* eslint-disable react/prop-types */
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Form, Row, Col, Button, Input, InputNumber, Radio } from 'antd';
 // import NewAdvertForm from './NewAdvertForm';
-import { editAdvert, loadAdvert } from '../../../store/actions';
-import { getAdvertOnState, getUi } from '../../../store/selectors';
+import { editAdvert } from '../../../store/actions';
 import TagsSelect from '../../Tags/TagSelect';
 import { InputImage } from '../../globals';
 import { definitions } from '../../../utils';
+import Swal from 'sweetalert2';
 
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
 const AdvertsEditForm = ({ advert }) => {
-  const advertData = { name: advert?.name };
   const dispatch = useDispatch();
 
   const canSubmit = () => {
     return true;
   };
 
-  const onValuesChange = (changedValues, allValues) => {
-    console.log('values change', changedValues, allValues, advertData);
-  };
-
   const onFinish = async (data) => {
     console.log(data);
-    dispatch(editAdvert({ ...data, _id: advert._id }));
+    const res = await dispatch(editAdvert({ ...data, _id: advert._id }));
+    if (res) {
+      if (res.status === 200) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: res.data.message,
+          showConfirmButton: false,
+          timer: 2400,
+        });
+        return;
+      }
+    }
   };
 
   return (
-    <Form
-      initialValues={advert}
-      onFinish={onFinish}
-      onValuesChange={onValuesChange}>
+    <Form initialValues={advert} onFinish={onFinish}>
       <Row style={{ marginBottom: '3em' }}>
         <Col span={11}>
           <Form.Item

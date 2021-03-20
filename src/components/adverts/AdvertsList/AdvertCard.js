@@ -1,8 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Row, Col, Typography, Card, Avatar } from 'antd';
-import { DeleteOutlined, EyeOutlined, StarOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import { StarFilled, EyeOutlined, StarOutlined } from '@ant-design/icons';
+import { Link, useHistory } from 'react-router-dom';
+import { getLoggedUser } from '../../../store/selectors';
 
 const { REACT_APP_IMAGE_BASE_URL: IMAGE_BASE_URL } = process.env;
 const { Paragraph } = Typography;
@@ -19,13 +21,11 @@ const getHeadStyle = (sale) =>
         color: '#fa8c16',
       };
 
-const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
+const AdvertCard = ({ ad, hideSeller }) => {
   const history = useHistory();
-  if (!ad) return;
+  const userData = useSelector((state) => getLoggedUser(state));
 
-  const handleDelete = () => {
-    console.log('delete advert', ad._id);
-  };
+  if (!ad) return;
 
   const image = () => {
     // TODO: Check if image exists
@@ -50,18 +50,25 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
     }
   };
 
+  // const hasFavoriteFromLoggedUser =
+  //   ad.favorites?.filter((ids) => ids !== userData.userId) > 0;
+  // const FavoriteButton = hasFavoriteFromLoggedUser ? (
+  //   <StarOutlined />
+  // ) : (
+  //   <StarFilled />
+  // );
+
   return (
-    <Col key={ad._id} xs={24} md={12} lg={6} className="mx-auto">
+    <Col key={ad._id} xs={12} md={8} lg={8} className="mx-auto">
       <Card
         title={ad?.type === 'sell' ? 'Sell' : 'Buy'}
         headStyle={getHeadStyle(ad?.type === 'sell' ? true : false)}
         hoverable
         cover={image()}
         actions={[
-          <StarOutlined key="favorite" />,
-          // <DeleteOutlined onClick={() => handleDelete()} key="edit" />,
+          // <FavoriteButton key="favorite" />,
           <EyeOutlined
-            onClick={() => history.push(`/adverts/${ad?._id}`)}
+            onClick={() => history.push(`/adverts/${ad?.name}-${ad?._id}`)}
             key="check details"
           />,
         ]}>
@@ -70,10 +77,15 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
           description={
             <>
               <p className="card-text d-flex justify-content-between card-price font-weight-bold">
-                {ad?.price} €.
-                <i>{ad?.sale ? 'For sale' : 'To buy'}</i>
+                {ad.price} €.
+                <i>{ad.type === 'sell' ? 'For sale' : 'To buy'}</i>
               </p>
-              <p>Tags: {ad?.tags && ad?.tags?.join(', ')}</p>
+              <p>Tags: {ad.tags && ad.tags?.join(', ')}</p>
+              {!hideSeller && (
+                <Link to={`/profile/${ad.user?._id}`}>
+                  Seller: {ad.user?.username}
+                </Link>
+              )}
             </>
           }
         />

@@ -81,7 +81,10 @@ const LoginPage = () => {
           <a href="/forgot-password">Forgot Password</a>
           <br />
           You do not have an account yet?
-          <a href="/register">Register now, its free!</a>
+        <a href="/register"> Register now, its free!</a>
+          <br />
+          <a href="/">Access without login</a>
+
         </Message>
       </Grid.Column>
     </Grid>

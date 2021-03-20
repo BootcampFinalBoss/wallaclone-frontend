@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router';
@@ -10,6 +11,18 @@ import { getLoggedUser } from '../../../store/selectors';
 import translate from '../../../intl/translate';
 
 const { Title, Paragraph } = Typography;
+
+const NoMoreAdverts = ({ text }) => (
+  <Col span={24} className="text-center">
+    <Divider />
+    <Paragraph>
+      {text
+        ? text
+        : 'No more adverts to load, please, refine your search or create one!'}
+    </Paragraph>
+    <CreateNew />
+  </Col>
+);
 
 const AdvertsList = ({ adverts, ui, fetchMore }) => {
   if (ui.loading) {
@@ -25,30 +38,29 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
 
   return (
     <Col xs={20} className="adverts">
-      <PageHeader className="site-page-header" title="Adverts List" />,
+      <PageHeader className="site-page-header" title="Adverts List" />
       <Row gutter={[24, 24]} style={{ marginBottom: '2em' }} justify="center">
-        {adverts?.length > 0 && (
+        {adverts?.length > 1 && (
           <InfiniteScroll
             dataLength={adverts?.length || 10} // This is important field to render the next data
             next={fetchMore}
             hasMore={ui.hasMoreAdverts}
             loader={translate('ui.loading')}
-            // endMessage={}
-          >
+            endMessage={<NoMoreAdverts />}>
             <Row gutter={[24, 24]}>
               {adverts?.map((ad) => {
-                return <AdvertCard key={ad._id} ad={ad} checkDetail={true} />;
+                return <AdvertCard key={ad._id} ad={ad} />;
               })}
             </Row>
           </InfiniteScroll>
         )}
+        {adverts?.length === 1 &&
+          adverts?.map((ad) => {
+            return <AdvertCard key={ad._id} ad={ad} />;
+          })}
+        {adverts?.length === 1 && <NoMoreAdverts />}
         {(!adverts || adverts?.length === 0) && (
-          <Col className="text-center">
-            <Paragraph>
-              No adverts loaded, refine your search or create one!
-            </Paragraph>
-            <CreateNew />
-          </Col>
+          <NoMoreAdverts text="There is no adverts to load, please, refine your search or create one!" />
         )}
       </Row>
     </Col>

@@ -8,3 +8,18 @@
   overflow-y: auto !important;
   overflow-x: hidden !important;
 }
+
+.ant-card {
+  cursor: default;
+}
+
+.btn-favorites {
+  display: flex;
+  align-items: center;
+}
+
+.btn-favorites:hover,
+.btn-favorites:focus {
+  border-color: #f7eb55;
+  color: #cfc002;
+}
