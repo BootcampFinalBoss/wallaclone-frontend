@@ -19,7 +19,7 @@ const getHeadStyle = (sale) =>
         color: '#fa8c16',
       };
 
-const AdvertCard = ({ ad }) => {
+const AdvertCard = ({ ad, hideSeller }) => {
   const history = useHistory();
 
   if (!ad) return;
@@ -58,7 +58,7 @@ const AdvertCard = ({ ad }) => {
           <StarOutlined key="favorite" />,
           // <DeleteOutlined onClick={() => handleDelete()} key="edit" />,
           <EyeOutlined
-            onClick={() => history.push(`/adverts/${ad?._id}`)}
+            onClick={() => history.push(`/adverts/${ad?.name}-${ad?._id}`)}
             key="check details"
           />,
         ]}>
@@ -71,9 +71,11 @@ const AdvertCard = ({ ad }) => {
                 <i>{ad.type === 'sell' ? 'For sale' : 'To buy'}</i>
               </p>
               <p>Tags: {ad.tags && ad.tags?.join(', ')}</p>
-              <Link to={`\profile\${ad.user?._id}`}>
-                Seller: {ad.user?.username}
-              </Link>
+              {!hideSeller && (
+                <Link to={`/profile/${ad.user?._id}`}>
+                  Seller: {ad.user?.username}
+                </Link>
+              )}
             </>
           }
         />

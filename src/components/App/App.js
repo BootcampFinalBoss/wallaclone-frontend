@@ -69,7 +69,7 @@ const App = () => {
             <ResetPassword />
           </Route>
           <Route path="/user-edit/:id">
-            <UserEdit />
+            {(routerProps) => <UserEdit {...routerProps} />}
           </Route>
           <PrivateRoute path="/adverts/new" exact component={AdvertsNew} />
           <PrivateRoute path="/adverts/edit/:id" exact>
@@ -77,7 +77,7 @@ const App = () => {
               <AdvertsEdit history={history} {...routerProps} />
             )}
           </PrivateRoute>
-          <PrivateRoute path="/adverts/:id" exact>
+          <PrivateRoute path="/adverts/:nameId" exact>
             {(routerProps) => <AdvertPage history={history} {...routerProps} />}
           </PrivateRoute>
           <Route path="/error" exact>

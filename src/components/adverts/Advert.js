@@ -29,15 +29,13 @@ const { Title, Paragraph } = Typography;
 const AdvertPage = ({ history, ...props }) => {
   const dispatch = useDispatch();
   const ui = useSelector((state) => getUi(state));
-  const getAdvertId = () => props.match.params.id;
+  const getAdvertId = () => props.match.params.nameId?.split('-')[1];
   const advert = useSelector((state) => getAdvertOnState(state));
 
   const handleDeleteClick = async () => {
     dispatch(deleteAdvert(getAdvertId()));
 
-      await history.push('/');
-
-
+    await history.push('/');
   };
 
   const handleGetAdvert = async () => {
@@ -49,15 +47,15 @@ const AdvertPage = ({ history, ...props }) => {
   };
 
   const handleDeleteAdvert = async () => {
-   const res = await dispatch(deleteAdvert(getAdvertId()));
-    if(res){
-      if (res.status === 200){
+    const res = await dispatch(deleteAdvert(getAdvertId()));
+    if (res) {
+      if (res.status === 200) {
         Swal.fire({
           position: 'center',
           icon: 'success',
           title: res.data.message,
           showConfirmButton: false,
-          timer: 2400
+          timer: 2400,
         });
         return;
       }

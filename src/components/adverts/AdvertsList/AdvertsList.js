@@ -49,14 +49,14 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
             endMessage={<NoMoreAdverts />}>
             <Row gutter={[24, 24]}>
               {adverts?.map((ad) => {
-                return <AdvertCard key={ad._id} ad={ad} checkDetail={true} />;
+                return <AdvertCard key={ad._id} ad={ad} />;
               })}
             </Row>
           </InfiniteScroll>
         )}
         {adverts?.length === 1 &&
           adverts?.map((ad) => {
-            return <AdvertCard key={ad._id} ad={ad} checkDetail={true} />;
+            return <AdvertCard key={ad._id} ad={ad} />;
           })}
         {adverts?.length === 1 && <NoMoreAdverts />}
         {(!adverts || adverts?.length === 0) && (

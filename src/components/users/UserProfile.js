@@ -131,7 +131,7 @@ const UserProfile = () => {
           {profileData && (
             <Row gutter={[24, 24]} justify="center">
               {profileData?.adverts.map((ad) => {
-                return <AdvertCard key={ad._id} ad={ad} checkDetail={true} />;
+                return <AdvertCard key={ad._id} ad={ad} hideSeller={true} />;
               })}
             </Row>
           )}

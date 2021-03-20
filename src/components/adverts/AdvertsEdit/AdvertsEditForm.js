@@ -13,28 +13,23 @@ import Swal from 'sweetalert2';
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
 const AdvertsEditForm = ({ advert }) => {
-  const advertData = { name: advert?.name };
   const dispatch = useDispatch();
 
   const canSubmit = () => {
     return true;
   };
 
-  const onValuesChange = (changedValues, allValues) => {
-    console.log('values change', changedValues, allValues, advertData);
-  };
-
   const onFinish = async (data) => {
     console.log(data);
     const res = await dispatch(editAdvert({ ...data, _id: advert._id }));
-    if(res){
-      if (res.status === 200){
+    if (res) {
+      if (res.status === 200) {
         Swal.fire({
           position: 'center',
           icon: 'success',
           title: res.data.message,
           showConfirmButton: false,
-          timer: 2400
+          timer: 2400,
         });
         return;
       }
@@ -42,10 +37,7 @@ const AdvertsEditForm = ({ advert }) => {
   };
 
   return (
-    <Form
-      initialValues={advert}
-      onFinish={onFinish}
-      onValuesChange={onValuesChange}>
+    <Form initialValues={advert} onFinish={onFinish}>
       <Row style={{ marginBottom: '3em' }}>
         <Col span={11}>
           <Form.Item

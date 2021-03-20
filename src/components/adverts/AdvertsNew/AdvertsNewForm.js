@@ -1,16 +1,24 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Form, Row, Col, Button, Input, InputNumber, Radio, Upload } from 'antd';
+import {
+  Form,
+  Row,
+  Col,
+  Button,
+  Input,
+  InputNumber,
+  Radio,
+  Upload,
+} from 'antd';
 // import NewAdvertForm from './NewAdvertForm';
 import { createAdvert } from '../../../store/actions';
 import { getUi } from '../../../store/selectors';
 import TagsSelect from '../../Tags/TagSelect';
 import { InputImage } from '../../globals';
 import { definitions } from '../../../utils';
-import { UploadOutlined } from "@ant-design/icons";
+import { UploadOutlined } from '@ant-design/icons';
 import Swal from 'sweetalert2';
 import TextArea from 'antd/es/input/TextArea';
-
 
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
@@ -19,11 +27,11 @@ const NewAdvertForm = () => {
   const dispatch = useDispatch();
   const fileList = [];
 
-  const uploadProps ={
-    beforeUpload: file => {
-      fileList.push(file)
+  const uploadProps = {
+    beforeUpload: (file) => {
+      fileList.push(file);
       return false;
-    }
+    },
   };
 
   const handleCreateAdvert = async (data) => {
@@ -31,14 +39,14 @@ const NewAdvertForm = () => {
     /*console.log('File', fileList);*/
     data.image = fileList[0];
     const res = await dispatch(createAdvert(data));
-    if(res){
-      if (res.status === 200){
+    if (res) {
+      if (res.status === 200) {
         Swal.fire({
           position: 'center',
           icon: 'success',
           title: res.data.message,
           showConfirmButton: false,
-          timer: 2800
+          timer: 2800,
         });
         return;
       }
@@ -60,8 +68,11 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}
-          >
+              {
+                pattern: new RegExp(/^[a-zA-ZÀ-ÿ@~`!@#$%^&*()_=+]+$/i),
+                message: "You can't use the some special characters!",
+              },
+            ]}>
             <Input placeholder="Name" />
           </Form.Item>
           <Form.Item
@@ -71,8 +82,7 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}
-          >
+            ]}>
             <InputNumber min={MIN_PRICE} max={MAX_PRICE} />
           </Form.Item>
         </Col>
@@ -84,8 +94,7 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}
-          >
+            ]}>
             <TagsSelect />
           </Form.Item>
           <Form.Item
@@ -95,8 +104,7 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}
-          >
+            ]}>
             <Radio.Group options={[saleOptions.sell, saleOptions.buy]} />
           </Form.Item>
         </Col>
@@ -108,8 +116,7 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}
-          >
+            ]}>
             <TextArea maxLength={150} placeholder="Name" />
           </Form.Item>
           <Form.Item name="image" label="Image">
@@ -122,8 +129,7 @@ const NewAdvertForm = () => {
             htmlType="submit"
             disabled={!canSubmit()}
             shape="round"
-            icon={<UploadOutlined />}
-          >
+            icon={<UploadOutlined />}>
             Create!
           </Button>
         </Col>
