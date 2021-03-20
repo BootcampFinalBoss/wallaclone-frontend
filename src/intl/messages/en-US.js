@@ -8,21 +8,30 @@ export default {
       byTags: 'By tags',
       byPrice: 'By price',
       byName: 'By name',
-      byType:'By type',
+      byType: 'By type',
       search: 'Search',
       createOne: 'Go create one!',
     },
     advertsList: {
-      title: 'Lista de Anuncios',
+      title: 'Adverts List',
       haveAccount: 'Have an account?',
       logAndCreateBtn: 'Go login and create one!',
       regAndCreateBtn: 'Go register and create one!',
-      member: 'You are not a member yet?'
-    }
-    ,
-    userPage: {
-
+      member: 'You are not a member yet?',
     },
+    createAdvert: {
+      title: 'Create an advert',
+    },
+    advertsForm: {
+      formName: 'Name',
+      formPrice: 'Price',
+      formType: 'Type',
+      formDesc: 'Description',
+      formImage: 'Image',
+      formSelectFile: 'Select File',
+      createBtn: 'Create!',
+    },
+    userPage: {},
     advertsCard: {
       sell: 'Sell',
       buy: 'Buy',
@@ -36,7 +45,6 @@ export default {
       account: 'You do not have an account yet?',
       forgotPass: 'Forgot Password',
       loginBtn: 'Login',
-
     },
     'subscribe-invite': 'Sure, {name}. I will subscribe your channel!',
     menu: {
