@@ -4,7 +4,7 @@ export default {
   [LOCALES.SPANISH]: {
     advertsPage: {
       title: 'Página de anuncios',
-      pNoAdverts: 'No hay anuncios cargados, ¡refine su búsqueda o cree una!',
+      pNoAdverts: 'No hay anuncios cargados, ¡refine su búsqueda o cree un auncio!',
       byTags: 'Tags',
       byPrice: 'Precio',
       byName: 'Nombre',
@@ -44,6 +44,10 @@ export default {
       account: '¿Aún no tiene una cuenta?',
       forgotPass: 'Ha olvidado su contraseña?',
       loginBtn: 'Acceder',
+    },
+    editUser: {
+      title: 'Edit User',
+      
     },
     'subscribe-invite': 'Sure, {name}. I will subscribe your channel!',
     menu: {

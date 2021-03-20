@@ -46,6 +46,10 @@ export default {
       forgotPass: 'Forgot Password',
       loginBtn: 'Login',
     },
+    editUser: {
+      title: 'Edit User',
+      
+    },
     'subscribe-invite': 'Sure, {name}. I will subscribe your channel!',
     menu: {
       home: 'Home',
