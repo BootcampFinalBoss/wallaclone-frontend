@@ -26,7 +26,6 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const [profileData, setProfileData] = useState(null);
   let pageTitle = loggedUser.userId === id ? 'My Profile' : '';
-  console.log(id);
 
   // Get the user id
   // Save the current logged user id on state (Important for better performance on the next step)
@@ -42,9 +41,7 @@ const UserProfile = () => {
 
   useEffect(() => {
     handleGetUserData();
-    console.log(profileData);
   }, [id]);
-  console.log(profileData);
 
   if (!profileData && !loading) {
     return <Redirect to="/404" />;
@@ -69,7 +66,6 @@ const UserProfile = () => {
 
     const handleDeleteAdvert = async () => {
         const res = await dispatch(deleteUser(id.id, token.token));
-        console.log(res);
         if(res){
             if (res.status === 200){
                 Swal.fire({
@@ -106,11 +102,11 @@ const UserProfile = () => {
         title="User Profile"
         style={{ maxWidth: 1200, textAlign: 'center', padding: '0 1rem' }}
         actions={[
-          <Button onClick={() => history.push(`/user-adverts/${idUser}`)} key="advert" type="default" size={64}>
+          <Button onClick={() => history.push(`/user-adverts/${id}`)} key="advert" type="default" size={64}>
             Adverts
           </Button>,
           <Button
-              onClick={() => history.push(`/user-edit/${idUser}`)}
+              onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
               key="edit" type="primary" size={64}>
             Edit
           </Button>,

@@ -14,7 +14,9 @@ const initialState = {
   },
   locale: null,
   resReset: null,
+  user:null,
 };
+
 
 export const auth = (state = initialState.auth, action) => {
   switch (action.type) {
@@ -129,8 +131,12 @@ export const reset = (state = initialState.resReset, action) => {
 };
 
 
-/*export const user = (state= initialState.user, action) => {
+export const user = (state= initialState.user, action) => {
   switch (action.type) {
+    case  types.USER_EDITED ||
+        types.USER_REQUEST ||
+        types.USER_EDITED_REQUEST:
+      return {...state, loading: true}
     case types.USER_SUCCESS:
       // login
       return action.payload; // Save the token on redux state
@@ -139,5 +145,5 @@ export const reset = (state = initialState.resReset, action) => {
     default:
       return state;
   }
-};*/
+};
 

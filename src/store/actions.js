@@ -385,17 +385,31 @@ export const getUserId = (id,token) => {
     try {
       const res = await user.getUser(id, token);
       dispatch(userSuccess(res));
+      dispatch(resetError());
     } catch (error) {
-      dispatch(userFailure(error));
+      dispatch(userFailure());
     }
   };
 };
 
-export const userEdited = (user) => {
+export const userEditedRequest = () => {
+  return {
+    type: types.USER_EDITED_REQUEST,
+  };
+};
+
+export const userEdited = () => {
   return {
     type: types.USER_EDITED,
+  };
+};
+
+export const userEditedError = (error) => {
+  return {
+    type: types.USER_EDITED_ERROR,
+    error: true,
     payload: {
-      user,
+      error,
     },
   };
 };
@@ -405,14 +419,18 @@ export const editUser = (id, userData, token) => async (
     getState,
     { history, api },
 ) => {
+  dispatch(userEditedRequest());
   try {
     const res = await user.editUser(id, userData, token);
-    console.log(id,userData, token);
-    dispatch(userEdited(res?.data?.result));
-    //history.push(`/adverts/${res?.data?.result?._id}`);
     console.log(res);
+    await dispatch(userEdited(res));
+    setTimeout(() => {
+      history.push(`/my-profile/${id}`);
+    }, 3000)
+
+    return res;
   } catch (error) {
-    dispatch(generateAdvertError(error));
+    dispatch(userEditedError(error.response.data));
   }
 };
 

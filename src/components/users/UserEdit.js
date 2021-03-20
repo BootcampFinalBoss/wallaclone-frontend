@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import "../../assets/styles/styles.css"
 import {useParams} from 'react-router-dom';
 import {editUser, getUserId} from '../../store/actions';
+import {getUi} from '../../store/selectors';
+import Swal from 'sweetalert2';
 
 const UserEdit = () => {
   let dataInitials = {};
@@ -14,6 +16,7 @@ const UserEdit = () => {
   const state = useSelector((state) => state);
   const token = state.auth;
   const dataUser = state.user
+  const {error} = useSelector(state => getUi(state));
 
   const canSubmit = () => {
     return true;
@@ -21,13 +24,12 @@ const UserEdit = () => {
 
 
   if(dataUser !== null){
-    console.log(dataUser);
     dataInitials = {
-      name: dataUser.result.name,
-      email: dataUser.result.email,
-      username: dataUser.result.username,
-      avatar: dataUser.result.avatar,
-      surname: dataUser.result.surname
+      name: dataUser.name,
+      email: dataUser.email,
+      username: dataUser.username,
+      avatar: dataUser.avatar,
+      surname: dataUser.surname
     }
   }
 
@@ -40,9 +42,22 @@ const UserEdit = () => {
   };
 
   const onFinish = async (data) => {
-    console.log('submit', data);
-    dispatch(editUser(id.id,data, token.token ));
-    console.log(data, id.id, token.token);
+    const res = await dispatch(editUser(id.id,data, token.token ));
+    console.log(res);
+    if(res){
+      console.log(res);
+      if (res.status === 200){
+        console.log('Aqui');
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: res.data,
+          showConfirmButton: false,
+          timer: 2500
+        });
+        return;
+      }
+    }
   };
 
   return (
@@ -53,6 +68,9 @@ const UserEdit = () => {
         onFinish={onFinish}
         onValuesChange={onValuesChange}
       >
+        {error && (
+            <Alert message={error.error.message} type="error" showIcon />
+        )}
         <Row type="flex" justify="space-between" gutter={16}>
           <Col xs={24} md={12} lg={12} xl={12}>
             <Form.Item
@@ -90,54 +108,6 @@ const UserEdit = () => {
               ]}
             >
               <Input />
-            </Form.Item>
-            {state.error &&
-              state.error.errors.map((error) => {
-                if (error.param === 'email') {
-                  return <Alert message={error.msg} type="error" showIcon />;
-                }
-              })}
-          </Col>
-
-          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            <Form.Item
-              name="password"
-              label="Password"
-              rules={[
-                {
-                  min: 8,
-                  message: "Please input your password!",
-                },
-              ]}
-              hasFeedback
-            >
-              <Input.Password />
-            </Form.Item>
-          </Col>
-          <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            <Form.Item
-              name="confirm"
-              label="Confirm Password"
-              dependencies={["password"]}
-              hasFeedback
-              rules={[
-                {
-                  min: 8,
-                  message: "Please confirm your password!",
-                },
-                ({ getFieldValue }) => ({
-                  validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
-                      return Promise.resolve();
-                    }
-                    return Promise.reject(
-                      "The two passwords that you entered do not match!"
-                    );
-                  },
-                }),
-              ]}
-            >
-              <Input.Password />
             </Form.Item>
           </Col>
           <Form.Item>

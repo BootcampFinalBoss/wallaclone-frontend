@@ -1,6 +1,7 @@
 import client, {setAuthorizationHeader} from './client';
 import {useSelector} from 'react-redux';
 import {getLoggedUser} from '../store/selectors';
+import {logout} from './auth';
 
 
 export const getUser = (id) => {
@@ -11,7 +12,7 @@ export const getUser = (id) => {
 
 export const editUser = (id, data, token) => {
     return client.put(`/user/${id}`, data, client(setAuthorizationHeader(token))).then(res => {
-        return res.data;
+        return res;
     })
 };
 
