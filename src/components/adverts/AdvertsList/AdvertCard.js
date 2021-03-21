@@ -1,9 +1,10 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import { Row, Col, Typography, Card, Avatar } from 'antd';
 import { StarFilled, EyeOutlined, StarOutlined } from '@ant-design/icons';
-import { Link, useHistory } from 'react-router-dom';
+import Chip from '@material-ui/core/Chip';
 import { getLoggedUser } from '../../../store/selectors';
 import translate from '../../../intl/translate';
 
@@ -36,6 +37,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
         <img
           src={`${IMAGE_BASE_URL}/${ad.image}`}
           className="card-img-top"
+          style={{ padding: '1rem' }}
           alt={ad?.name}
         />
       );
@@ -60,7 +62,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
   // );
 
   return (
-    <Col key={ad._id} xs={12} md={8} lg={8} className="mx-auto">
+    <Col key={ad._id} xs={12} className="mx-auto">
       <Card
         title={ad?.type === 'sell' ? 'Sell' : 'Buy'}
         headStyle={getHeadStyle(ad?.type === 'sell' ? true : false)}
@@ -77,16 +79,54 @@ const AdvertCard = ({ ad, hideSeller }) => {
           title={ad.title || ad?.name}
           description={
             <>
-              <p className="card-text d-flex justify-content-between card-price font-weight-bold">
-                {ad.price} €.
-                <i>{ad.type === 'sell' ? 'For sale' : 'To buy'}</i>
+              <p>
+                <Chip
+                  color="primary"
+                  label={`Tags: ${ad?.tags && ad?.tags?.join(', ')}`}
+                  style={{ fontSize: '.8rem' }}></Chip>
               </p>
-              <p>Tags: {ad.tags && ad.tags?.join(', ')}</p>
-              {!hideSeller && (
-                <Link to={`/profile/${ad.user?.username}`}>
-                  Seller: {ad.user?.username}
-                </Link>
-              )}
+              <div style={{ display: 'flex', flex: 'row' }}>
+                <p>
+                  <Chip
+                    label={`${ad.price} €`}
+                    color="secondary"
+                    style={{ fontSize: '1rem' }}>
+                    {ad?.price} €.
+                  </Chip>
+                </p>
+                <p>
+                  {ad.state === 'reserved' ? (
+                    <Chip
+                      label={translate('advert.reserved')}
+                      color="secondary"
+                      style={{
+                        fontSize: '1.2rem',
+                        backgroundColor: '#BC876C',
+                        margin: '0 1rem',
+                      }}
+                    />
+                  ) : ad.state === 'sold' ? (
+                    <Chip
+                      label={translate('advert.sold')}
+                      color="secondary"
+                      style={{
+                        fontSize: '1.2rem',
+                        backgroundColor: '#027E0B',
+                        margin: '0 1rem',
+                      }}
+                    />
+                  ) : (
+                    ''
+                  )}
+                </p>
+              </div>
+              <p>
+                {!hideSeller && (
+                  <Link to={`/profile/${ad.user?.username}`}>
+                    {translate('advert.seller')}: {ad.user?.username}
+                  </Link>
+                )}
+              </p>
             </>
           }
         />

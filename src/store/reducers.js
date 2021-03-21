@@ -114,6 +114,7 @@ export const ui = (state = initialState.ui, action) => {
       return { ...state, loading: true };
     case types.ADVERTS_SUCCESS:
     case types.ADVERT_DELETED:
+    case types.UI_STOP_LOADING:
       return { ...state, loading: false };
     default:
       return state;
@@ -140,7 +141,7 @@ export const user = (state = initialState.user, action) => {
       return { ...state, loading: true };
     case types.USER_SUCCESS:
       // login
-      return action.payload; // Save the token on redux state
+      return [...state, action.payload]; // Save the token on redux state
     case types.USER_DELETED:
       return action.payload;
     default:

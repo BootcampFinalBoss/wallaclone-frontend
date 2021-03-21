@@ -21,7 +21,12 @@ import { getAdvertOnState, getLoggedUser, getUi } from '../../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import Swal from 'sweetalert2';
-import { addFavoriteAdvert, removeFavoriteAdvert } from '../../api/adverts';
+import {
+  addFavoriteAdvert,
+  removeFavoriteAdvert,
+  updateAdvertState,
+} from '../../api/adverts';
+import translate from '../../intl/translate';
 
 const { confirm } = Modal;
 
@@ -34,6 +39,7 @@ const AdvertPage = ({ history, ...props }) => {
   const getAdvertId = () => props.match.params.nameId?.split('-')[1];
   const advert = useSelector((state) => getAdvertOnState(state));
   const [isFavorited, setIsFavorited] = useState(false);
+  const [advertState, setAdvertState] = useState(false);
 
   const handleGetAdvert = async () => {
     dispatch(loadAdvert(getAdvertId()));
@@ -69,6 +75,11 @@ const AdvertPage = ({ history, ...props }) => {
     }
   };
 
+  const handleChangeState = async (newState) => {
+    await updateAdvertState(advert._id, newState);
+    setAdvertState(newState !== 'default' ? newState : advert?.type);
+  };
+
   const showConfirmDelete = () => {
     confirm({
       title: 'Are you sure delete this advert?',
@@ -83,6 +94,9 @@ const AdvertPage = ({ history, ...props }) => {
       onCancel() {},
     });
   };
+
+  const addFavoriteLabel = translate('advert.detail.addFavorite');
+  const removeFavoriteLabel = translate('advert.detail.removeFavorite');
 
   const renderAdvert = () => {
     if (ui?.error) {
@@ -111,13 +125,50 @@ const AdvertPage = ({ history, ...props }) => {
               <Tags tags={tags} />
             </Row>
             {advert.favorites && (
-              <Row style={{ marginTop: 20 }}>
+              <Row
+                style={{
+                  marginTop: '20px',
+                }}>
                 <Button className="btn-favorites" onClick={handleToggleAdvert}>
-                  {isFavorited ? 'Remove favorite' : 'Add Favorite'}
+                  {isFavorited ? removeFavoriteLabel : addFavoriteLabel}
                   <StarOutlined />
                 </Button>
               </Row>
             )}
+            <Row
+              style={{
+                marginTop: '20px',
+              }}>
+              <Col span={24}>
+                <Row>
+                  <Paragraph>
+                    {translate('advert.state')}: {advertState}
+                  </Paragraph>
+                </Row>
+              </Col>
+              {userData.userId === advert.user._id && (
+                <Col span={24}>
+                  <Row>
+                    <Paragraph>{translate('advert.changeState')}:</Paragraph>
+                  </Row>
+                  <Row>
+                    <Button
+                      style={{ marginRight: '20px' }}
+                      onClick={() => handleChangeState('reserved')}>
+                      Reserved
+                    </Button>
+                    <Button
+                      style={{ marginRight: '20px' }}
+                      onClick={() => handleChangeState('sold')}>
+                      Sold
+                    </Button>
+                    <Button onClick={() => handleChangeState('default')}>
+                      Nothing
+                    </Button>
+                  </Row>
+                </Col>
+              )}
+            </Row>
           </Col>
           <Col span={12}>
             <Image
@@ -129,16 +180,18 @@ const AdvertPage = ({ history, ...props }) => {
             />
           </Col>
           {userData.userId === advert.user._id && (
-            <>
-              <Col
-                span={5}
-                style={{ justifyContent: 'space-between', display: 'flex' }}>
-                <Button onClick={goToEditAdvert}>Edit advert</Button>
-                <Button danger onClick={showConfirmDelete}>
-                  Delete advert
-                </Button>
-              </Col>
-            </>
+            <Col
+              span={5}
+              style={{
+                justifyContent: 'space-between',
+                display: 'flex',
+                marginTop: '20px',
+              }}>
+              <Button onClick={goToEditAdvert}>Edit advert</Button>
+              <Button danger onClick={showConfirmDelete}>
+                Delete advert
+              </Button>
+            </Col>
           )}
         </Row>
       );
@@ -155,12 +208,13 @@ const AdvertPage = ({ history, ...props }) => {
     ) {
       setIsFavorited(true);
     }
+    setAdvertState(advert?.state !== 'default' ? advert?.state : advert?.type);
   }, [advert?._id, userData]);
 
   return (
     <Row justify="center">
       <Col xs={20} lg={16}>
-        <Divider>Detail of your advert</Divider>
+        <Divider>{translate('advert.detail.title')}</Divider>
         {renderAdvert()}
       </Col>
     </Row>

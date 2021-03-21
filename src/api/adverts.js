@@ -41,3 +41,6 @@ export const removeFavoriteAdvert = (advertId, userId) =>
 
 export const deleteAdvert = (id, userId) =>
   client.delete(`/adverts/${id}`, { data: { userId } });
+
+export const updateAdvertState = (advertId, newState) =>
+  client.put(`/adverts/state/${advertId}`, { newState: newState });
