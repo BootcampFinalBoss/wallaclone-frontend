@@ -26,9 +26,14 @@ const userOptions = (userData) => {
 };
 
 const Header = () => {
+  const dispatch = useDispatch();
   const [menuActiveItem, setMenuActiveItem] = useState('');
   const userData = useSelector((state) => getLoggedUser(state));
   const history = useHistory();
+
+  const handleChangeLocale = (newLocale) => {
+    dispatch(loadLang(newLocale));
+  };
 
   const handleItemClick = (e, { name }) => setMenuActiveItem(name);
 
@@ -42,6 +47,16 @@ const Header = () => {
         </Link>
       </Menu.Item>
       <Menu.Menu position="right">
+        <Menu.Item
+          onClick={() => handleChangeLocale(LOCALES.ENGLISH)}
+          name={LOCALES.ENGLISH}
+          active={menuActiveItem === LOCALES.ENGLISH}
+          color="teal"></Menu.Item>
+        <Menu.Item
+          onClick={() => handleChangeLocale(LOCALES.SPANISH)}
+          name={LOCALES.SPANISH}
+          active={menuActiveItem === LOCALES.SPANISH}
+          color="teal"></Menu.Item>
         {userData && userData.token ? (
           <PrivateHeader
             menuActiveItem={menuActiveItem}
@@ -105,10 +120,6 @@ const PrivateHeader = ({
     history.push(`/profile/${username}`);
   };
 
-  const handleChangeLocale = (newLocale) => {
-    dispatch(loadLang(newLocale));
-  };
-
   return (
     <>
       <Menu.Item
@@ -118,16 +129,6 @@ const PrivateHeader = ({
         color="teal">
         <Link to={'/adverts/new'}>{translate('menu.createAdvert')}</Link>
       </Menu.Item>
-      <Menu.Item
-        onClick={() => handleChangeLocale(LOCALES.ENGLISH)}
-        name={LOCALES.ENGLISH}
-        active={menuActiveItem === LOCALES.ENGLISH}
-        color="teal"></Menu.Item>
-      <Menu.Item
-        onClick={() => handleChangeLocale(LOCALES.SPANISH)}
-        name={LOCALES.SPANISH}
-        active={menuActiveItem === LOCALES.SPANISH}
-        color="teal"></Menu.Item>
       <Menu.Item>
         <Dropdown
           inline

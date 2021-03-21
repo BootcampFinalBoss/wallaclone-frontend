@@ -19,7 +19,11 @@ import Tags from '../Tags/Tags';
 import { loadAdvert, deleteAdvert } from '../../store/actions';
 import { getAdvertOnState, getLoggedUser, getUi } from '../../store/selectors';
 import { useDispatch, useSelector } from 'react-redux';
-import { ExclamationCircleOutlined } from '@ant-design/icons';
+import {
+  ExclamationCircleOutlined,
+  FacebookFilled,
+  TwitterSquareFilled,
+} from '@ant-design/icons';
 import Swal from 'sweetalert2';
 import {
   addFavoriteAdvert,
@@ -109,6 +113,7 @@ const AdvertPage = ({ history, ...props }) => {
 
     if (advert && advert.name) {
       const { name, description, price, tags, type, image } = advert;
+      const advertLink = `${process.env.REACT_APP_FRONT_END}/${advert?.name}-${advert?._id}`;
 
       return (
         <Row style={{ marginBottom: '3em' }}>
@@ -129,16 +134,25 @@ const AdvertPage = ({ history, ...props }) => {
                 style={{
                   marginTop: '20px',
                 }}>
-                <Button className="btn-favorites" onClick={handleToggleAdvert}>
-                  {isFavorited ? removeFavoriteLabel : addFavoriteLabel}
-                  <StarOutlined />
-                </Button>
+                <Paragraph>
+                  {translate('advert.detail.hasNFavorites')}:{' '}
+                  {advert.favorites.length}
+                </Paragraph>
+                {userData.token && (
+                  <Button
+                    className="btn-favorites"
+                    onClick={handleToggleAdvert}>
+                    {isFavorited ? removeFavoriteLabel : addFavoriteLabel}
+                    <StarOutlined />
+                  </Button>
+                )}
               </Row>
             )}
             <Row
               style={{
                 marginTop: '20px',
-              }}>
+              }}
+              gutter={[24, 24]}>
               <Col span={24}>
                 <Row>
                   <Paragraph>
@@ -153,12 +167,12 @@ const AdvertPage = ({ history, ...props }) => {
                   </Row>
                   <Row>
                     <Button
-                      style={{ marginRight: '20px' }}
+                      className="button-margin-right"
                       onClick={() => handleChangeState('reserved')}>
                       Reserved
                     </Button>
                     <Button
-                      style={{ marginRight: '20px' }}
+                      className="button-margin-right"
                       onClick={() => handleChangeState('sold')}>
                       Sold
                     </Button>
@@ -168,6 +182,37 @@ const AdvertPage = ({ history, ...props }) => {
                   </Row>
                 </Col>
               )}
+              <Col span={24}>
+                <Paragraph>{translate('global.share')}:</Paragraph>
+                <Row>
+                  <Button className="button-margin-right share-buttons">
+                    <FacebookFilled />
+                    <div
+                      className="fb-share-button"
+                      data-href="https://developers.facebook.com/docs/plugins/"
+                      data-layout="button_count"
+                      data-size="large">
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+                        className="fb-xfbml-parse-ignore">
+                        {translate('global.share')}
+                      </a>
+                    </div>
+                  </Button>
+                  <Button className="share-buttons">
+                    <TwitterSquareFilled />
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      className="twitter-share-button"
+                      href={`https://twitter.com/intent/tweet?text=Check%20this%20awesome%20advert!%20${advertLink}`}>
+                      Tweet
+                    </a>
+                  </Button>
+                </Row>
+              </Col>
             </Row>
           </Col>
           <Col span={12}>

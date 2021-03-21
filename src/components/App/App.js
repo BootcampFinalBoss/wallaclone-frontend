@@ -77,9 +77,9 @@ const App = () => {
               <AdvertsEdit history={history} {...routerProps} />
             )}
           </PrivateRoute>
-          <PrivateRoute path="/adverts/:nameId" exact>
+          <Route path="/adverts/:nameId" exact>
             {(routerProps) => <AdvertPage history={history} {...routerProps} />}
-          </PrivateRoute>
+          </Route>
           <Route path="/error" exact>
             {CommonErrorPage}
           </Route>

@@ -33,6 +33,7 @@ export default {
         title: 'Detail of your advert',
         removeFavorite: 'Remove favorite',
         addFavorite: 'Add Favorite',
+        hasNFavorites: 'Advert favorites',
       },
     },
     advertsForm: {
@@ -73,6 +74,9 @@ export default {
     },
     ui: {
       loading: 'Loading...',
+    },
+    global: {
+      share: 'Share',
     },
     richTextEx: 'I have <bold>{num, plural, one {# dog} other {# dogs}}</bold>',
   },
