@@ -10,7 +10,7 @@ import AdvertsList from './AdvertsList';
 import AdvertsFilters from './AdvertsFilters';
 // import BasicFilters from './BasicFilters';
 
-import { loadMoreAdverts, loadTags } from '../../../store/actions';
+import { loadAdverts, loadMoreAdverts, loadTags } from '../../../store/actions';
 import {
   getAdvertsOnState,
   getUi,
@@ -18,6 +18,7 @@ import {
 } from '../../../store/selectors';
 
 import '../../../assets/styles/styles.css';
+import { sortOptions } from '../../../utils/definitions';
 
 const { Title, Paragraph } = Typography;
 
@@ -29,6 +30,7 @@ const defaultFilters = {
   price: pricesRange,
   tags: [],
   sale: saleOptions.all,
+  sort: sortOptions.desc,
 };
 
 const AdvertsContainer = () => {
@@ -53,6 +55,7 @@ const AdvertsContainer = () => {
 
   useEffect(() => {
     dispatch(loadTags());
+    dispatch(loadAdverts({ ...filters }));
   }, [loadTags]);
 
   return (
@@ -67,7 +70,6 @@ const AdvertsContainer = () => {
             className="site-page-header"
             title={translate('advertsPage.title')}
           />
-          ,
         </Col>
         <Col span={24}>
           <Row justify="center" align="middle">

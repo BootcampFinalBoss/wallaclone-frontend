@@ -33,27 +33,11 @@ export const createAdvert = (advert) => {
 export const editAdvert = (advert) =>
   client.put(`/adverts/${advert._id}`, advert);
 
-export const deleteAdvert = (id) => client.delete(`/adverts/${id}`);
+export const addFavoriteAdvert = (advertId, userId) =>
+  client.post(`/adverts/favorite/${advertId}`, userId);
 
-export const getAdvertsUser = (id) => {
-    return client.get(`/adverts-user/${id}`).then(res => {
-        console.log(res.data);
-        return res.data;
-    })
-}
+export const removeFavoriteAdvert = (advertId, userId) =>
+  client.delete(`/adverts/favorite/${advertId}`, { data: { userId } });
 
-export const reserved = (id) => {
-    return client.put(`/advert-reserved/${id}`).then(res => {
-        console.log(id);
-        console.log(res.data.reserved);
-        return res.data;
-    })
-}
-
-export const sold = (id) => {
-    return client.put(`/advert-sold/${id}`).then(res => {
-        console.log(res.data.sold);
-        return res.data;
-    })
-}
-
+export const deleteAdvert = (id, userId) =>
+  client.delete(`/adverts/${id}`, { data: { userId } });

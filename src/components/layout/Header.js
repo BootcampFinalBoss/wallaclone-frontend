@@ -30,15 +30,16 @@ const Header = () => {
   const userData = useSelector((state) => getLoggedUser(state));
   const history = useHistory();
 
-
   const handleItemClick = (e, { name }) => setMenuActiveItem(name);
 
   return (
     <Menu stackable>
-      <Menu.Item href="/">
-        <Logo as="h4">
-          <Image circular src="/logo192.png" /> Wallaclone
-        </Logo>
+      <Menu.Item>
+        <Link to="/">
+          <Logo as="h4">
+            <Image circular src="/logo192.png" /> Wallaclone
+          </Logo>
+        </Link>
       </Menu.Item>
       <Menu.Menu position="right">
         {userData && userData.token ? (
@@ -96,16 +97,12 @@ const PrivateHeader = ({
   history,
 }) => {
   const dispatch = useDispatch();
-  const id = loggedUser.userId;
+  const username = loggedUser.username;
   const handleLogout = () => {
     dispatch(authLogout());
   };
   const goToMyProfile = () => {
-    history.push(`/my-profile/${id}`);
-  };
-
-  const goToAdvertsUser = () => {
-    history.push(`/user-adverts/${id}`);
+    history.push(`/profile/${username}`);
   };
 
   const handleChangeLocale = (newLocale) => {
@@ -141,10 +138,6 @@ const PrivateHeader = ({
               icon="user"
               text={translate('menu.myProfile')}
               onClick={goToMyProfile}></Dropdown.Item>
-            <Dropdown.Item
-              icon="newspaper outline"
-              text={translate('menu.adverts')}
-            onClick={goToAdvertsUser}></Dropdown.Item>
             <Dropdown.Item
               icon="power off"
               text={translate('menu.logout')}

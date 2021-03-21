@@ -1,9 +1,13 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link, useHistory } from 'react-router-dom';
 import { Row, Col, Typography, Card, Avatar } from 'antd';
-import { DeleteOutlined, EyeOutlined, StarOutlined } from '@ant-design/icons';
-import { useHistory } from 'react-router-dom';
+import { StarFilled, EyeOutlined, StarOutlined } from '@ant-design/icons';
 import Chip from '@material-ui/core/Chip';
+import { getLoggedUser } from '../../../store/selectors';
+import translate from '../../../intl/translate';
+>>>>>>> master
 
 const { REACT_APP_IMAGE_BASE_URL: IMAGE_BASE_URL } = process.env;
 const { Paragraph } = Typography;
@@ -20,13 +24,11 @@ const getHeadStyle = (sale) =>
         color: '#fa8c16',
       };
 
-const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
+const AdvertCard = ({ ad, hideSeller }) => {
   const history = useHistory();
-  if (!ad) return;
+  const userData = useSelector((state) => getLoggedUser(state));
 
-  const handleDelete = () => {
-    console.log('delete advert', ad._id);
-  };
+  if (!ad) return;
 
   const image = () => {
     // TODO: Check if image exists
@@ -52,6 +54,14 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
     }
   };
 
+  // const hasFavoriteFromLoggedUser =
+  //   ad.favorites?.filter((ids) => ids !== userData.userId) > 0;
+  // const FavoriteButton = hasFavoriteFromLoggedUser ? (
+  //   <StarOutlined />
+  // ) : (
+  //   <StarFilled />
+  // );
+
   return (
     <Col key={ad._id} xs={12}className="mx-auto">
       <Card
@@ -60,8 +70,9 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
         hoverable
         cover={image()}
         actions={[
+          // <FavoriteButton key="favorite" />,
           <EyeOutlined
-            onClick={() => history.push(`/adverts/${ad?._id}`)}
+            onClick={() => history.push(`/adverts/${ad?.name}-${ad?._id}`)}
             key="check details"
           />,
         ]}>

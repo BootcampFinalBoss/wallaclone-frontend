@@ -14,14 +14,8 @@ const initialState = {
   },
   locale: null,
   resReset: null,
-  user:null,
-  stateAdvert: {
-    reserved: null,
-    sold: null,
-    id: null,
-  }
+  user: null,
 };
-
 
 export const auth = (state = initialState.auth, action) => {
   switch (action.type) {
@@ -39,7 +33,16 @@ export const auth = (state = initialState.auth, action) => {
 export const adverts = (state = initialState.adverts, action) => {
   switch (action.type) {
     case types.ADVERTS_LOADED:
-      initialState.ui.hasMoreAdverts = true;
+      if (
+        action.payload?.length === 0 ||
+        action.payload?.length < LIMIT_ADVERTS_API
+      ) {
+        initialState.ui.hasMoreAdverts = false;
+      } else {
+        initialState.ui.hasMoreAdverts = true;
+        initialState.ui.advertsIndex += LIMIT_ADVERTS_API;
+      }
+      initialState.ui.loading = false;
       return action.payload; // On new load, save the passed adverts on the state
     case types.ADVERTS_MORE_LOADED:
       if (
@@ -47,9 +50,11 @@ export const adverts = (state = initialState.adverts, action) => {
         action.payload?.length < LIMIT_ADVERTS_API
       ) {
         initialState.ui.hasMoreAdverts = false;
+        return [...state];
       } else {
         initialState.ui.advertsIndex += LIMIT_ADVERTS_API;
       }
+      initialState.ui.loading = false;
       return [...state, ...action.payload]; // On new load, save the passed adverts on the state
     case types.ADVERT_CREATED:
       if (!state) {
@@ -57,13 +62,6 @@ export const adverts = (state = initialState.adverts, action) => {
         return [action.payload.advert]; // If not, save the passed advert on an array
       } // otherwise, concat the adverts on state with the new advert
       return [...state, action.payload];
-    case types.ADVERT_DELETED:
-      if (!state) {
-        // Check if there is adverts already on state
-        return null; // If not, we can't remove any advert
-      } // otherwise, filter the removed advert from the state using it's id
-      const deletedAdvert = action.payload;
-      return state.filter((advert) => advert._id !== deletedAdvert._id);
     default:
       return state;
   }
@@ -77,15 +75,6 @@ export const advert = (state = initialState.advert, action) => {
       return state;
   }
 };
-
-export const stateAdvert = (state = initialState.stateAdvert, action) => {
-  switch (action.type) {
-    case types.ADVERT_RESERVED:
-      return action.payload;
-    default:
-      return state;
-  }
-}
 
 export const tags = (state = initialState.tags, action) => {
   switch (action.type) {
@@ -124,7 +113,8 @@ export const ui = (state = initialState.ui, action) => {
     case types.ADVERTS_REQUEST:
       return { ...state, loading: true };
     case types.ADVERTS_SUCCESS:
-      return { ...state, loading: true };
+    case types.ADVERT_DELETED:
+      return { ...state, loading: false };
     default:
       return state;
   }
@@ -144,13 +134,10 @@ export const reset = (state = initialState.resReset, action) => {
   }
 };
 
-
-export const user = (state= initialState.user, action) => {
+export const user = (state = initialState.user, action) => {
   switch (action.type) {
-    case  types.USER_EDITED ||
-        types.USER_REQUEST ||
-        types.USER_EDITED_REQUEST:
-      return {...state, loading: true}
+    case types.USER_EDITED || types.USER_REQUEST || types.USER_EDITED_REQUEST:
+      return { ...state, loading: true };
     case types.USER_SUCCESS:
       // login
       return [...state, action.payload]; // Save the token on redux state
@@ -160,4 +147,3 @@ export const user = (state= initialState.user, action) => {
       return state;
   }
 };
-

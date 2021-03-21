@@ -1,11 +1,10 @@
-
 import React, { useEffect, useState } from 'react';
-import { Card, PageHeader, Image, Row, Col, Button, Modal } from "antd";
-import "antd/dist/antd.css";
-import {deleteUser, getUserId} from '../../store/actions';
-import { useDispatch, useSelector } from "react-redux";
-import {useParams, useHistory, Redirect} from 'react-router-dom';
-import {getLoggedUser} from '../../store/selectors';
+import { Card, PageHeader, Image, Row, Col, Button, Modal } from 'antd';
+import 'antd/dist/antd.css';
+import { deleteUser } from '../../store/actions';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, useHistory, Redirect } from 'react-router-dom';
+import { getLoggedUser } from '../../store/selectors';
 import Title from 'antd/lib/typography/Title';
 import { user } from '../../api';
 import AdvertCard from '../adverts/AdvertsList/AdvertCard';
@@ -17,45 +16,31 @@ import AdvertListUser from '../adverts/AdvertsList/AdvertListUser';
 
 const { confirm } = Modal;
 
-
-
 const UserProfile = () => {
-    const history = useHistory();
-    const dispatch = useDispatch();
-  const id = useParams();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const params = useParams();
   const loggedUser = useSelector((state) => getLoggedUser(state));
   const [loading, setLoading] = useState(true);
   const [profileData, setProfileData] = useState(null);
-  let pageTitle = loggedUser.userId === id ? 'My Profile' : '';
-
-  // Get the user id
-  // Save the current logged user id on state (Important for better performance on the next step)
-  // If the user id is the same as the actual user, is 'my profile'
-  // Otherwise is another member
+  const [showFavorites, setShowFavorites] = useState(false);
+  let pageTitle = loggedUser.username === params.username ? 'My Profile' : '';
 
   const handleGetUserData = async () => {
     setLoading(true);
-    let fetchedUserData = await user.getUser(id.id);
+    let fetchedUserData = await user.getUser(params.username);
     setProfileData(fetchedUserData);
     setLoading(false);
   };
 
   useEffect(() => {
+    console.log(params);
     handleGetUserData();
-  }, [id]);
+  }, [params]);
 
   if (!profileData && !loading) {
     return <Redirect to="/404" />;
   }
-
-    /*const token = state.auth;
-    const {idUser} = token.userId
-    console.log(idUser);
-    const dataUser = state.user
-
-  useEffect(()=> {
-      dispatch(getUserId(id.id, token.token));
-  }, [])*/
 
   if (loading) {
     return (
@@ -65,50 +50,64 @@ const UserProfile = () => {
     );
   }
 
-    const handleDeleteAdvert = async () => {
-        const res = await dispatch(deleteUser(id.id, token.token));
-        if(res){
-            if (res.status === 200){
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: res.data.msg,
-                    showConfirmButton: false,
-                    timer: 2400
-                });
-                return;
-            }
-        }
-    };
-
-    const showConfirmDelete = () => {
-        confirm({
-            title: 'Are you sure delete the user account?',
-            icon: <ExclamationCircleOutlined />,
-            content: "This action can't be reversed. Your adverts also delete.",
-            okText: 'Yes, delete this userAccount',
-            okType: 'danger',
-            cancelText: 'No!!!!',
-            onOk() {
-                handleDeleteAdvert();
-            },
-            onCancel() {},
+  const handleDeleteUser = async () => {
+    const res = await dispatch(deleteUser(profileData._id));
+    if (res) {
+      if (res.status === 200) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: res.data.msg,
+          showConfirmButton: false,
+          timer: 2400,
         });
-    };
+        return;
+      }
+    }
+  };
+
+  const showConfirmDelete = () => {
+    confirm({
+      title: 'Are you sure delete the user account?',
+      icon: <ExclamationCircleOutlined />,
+      content:
+        "This action can't be reversed. Your adverts will be deleted aswell.",
+      okText: 'Yes, delete this user account',
+      okType: 'danger',
+      cancelText: 'No!!!!',
+      onOk() {
+        handleDeleteUser();
+      },
+      onCancel() {},
+    });
+  };
 
   return (
     <div className="containerPrincipalRegister">
-      <PageHeader className="site-page-header" title={pageTitle} />,
+      <PageHeader className="site-page-header" title={pageTitle} />
       <Card
         title="User Profile"
         style={{ maxWidth: 1200, textAlign: 'center', padding:  '0 1rem', margin:'1rem 0'}}
         actions={[
           <Button
-              onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
-              key="edit" type="primary" size={128}>
+            onClick={() => setShowFavorites((prev) => !prev)}
+            key="advert"
+            type="default"
+            size={64}>
+            {showFavorites ? 'Show User Adverts' : 'Show User Favorites'}
+          </Button>,
+          <Button
+            onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
+            key="edit"
+            type="primary"
+            size={64}>
             Edit
           </Button>,
-          <Button key="delete" type="danger" onClick={showConfirmDelete} size={128}>
+          <Button
+            key="delete"
+            type="danger"
+            onClick={showConfirmDelete}
+            size={64}>
             Delete
           </Button>,
         ]}>
@@ -129,19 +128,43 @@ const UserProfile = () => {
           </Col>
         </Row>
       </Card>
-      <Row>
-          <Col xs={24} className="adverts">
-              <PageHeader className="site-page-header" title="Adverts List" />,
-        {/*<Title level={2}>Adverts</Title>*/}
-          </Col>
-          {profileData && (
-              <Row gutter={[12,12,12]}>
-                  {profileData?.adverts.map((ad) => {
-                    return < AdvertListUser key={ad._id} ad={ad} />
-                  })}
+      {showFavorites ? (
+        <Row justify="center" style={{ marginTop: '2rem' }}>
+          <Col span={20}>
+            {profileData && (
+              <Row gutter={[24, 24]} justify="center">
+                {profileData?.favorites.map((ad) => {
+                  return (
+                    <AdvertCard
+                      key={`${ad._id}-favorite`}
+                      ad={ad}
+                      hideSeller={true}
+                    />
+                  );
+                })}
               </Row>
-          )}
-      </Row>
+            )}
+          </Col>
+        </Row>
+      ) : (
+        <Row justify="center" style={{ marginTop: '2rem' }}>
+          <Col span={20}>
+            {profileData && (
+              <Row gutter={[24, 24]} justify="center">
+                {profileData?.adverts.map((ad) => {
+                  return (
+                    <AdvertCard
+                      key={`${ad._id}-adverts`}
+                      ad={ad}
+                      hideSeller={true}
+                    />
+                  );
+                })}
+              </Row>
+            )}
+          </Col>
+        </Row>
+      )}
     </div>
   );
 };

@@ -254,7 +254,8 @@ export const createAdvert = (advertData) => async (
   try {
     const fetchedAdvert = await adverts.createAdvert(advertData);
     dispatch(advertCreated(fetchedAdvert?.data?.result));
-    history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
+    const { _id, name } = fetchedAdvert?.data?.result;
+    history.push(`/adverts/${name}-${_id}`);
     return fetchedAdvert;
   } catch (error) {
     dispatch(generateAdvertError(error));
@@ -280,9 +281,9 @@ export const editAdvert = (advertData) => async (
     dispatch(advertEdited(fetchedAdvert?.data?.result));
     setTimeout(() => {
       history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
-    }, 2800)
+    }, 2800);
 
-    return fetchedAdvert
+    return fetchedAdvert;
   } catch (error) {
     dispatch(generateAdvertError(error));
   }
@@ -297,33 +298,17 @@ export const advertDeleted = (advert) => {
   };
 };
 
-export const deleteAdvert = (advertId) => async (
+export const deleteAdvert = (advertId, userId) => async (
   dispatch,
   getState,
   { history, api },
 ) => {
-  const fetchedAdvert = await adverts.deleteAdvert(advertId);
+  const fetchedAdvert = await adverts.deleteAdvert(advertId, userId);
   dispatch(advertDeleted(fetchedAdvert.result));
   setTimeout(async () => {
     await history.push('/');
-  }, 2800)
+  }, 2800);
   return fetchedAdvert;
-};
-
-export const advertLoadedUser = (advert) => {
-  return {
-    type: types.ADVERTS_LOADED,
-    payload: advert,
-  };
-};
-
-export const loadAdvertUser = (id) => async (
-    dispatch,
-    getState,
-    { history, api },
-) => {
-  const res = await adverts.getAdvertsUser(id);
-  dispatch(advertLoadedUser(res));
 };
 
 
@@ -345,7 +330,7 @@ export const reservedAdvert = (id, ad) => async (
 
 export const soldAdvert = (id) => async (
     dispatch,
-    history,
+    history,*
 ) => {
   const res = await adverts.sold(id);
   dispatch(advertReserved(res));
@@ -401,10 +386,10 @@ export const userFailure = (error) => ({
 
 export const userSuccess = (res) => ({
   type: types.USER_SUCCESS,
-  payload: res
+  payload: res,
 });
 
-export const getUserId = (id,token) => {
+export const getUserId = (id, token) => {
   return async function (dispatch, getState, { history, api }) {
     dispatch(userRequest(id, token.token));
     try {
@@ -440,9 +425,9 @@ export const userEditedError = (error) => {
 };
 
 export const editUser = (id, userData, token) => async (
-    dispatch,
-    getState,
-    { history, api },
+  dispatch,
+  getState,
+  { history, api },
 ) => {
   dispatch(userEditedRequest());
   try {
@@ -451,7 +436,7 @@ export const editUser = (id, userData, token) => async (
     await dispatch(userEdited(res));
     setTimeout(() => {
       history.push(`/my-profile/${id}`);
-    }, 3000)
+    }, 3000);
 
     return res;
   } catch (error) {
@@ -468,18 +453,15 @@ export const userDeleted = (user) => {
   };
 };
 
-export const deleteUser = (id, token) => async (
-    dispatch,
-    getState,
-    { history, api },
+export const deleteUser = (id) => async (
+  dispatch,
+  getState,
+  { history, api },
 ) => {
-  const fetchedAdvert = await user.deleteUser(id, token);
+  const fetchedAdvert = await user.deleteUser(id);
   setTimeout(() => {
     dispatch(authLogout());
-  }, 3000)
-
+  }, 3000);
 
   return fetchedAdvert;
-
-
 };
