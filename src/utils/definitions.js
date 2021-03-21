@@ -4,6 +4,11 @@ export const saleOptions = {
   all: { label: 'All', value: null },
 };
 
+export const sortOptions = {
+  asc: { label: 'ASC', value: 1 },
+  desc: { label: 'DESC', value: -1 },
+};
+
 export const MIN_PRICE = 0;
 export const MAX_PRICE = 10000;
 

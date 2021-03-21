@@ -40,8 +40,9 @@ export const adverts = (state = initialState.adverts, action) => {
         initialState.ui.hasMoreAdverts = false;
       } else {
         initialState.ui.hasMoreAdverts = true;
-        iintialState.ui.advertsIndex += LIMIT_ADVERTS_API;
+        initialState.ui.advertsIndex += LIMIT_ADVERTS_API;
       }
+      initialState.ui.loading = false;
       return action.payload; // On new load, save the passed adverts on the state
     case types.ADVERTS_MORE_LOADED:
       if (
@@ -51,8 +52,9 @@ export const adverts = (state = initialState.adverts, action) => {
         initialState.ui.hasMoreAdverts = false;
         return [...state];
       } else {
-        iintialState.ui.advertsIndex += LIMIT_ADVERTS_API;
+        initialState.ui.advertsIndex += LIMIT_ADVERTS_API;
       }
+      initialState.ui.loading = false;
       return [...state, ...action.payload]; // On new load, save the passed adverts on the state
     case types.ADVERT_CREATED:
       if (!state) {
@@ -60,13 +62,6 @@ export const adverts = (state = initialState.adverts, action) => {
         return [action.payload.advert]; // If not, save the passed advert on an array
       } // otherwise, concat the adverts on state with the new advert
       return [...state, action.payload];
-    case types.ADVERT_DELETED:
-      if (!state) {
-        // Check if there is adverts already on state
-        return null; // If not, we can't remove any advert
-      } // otherwise, filter the removed advert from the state using it's id
-      const deletedAdvert = action.payload;
-      return state.filter((advert) => advert._id !== deletedAdvert._id);
     default:
       return state;
   }
@@ -118,7 +113,8 @@ export const ui = (state = initialState.ui, action) => {
     case types.ADVERTS_REQUEST:
       return { ...state, loading: true };
     case types.ADVERTS_SUCCESS:
-      return { ...state, loading: true };
+    case types.ADVERT_DELETED:
+      return { ...state, loading: false };
     default:
       return state;
   }

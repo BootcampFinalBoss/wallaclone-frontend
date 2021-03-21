@@ -72,8 +72,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
             onClick={() => history.push(`/adverts/${ad?.name}-${ad?._id}`)}
             key="check details"
           />,
-        ]}
-      >
+        ]}>
         <Meta
           title={ad.title || ad?.name}
           description={
@@ -84,7 +83,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
               </p>
               <p>Tags: {ad.tags && ad.tags?.join(', ')}</p>
               {!hideSeller && (
-                <Link to={`/profile/${ad.user?._id}`}>
+                <Link to={`/profile/${ad.user?.username}`}>
                   Seller: {ad.user?.username}
                 </Link>
               )}

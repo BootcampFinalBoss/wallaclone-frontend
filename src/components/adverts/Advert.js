@@ -44,7 +44,7 @@ const AdvertPage = ({ history, ...props }) => {
   };
 
   const handleDeleteAdvert = async () => {
-    const res = await dispatch(deleteAdvert(getAdvertId()));
+    const res = await dispatch(deleteAdvert(getAdvertId(), userData.userId));
     if (res) {
       if (res.status === 200) {
         Swal.fire({

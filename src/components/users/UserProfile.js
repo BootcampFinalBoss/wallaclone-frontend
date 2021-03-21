@@ -133,7 +133,13 @@ const UserProfile = () => {
             {profileData && (
               <Row gutter={[24, 24]} justify="center">
                 {profileData?.favorites.map((ad) => {
-                  return <AdvertCard key={ad._id} ad={ad} hideSeller={true} />;
+                  return (
+                    <AdvertCard
+                      key={`${ad._id}-favorite`}
+                      ad={ad}
+                      hideSeller={true}
+                    />
+                  );
                 })}
               </Row>
             )}
@@ -145,7 +151,13 @@ const UserProfile = () => {
             {profileData && (
               <Row gutter={[24, 24]} justify="center">
                 {profileData?.adverts.map((ad) => {
-                  return <AdvertCard key={ad._id} ad={ad} hideSeller={true} />;
+                  return (
+                    <AdvertCard
+                      key={`${ad._id}-adverts`}
+                      ad={ad}
+                      hideSeller={true}
+                    />
+                  );
                 })}
               </Row>
             )}

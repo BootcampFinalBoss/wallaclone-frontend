@@ -37,6 +37,7 @@ export const addFavoriteAdvert = (advertId, userId) =>
   client.post(`/adverts/favorite/${advertId}`, userId);
 
 export const removeFavoriteAdvert = (advertId, userId) =>
-  client.delete(`/adverts/favorite/${advertId}`, userId);
+  client.delete(`/adverts/favorite/${advertId}`, { data: { userId } });
 
-export const deleteAdvert = (id) => client.delete(`/adverts/${id}`);
+export const deleteAdvert = (id, userId) =>
+  client.delete(`/adverts/${id}`, { data: { userId } });

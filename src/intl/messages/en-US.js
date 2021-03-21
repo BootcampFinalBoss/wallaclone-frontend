@@ -9,6 +9,7 @@ export default {
       byPrice: 'By price',
       byName: 'By name',
       byType: 'By type',
+      bySort: 'By sort',
       search: 'Search',
       createOne: 'Go create one!',
     },
@@ -29,7 +30,7 @@ export default {
       formDesc: 'Description',
       formImage: 'Image',
       formSelectFile: 'Select File',
-      createBtn: 'Create!',
+      createBtn: 'Create',
     },
     userPage: {},
     advertsCard: {

@@ -9,6 +9,7 @@ export default {
       byPrice: 'Precio',
       byName: 'Nombre',
       byType: 'Tipo',
+      bySort: 'Orden',
       search: 'Buscar',
       createOne: 'Crea tu anuncio!',
     },
@@ -17,7 +18,7 @@ export default {
       haveAccount: 'Tienes una cuenta?',
       logAndCreateBtn: 'Inicia sesión y crea tu anuncio!',
       regAndCreateBtn: 'Regístrate y crea tu anuncio!',
-      member: 'Aún no eres miembro?'
+      member: 'Aún no eres miembro?',
     },
     createAdvert: {
       title: 'Crear un anuncio',
@@ -29,7 +30,7 @@ export default {
       formDesc: 'Descripción',
       formImage: 'Imagen',
       formSelectFile: 'Seleccione Archivo',
-      createBtn: 'Crear!',
+      createBtn: 'Crear',
     },
     advertsCard: {
       sell: 'Se vende',
