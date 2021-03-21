@@ -13,6 +13,7 @@ import { Content } from 'antd/lib/layout/layout';
 import translate from '../../intl/translate';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import Swal from 'sweetalert2';
+import AdvertListUser from '../adverts/AdvertsList/AdvertListUser';
 
 const { confirm } = Modal;
 
@@ -100,17 +101,14 @@ const UserProfile = () => {
       <PageHeader className="site-page-header" title={pageTitle} />,
       <Card
         title="User Profile"
-        style={{ maxWidth: 1200, textAlign: 'center', padding: '0 1rem' }}
+        style={{ maxWidth: 1200, textAlign: 'center', padding:  '0 1rem', margin:'1rem 0'}}
         actions={[
-          <Button onClick={() => history.push(`/user-adverts/${id}`)} key="advert" type="default" size={64}>
-            Adverts
-          </Button>,
           <Button
               onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
-              key="edit" type="primary" size={64}>
+              key="edit" type="primary" size={128}>
             Edit
           </Button>,
-          <Button key="delete" type="danger" onClick={showConfirmDelete} size={64}>
+          <Button key="delete" type="danger" onClick={showConfirmDelete} size={128}>
             Delete
           </Button>,
         ]}>
@@ -132,11 +130,14 @@ const UserProfile = () => {
         </Row>
       </Card>
       <Row>
-        <Title level={2}>Adverts</Title>
+          <Col xs={24} className="adverts">
+              <PageHeader className="site-page-header" title="Adverts List" />,
+        {/*<Title level={2}>Adverts</Title>*/}
+          </Col>
           {profileData && (
-              <Row gutter={[12, 12, 12]}>
+              <Row gutter={[12,12,12]}>
                   {profileData?.adverts.map((ad) => {
-                      return <AdvertCard key={ad._id} ad={ad} checkDetail={true} />;
+                    return < AdvertListUser key={ad._id} ad={ad} />
                   })}
               </Row>
           )}

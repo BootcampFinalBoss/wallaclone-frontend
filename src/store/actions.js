@@ -326,6 +326,31 @@ export const loadAdvertUser = (id) => async (
   dispatch(advertLoadedUser(res));
 };
 
+
+export const advertReserved = (res) => {
+  return {
+    type: types.ADVERT_RESERVED,
+    payload: {reserved: res.reserved, sold: res.sold, id: res._id},
+
+  };
+};
+
+export const reservedAdvert = (id, ad) => async (
+    dispatch,
+    history,
+) => {
+  const res = await adverts.reserved(id);
+  dispatch(advertReserved(ad));
+};
+
+export const soldAdvert = (id) => async (
+    dispatch,
+    history,
+) => {
+  const res = await adverts.sold(id);
+  dispatch(advertReserved(res));
+};
+
 /* UI */
 
 export const resetError = () => {

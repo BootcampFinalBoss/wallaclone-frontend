@@ -3,6 +3,7 @@ import React from 'react';
 import { Row, Col, Typography, Card, Avatar } from 'antd';
 import { DeleteOutlined, EyeOutlined, StarOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+import Chip from '@material-ui/core/Chip';
 
 const { REACT_APP_IMAGE_BASE_URL: IMAGE_BASE_URL } = process.env;
 const { Paragraph } = Typography;
@@ -35,6 +36,7 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
         <img
           src={`${IMAGE_BASE_URL}/${ad.image}`}
           className="card-img-top"
+          style={{padding: '1rem'}}
           alt={ad?.name}
         />
       );
@@ -51,15 +53,13 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
   };
 
   return (
-    <Col key={ad._id} xs={12} md={8} lg={8} className="mx-auto">
+    <Col key={ad._id} xs={12}className="mx-auto">
       <Card
         title={ad?.type === 'sell' ? 'Sell' : 'Buy'}
         headStyle={getHeadStyle(ad?.type === 'sell' ? true : false)}
         hoverable
         cover={image()}
         actions={[
-          <StarOutlined key="favorite" />,
-          // <DeleteOutlined onClick={() => handleDelete()} key="edit" />,
           <EyeOutlined
             onClick={() => history.push(`/adverts/${ad?._id}`)}
             key="check details"
@@ -69,11 +69,14 @@ const AdvertCard = ({ ad, checkDetail, hasDelete }) => {
           title={ad.title || ad?.name}
           description={
             <>
-              <p className="card-text d-flex justify-content-between card-price font-weight-bold">
+
+                <p><Chip color="primary" label={`Tags: ${ad?.tags && ad?.tags?.join(', ')}`} style={{fontSize: '.8rem'}}></Chip></p>
+              <div style={{display: 'flex', flex: 'row'}}><p><Chip label={`${ad.price} €`} color="secondary" style={{fontSize: '1rem'}} >
                 {ad?.price} €.
-                <i>{ad?.type === 'sell' ? 'For sale' : 'To buy'}</i>
-              </p>
-              <p>Tags: {ad?.tags && ad?.tags?.join(', ')}</p>
+              </Chip></p>
+                  <p>{ad.reserved===true ? <Chip label='Reservado' color="secondary" style={{fontSize: '1.2rem', backgroundColor:'#BC876C', margin:'0 1rem'}}  /> : ad.sold === true ? <Chip label='Vendido' color="secondary" style={{fontSize: '1.2rem', backgroundColor:'#027E0B', margin:'0 1rem'}}  /> : '' }</p>
+              </div>
+
             </>
           }
         />

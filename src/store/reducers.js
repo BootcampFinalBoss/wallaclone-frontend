@@ -15,6 +15,11 @@ const initialState = {
   locale: null,
   resReset: null,
   user:null,
+  stateAdvert: {
+    reserved: null,
+    sold: null,
+    id: null,
+  }
 };
 
 
@@ -72,6 +77,15 @@ export const advert = (state = initialState.advert, action) => {
       return state;
   }
 };
+
+export const stateAdvert = (state = initialState.stateAdvert, action) => {
+  switch (action.type) {
+    case types.ADVERT_RESERVED:
+      return action.payload;
+    default:
+      return state;
+  }
+}
 
 export const tags = (state = initialState.tags, action) => {
   switch (action.type) {
@@ -139,7 +153,7 @@ export const user = (state= initialState.user, action) => {
       return {...state, loading: true}
     case types.USER_SUCCESS:
       // login
-      return action.payload; // Save the token on redux state
+      return [...state, action.payload]; // Save the token on redux state
     case types.USER_DELETED:
       return action.payload;
     default:

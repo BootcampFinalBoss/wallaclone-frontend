@@ -41,3 +41,19 @@ export const getAdvertsUser = (id) => {
         return res.data;
     })
 }
+
+export const reserved = (id) => {
+    return client.put(`/advert-reserved/${id}`).then(res => {
+        console.log(id);
+        console.log(res.data.reserved);
+        return res.data;
+    })
+}
+
+export const sold = (id) => {
+    return client.put(`/advert-sold/${id}`).then(res => {
+        console.log(res.data.sold);
+        return res.data;
+    })
+}
+

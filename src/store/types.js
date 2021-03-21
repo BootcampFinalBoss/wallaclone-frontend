@@ -19,6 +19,7 @@ export const AUTH_UPDATEPASS_FAILURE = 'auth/UPDATEPASS_FAILURE';
 
 export const ADVERTS_LOADED = 'adverts/LOADED';
 export const ADVERTS_MORE_LOADED = 'adverts/MORE_LOADED';
+export const ADVERT_RESERVED = 'advert/RESERVED';
 
 export const ADVERTS_REQUEST = 'advert/CREATED';
 export const ADVERTS_SUCCESS = 'advert/CREATED';
