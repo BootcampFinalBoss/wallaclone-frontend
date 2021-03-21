@@ -33,6 +33,7 @@ export const TAGS_LOADED = 'tags/LOADED';
 export const LANGS_LOADED = 'langs/LOADED';
 
 export const UI_RESET_ERROR = 'ui/RESET_ERROR';
+export const UI_STOP_LOADING = 'ui/STOP_LOADING';
 
 export const USER_REQUEST = 'user/REQUEST';
 export const USER_SUCCESS = 'user/SUCCESS';

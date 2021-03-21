@@ -23,6 +23,18 @@ export default {
     createAdvert: {
       title: 'Create an advert',
     },
+    advert: {
+      state: 'Actual state',
+      changeState: 'Change state',
+      reserved: 'Reserved',
+      sold: 'Sold',
+      seller: 'Seller',
+      detail: {
+        title: 'Detail of your advert',
+        removeFavorite: 'Remove favorite',
+        addFavorite: 'Add Favorite',
+      },
+    },
     advertsForm: {
       formName: 'Name',
       formPrice: 'Price',

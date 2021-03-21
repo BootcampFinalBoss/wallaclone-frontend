@@ -114,6 +114,7 @@ export const ui = (state = initialState.ui, action) => {
       return { ...state, loading: true };
     case types.ADVERTS_SUCCESS:
     case types.ADVERT_DELETED:
+    case types.UI_STOP_LOADING:
       return { ...state, loading: false };
     default:
       return state;
