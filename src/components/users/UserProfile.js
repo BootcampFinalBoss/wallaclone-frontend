@@ -81,6 +81,9 @@ const UserProfile = () => {
     });
   };
 
+  const showFavsAdsBtn = 'Show User Favorites';
+  const showUserAdsBtn = 'Show User Adverts';
+
   return (
     <div className="containerPrincipalRegister">
       <PageHeader className="site-page-header" title={pageTitle} />
@@ -94,7 +97,7 @@ const UserProfile = () => {
             type="default"
             size={64}
           >
-            {showFavorites ? 'Show User Adverts' : 'Show User Favorites'}
+            {showFavorites ? showUserAdsBtn : showFavsAdsBtn}
           </Button>,
           <Button
             onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
