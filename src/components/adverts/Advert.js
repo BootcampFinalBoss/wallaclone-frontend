@@ -122,7 +122,7 @@ const AdvertPage = ({ history, ...props }) => {
               {name} - {type === 'sell' ? 'Sell' : 'Buy'}
             </Title>
             <Paragraph>{description}</Paragraph>
-            <Statistic title="Price" value={price} />
+            <Statistic title={translate('advert.price')} value={price} />
             <Row style={{ marginTop: 20 }}>
               <Paragraph style={{ marginRight: 5, marginBottom: 0 }}>
                 Tags
@@ -232,9 +232,9 @@ const AdvertPage = ({ history, ...props }) => {
                 display: 'flex',
                 marginTop: '20px',
               }}>
-              <Button onClick={goToEditAdvert}>Edit advert</Button>
+              <Button onClick={goToEditAdvert}>{translate('advert.editAdvertBtn')}</Button>
               <Button danger onClick={showConfirmDelete}>
-                Delete advert
+                {translate('advert.deleteAdvertBtn')}
               </Button>
             </Col>
           )}

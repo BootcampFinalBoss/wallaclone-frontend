@@ -24,6 +24,7 @@ export default {
       title: 'Create an advert',
     },
     advert: {
+      price: 'Price',
       state: 'Actual state',
       changeState: 'Change state',
       reserved: 'Reserved',
@@ -35,6 +36,8 @@ export default {
         addFavorite: 'Add Favorite',
         hasNFavorites: 'Advert favorites',
       },
+      editAdvertBtn: 'Edit Advert',
+      deleteAdvertBtn: 'Delete Advert',
     },
     advertsForm: {
       formName: 'Name',

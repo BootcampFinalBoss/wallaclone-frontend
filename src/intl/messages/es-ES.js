@@ -4,8 +4,7 @@ export default {
   [LOCALES.SPANISH]: {
     advertsPage: {
       title: 'Página de anuncios',
-      pNoAdverts:
-        'No hay anuncios cargados, ¡refine su búsqueda o cree un auncio!',
+      pNoAdverts: 'No hay anuncios cargados, ¡refine su búsqueda o cree un auncio!',
       byTags: 'Tags',
       byPrice: 'Precio',
       byName: 'Nombre',
@@ -25,6 +24,7 @@ export default {
       title: 'Crear un anuncio',
     },
     advert: {
+      price: 'Precio',
       state: 'Estado actual',
       changeState: 'Cambiar estado',
       reserved: 'Reservado',
@@ -36,6 +36,8 @@ export default {
         addFavorite: 'Añadir favorito',
         hasNFavorites: 'Favoritos del anuncio',
       },
+      editAdvertBtn: 'Editar Anuncio',
+      deleteAdvertBtn: 'Borrar Anuncio',
     },
     advertsForm: {
       formName: 'Nombre',
