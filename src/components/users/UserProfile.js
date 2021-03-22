@@ -24,7 +24,7 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const [profileData, setProfileData] = useState(null);
   const [showFavorites, setShowFavorites] = useState(false);
-  const myProfile = translate('profile.title')
+  const myProfile = translate('profile.title');
   let pageTitle = loggedUser.username === params.username ? myProfile : '';
 
   const handleGetUserData = async () => {
@@ -33,8 +33,6 @@ const UserProfile = () => {
     setProfileData(fetchedUserData);
     setLoading(false);
   };
-
-  console.log(loggedUser);
 
   useEffect(() => {
     console.log(params);
@@ -53,7 +51,9 @@ const UserProfile = () => {
     );
   }
 
-  const showFav =  showFavorites ? translate('buttonProfile.showAdverts') : translate('buttonProfile.showFavorite')
+  const showFav = showFavorites
+    ? translate('buttonProfile.showAdverts')
+    : translate('buttonProfile.showFavorite');
 
   const handleDeleteUser = async () => {
     const res = await dispatch(deleteUser(profileData._id));
@@ -70,15 +70,16 @@ const UserProfile = () => {
       }
     }
   };
+  const msgTitle = translate('deleteModal.title');
 
   const showConfirmDelete = () => {
-    const msgTitle = translate('deleteModal.title')
+    console.log(msgTitle);
     confirm({
-      title: 'Aqui',
+      title: 'Are you sure delete the user account?',
       icon: <ExclamationCircleOutlined />,
       content:
-          'aqui',
-      okText: 'aqui',
+        "This action can't be reversed. Your adverts will be deleted aswell",
+      okText: 'Yes',
       okType: 'danger',
       cancelText: 'No',
       onOk() {
@@ -88,43 +89,49 @@ const UserProfile = () => {
     });
   };
 
-  const showFavsAdsBtn = 'Show User Favorites';
-  const showUserAdsBtn = 'Show User Adverts';
+  const loggedUserProfileActions = loggedUser.username === params.username && (
+    <Col
+      span={24}
+      style={{
+        justifyContent: 'space-around',
+        display: 'flex',
+        marginTop: '20px',
+        padding: '1rem 0 .3rem 0',
+      }}>
+      <Button
+        onClick={() => setShowFavorites((prev) => !prev)}
+        key="advert"
+        type="default"
+        shape="round"
+        size={64}>
+        {showFav}
+      </Button>
+      <Button
+        onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
+        key="edit"
+        type="primary"
+        shape="round"
+        size={64}>
+        {translate('buttonProfile.edit')}
+      </Button>
+      <Button
+        key="delete"
+        type="danger"
+        shape="round"
+        onClick={showConfirmDelete}
+        size={64}>
+        {translate('buttonProfile.delete')}
+      </Button>
+    </Col>
+  );
 
   return (
     <div className="containerPrincipalRegister">
       <PageHeader className="site-page-header" title={pageTitle} />
       <Card
         title={translate('profile.profileUser')}
-        style={{ maxWidth: 1200, textAlign: 'center', padding:  '0 1rem', margin:'1rem 0'}}
-        actions={[
-          /*<Button
-            onClick={() => setShowFavorites((prev) => !prev)}
-            key="advert"
-            type="default"
-            shape="round"
-            size={64}>
-            {showFav}
-          </Button>,
-          <Button
-            onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
-            key="edit"
-            type="primary"
-         shape="round"
-            size={64}>
-            {translate('buttonProfile.edit')}
-          </Button>,
-          <Button
-            key="delete"
-            type="danger"
-            shape="round"
-            onClick={showConfirmDelete}
-            size={64}>
-            {translate('buttonProfile.delete')}
-          </Button>*/
-        ]}
-
-      >
+        style={{ textAlign: 'center', padding: '0 1rem', margin: '1rem 0' }}
+        actions={[loggedUserProfileActions || []]}>
         <Row className="text-left">
           <Col span={14}>
             <span>{translate('profile.name')}</span>
@@ -142,42 +149,7 @@ const UserProfile = () => {
           </Col>
         </Row>
       </Card>
-      {loggedUser.username === params.username && (
-          <Col
-              span={24}
-              style={{
-                justifyContent: 'space-around',
-                display: 'flex',
-                marginTop: '20px',
-                borderTop: '1px solid gray',
-                padding: '1rem 0 .3rem 0'
-              }}>
-      <Button
-          onClick={() => setShowFavorites((prev) => !prev)}
-          key="advert"
-          type="default"
-          shape="round"
-          size={64}>
-        {showFav}
-      </Button>
-      <Button
-          onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
-          key="edit"
-          type="primary"
-          shape="round"
-          size={64}>
-        {translate('buttonProfile.edit')}
-      </Button>
-      <Button
-          key="delete"
-          type="danger"
-          shape="round"
-          onClick={showConfirmDelete}
-          size={64}>
-        {translate('buttonProfile.delete')}
-      </Button>
-          </Col>
-      )}
+
       {showFavorites ? (
         <Row justify="center" style={{ marginTop: '2rem' }}>
           <Col span={20}>

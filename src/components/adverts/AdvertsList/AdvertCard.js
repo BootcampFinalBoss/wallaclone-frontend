@@ -12,8 +12,6 @@ const { REACT_APP_IMAGE_BASE_URL: IMAGE_BASE_URL } = process.env;
 const { Paragraph } = Typography;
 const { Meta } = Card;
 
-
-
 const getHeadStyle = (sale) =>
   sale
     ? {
@@ -28,7 +26,10 @@ const getHeadStyle = (sale) =>
 const AdvertCard = ({ ad, hideSeller }) => {
   const history = useHistory();
   const userData = useSelector((state) => getLoggedUser(state));
-    const titleType = ad?.type === 'sell' ? translate('advertsCard.sell') : translate('advertsCard.buy')
+  const titleType =
+    ad?.type === 'sell'
+      ? translate('advertsCard.sell')
+      : translate('advertsCard.buy');
   if (!ad) return;
 
   const image = () => {
@@ -37,8 +38,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
       return (
         <img
           src={`${IMAGE_BASE_URL}/${ad.image}`}
-          className="card-img-top m-auto"
-          style={{ padding: '2rem', width:'60%', minHeight: 320}}
+          className="advert-image"
           alt={ad?.name}
         />
       );
@@ -46,7 +46,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
       return (
         <img
           src="https://placedog.net/800"
-          className="card-img-top"
+          className="advert-image"
           alt={ad?.name}
         />
       );
@@ -114,13 +114,22 @@ const AdvertCard = ({ ad, hideSeller }) => {
                   )}
                 </p>
               </div>
-                <p style={{backgroundColor: 'blue', color:'white', borderRadius: 20, padding:'.8rem', fontSize: '1rem'}}>
-                    {`Tags: ${ad?.tags && ad?.tags?.join(', ')}`}
-                </p>
+              <p
+                style={{
+                  backgroundColor: 'blue',
+                  color: 'white',
+                  borderRadius: 20,
+                  padding: '.8rem',
+                  fontSize: '1rem',
+                }}>
+                {`Tags: ${ad?.tags && ad?.tags?.join(', ')}`}
+              </p>
               <p>
                 {!hideSeller && (
-                  <Link to={`/profile/${ad.user?.username}`} style={{fontSize: '1.2rem'}}>
-                   {translate('advert.seller')}: {ad.user?.username}
+                  <Link
+                    to={`/profile/${ad.user?.username}`}
+                    style={{ fontSize: '1.2rem' }}>
+                    {translate('advert.seller')}: {ad.user?.username}
                   </Link>
                 )}
               </p>

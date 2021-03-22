@@ -10,7 +10,6 @@ import { editUser, getUserId } from '../../store/actions';
 import UserEditForm from './UserEditForm';
 import translate from '../../intl/translate';
 
-
 const UserEdit = ({ ...props }) => {
   let dataInitials = null;
   const id = useParams();
@@ -42,7 +41,6 @@ const UserEdit = ({ ...props }) => {
     if (res) {
       console.log(res);
       if (res.status === 200) {
-        console.log('Aqui');
         Swal.fire({
           position: 'center',
           icon: 'success',
@@ -57,7 +55,10 @@ const UserEdit = ({ ...props }) => {
 
   return (
     <div className="containerPrincipalRegister">
-      <PageHeader className="site-page-header" title={translate('editUser.title')}/>
+      <PageHeader
+        className="site-page-header"
+        title={translate('editUser.title')}
+      />
       <UserEditForm dataInitials={dataInitials} onFinish={onFinish} />
     </div>
   );
