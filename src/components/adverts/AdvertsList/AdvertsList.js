@@ -15,11 +15,7 @@ const { Title, Paragraph } = Typography;
 const NoMoreAdverts = ({ text }) => (
   <Col span={24} className="text-center">
     <Divider />
-    <Paragraph>
-      {text
-        ? text
-        : translate('advertsPage.pNoAdverts')}
-    </Paragraph>
+    <Paragraph>{text ? text : translate('advertsPage.pNoAdverts')}</Paragraph>
     <CreateNew />
   </Col>
 );
@@ -55,8 +51,8 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
             hasMore={ui.hasMoreAdverts}
             loader={translate('ui.loading')}
             endMessage={<NoMoreAdverts />}
-          >
-            <Row gutter={[24, 24]}>
+            style={{ width: '100%' }}>
+            <Row gutter={[24, 24]} justify="center">
               {adverts?.map((ad) => {
                 return <AdvertCard key={ad._id} ad={ad} />;
               })}
@@ -101,7 +97,7 @@ const CreateNew = () => {
   if (isLoggedUser) {
     return (
       <Row justify="center">
-        <Button onClick={goCreateOne} shape='round'>
+        <Button onClick={goCreateOne} shape="round">
           {translate('advertsPage.createOne')}
         </Button>
       </Row>
@@ -110,12 +106,12 @@ const CreateNew = () => {
   return (
     <Row justify="center">
       <Paragraph>{translate('advertsList.haveAccount')}</Paragraph>
-      <Button onClick={goLogin} shape='round' className='mx-3'>
+      <Button onClick={goLogin} shape="round" className="mx-3">
         {translate('advertsList.logAndCreateBtn')}
       </Button>
       <Divider></Divider>
       <Paragraph>{translate('advertsList.member')}</Paragraph>
-      <Button onClick={goRegister} shape='round' className='mx-3'>
+      <Button onClick={goRegister} shape="round" className="mx-3">
         {translate('advertsList.regAndCreateBtn')}
       </Button>
     </Row>

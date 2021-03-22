@@ -62,7 +62,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
   // );
 
   return (
-    <Col key={ad._id} xs={24} md={12} className="mx-auto">
+    <Col key={ad._id} xs={24} md={12} lg={8}>
       <Card
         title={titleType}
         headStyle={getHeadStyle(ad?.type === 'sell' ? true : false)}
@@ -116,7 +116,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
               </div>
               <p
                 style={{
-                  backgroundColor: 'blue',
+                  backgroundColor: '#f43f3d',
                   color: 'white',
                   borderRadius: 20,
                   padding: '.8rem',
