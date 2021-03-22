@@ -43,11 +43,15 @@ const UserEditForm = ({ dataInitials, onFinish }) => {
             <Input />
           </Form.Item>
         </Col>
-        <Form.Item>
-          <Button type="primary" htmlType="submit" className="align-center">
+          <Button
+              type="primary"
+              htmlType="submit"
+              className="my-4"
+              size='large'
+              shape='round'
+          block>
             {translate('editUser.updateBtn')}
           </Button>
-        </Form.Item>
       </Row>
     </Form>
   );

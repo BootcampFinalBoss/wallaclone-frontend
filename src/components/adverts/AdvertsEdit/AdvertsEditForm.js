@@ -8,6 +8,8 @@ import TagsSelect from '../../Tags/TagSelect';
 import { InputImage } from '../../globals';
 import { definitions } from '../../../utils';
 import Swal from 'sweetalert2';
+import translate from '../../../intl/translate';
+import TextArea from 'antd/es/input/TextArea';
 
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
@@ -38,10 +40,10 @@ const AdvertsEditForm = ({ advert }) => {
   return (
     <Form initialValues={advert} onFinish={onFinish}>
       <Row style={{ marginBottom: '3em' }}>
-        <Col span={11}>
+        <Col xs={24} md={11}>
           <Form.Item
             name="name"
-            label="Name"
+            label={translate('advertsForm.formName')}
             rules={[
               {
                 required: true,
@@ -51,7 +53,7 @@ const AdvertsEditForm = ({ advert }) => {
           </Form.Item>
           <Form.Item
             name="price"
-            label="Price"
+            label={translate('advertsForm.formPrice')}
             rules={[
               {
                 required: true,
@@ -60,10 +62,10 @@ const AdvertsEditForm = ({ advert }) => {
             <InputNumber min={MIN_PRICE} max={MAX_PRICE} />
           </Form.Item>
         </Col>
-        <Col span={11} offset={2}>
+        <Col xs={{span:24,offset:0 }}  md={{span: 11, offset: 2}}>
           <Form.Item
             name="tags"
-            label="Tags"
+            label={translate('advertsPage.byTags')}
             rules={[
               {
                 required: true,
@@ -73,7 +75,7 @@ const AdvertsEditForm = ({ advert }) => {
           </Form.Item>
           <Form.Item
             name="type"
-            label="Type"
+            label={translate('advertsForm.formType')}
             rules={[
               {
                 required: true,
@@ -83,16 +85,29 @@ const AdvertsEditForm = ({ advert }) => {
           </Form.Item>
         </Col>
         <Col span={24}>
-          <Form.Item name="photo" label="Photo">
+          <Form.Item
+              name="description"
+              label={translate('advertsForm.formDesc')}
+              rules={[
+                {
+                  required: true,
+                },
+              ]}>
+            <TextArea placeholder="Name" />
+          </Form.Item>
+          <Form.Item name="photo" label={translate('advertsForm.formImage')}>
             <InputImage type="file" />
           </Form.Item>
-          <Button
-            type="primary"
-            htmlType="submit"
-            disabled={!canSubmit()}
-            block>
-            Finish editing
-          </Button>
+              <Button
+                  className='my-4'
+                  size='large'
+                  type="primary"
+                  shape='round'
+                  htmlType="submit"
+                  disabled={!canSubmit()}
+              block>
+                {translate('advertsForm.updateBtn')}
+              </Button>
         </Col>
       </Row>
     </Form>

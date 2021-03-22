@@ -7,6 +7,7 @@ const { Title } = Typography;
 import AdvertsEditForm from './AdvertsEditForm';
 import { getUi, getAdvertOnState } from '../../../store/selectors';
 import { loadAdvert } from '../../../store/actions';
+import translate from '../../../intl/translate';
 
 const AdvertsEdit = ({ history, ...props }) => {
   const ui = useSelector((state) => getUi(state));
@@ -24,7 +25,7 @@ const AdvertsEdit = ({ history, ...props }) => {
   return (
     <Row>
       <Col span={16} offset={4}>
-        <Divider>Edit the advert &apos;{advert?.name}&apos;</Divider>
+        <Divider>{translate('advert.titleEdit')} &apos;{advert?.name}&apos;</Divider>
         <AdvertsEditForm advert={advert} />
       </Col>
     </Row>

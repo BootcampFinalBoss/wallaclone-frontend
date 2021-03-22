@@ -43,6 +43,7 @@ export default {
       },
       editAdvertBtn: 'Editar Anuncio',
       deleteAdvertBtn: 'Borrar Anuncio',
+      titleEdit: 'Editar el anuncio',
     },
     advertsForm: {
       formName: 'Nombre',
@@ -52,6 +53,7 @@ export default {
       formImage: 'Imagen',
       formSelectFile: 'Seleccione Archivo',
       createBtn: 'Crear',
+      updateBtn:'Actualizar',
     },
     advertsCard: {
       sell: 'Venta',

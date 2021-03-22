@@ -1,0 +1,36 @@
+.btnColAdvert {
+    justify-content:space-between;
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+    border-top: 1px solid darkgrey;
+    padding: 1rem 0 .3rem 0;
+}
+
+.btnAdvert{
+    margin-top: 1rem;
+}
+
+.imageAdvertEdit{
+    margin: 0 auto;
+    max-height: 270px;
+    width: 75%;
+}
+
+.titleEditAdvert{
+    text-align: center;
+}
+
+@media (min-width: 768px) {
+    .btnColAdvert {
+        flex-direction: row;
+    }
+    .imageAdvertEdit{
+        margin: 0 auto;
+        max-height: 320px;
+        width: 90%;
+    }
+    .titleEditAdvert{
+        text-align: left;
+    }
+}

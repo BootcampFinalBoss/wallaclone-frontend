@@ -1,6 +1,7 @@
 import { LOCALES } from '../constants';
 import {ExclamationCircleOutlined} from '@ant-design/icons';
 import React from 'react';
+import {Divider} from 'antd';
 
 export default {
   [LOCALES.ENGLISH]: {
@@ -45,6 +46,7 @@ export default {
       },
       editAdvertBtn: 'Edit Advert',
       deleteAdvertBtn: 'Delete Advert',
+      titleEdit: 'Edit the advert',
     },
     advertsForm: {
       formName: 'Name',
@@ -54,6 +56,7 @@ export default {
       formImage: 'Image',
       formSelectFile: 'Select File',
       createBtn: 'Create',
+      updateBtn:'Update',
     },
     userPage: {},
     advertsCard: {

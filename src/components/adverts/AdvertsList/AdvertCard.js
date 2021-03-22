@@ -7,6 +7,7 @@ import { StarFilled, EyeOutlined, StarOutlined } from '@ant-design/icons';
 import Chip from '@material-ui/core/Chip';
 import { getLoggedUser } from '../../../store/selectors';
 import translate from '../../../intl/translate';
+import './AdvertCard.css';
 
 const { REACT_APP_IMAGE_BASE_URL: IMAGE_BASE_URL } = process.env;
 const { Paragraph } = Typography;
@@ -118,7 +119,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
                 style={{
                   backgroundColor: '#f43f3d',
                   color: 'white',
-                  borderRadius: 20,
+                  borderRadius: 10,
                   padding: '.8rem',
                   fontSize: '1rem',
                 }}>

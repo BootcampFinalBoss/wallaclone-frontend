@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 import {addFavoriteAdvert, removeFavoriteAdvert, updateAdvertState,} from '../../api/adverts';
 import translate from '../../intl/translate';
 import Chip from '@material-ui/core/Chip';
+import './AdvertEdit.css';
 
 const {confirm} = Modal;
 
@@ -99,14 +100,16 @@ const AdvertPage = ({history, ...props}) => {
 
       return (
           <Row style={{marginBottom: '3em', border: '1px solid gray', padding: '1rem', borderRadius: 20}}>
-            <Col span={24}>
+            <Col xs={24}>
               <Row>
-                <Col span={12}>
-              <Title level={2}>
-                {name} - {titleType}
-              </Title>
+                <Col xs={24} md={14}>
+                  <Col xs={{span:24}} className='titleEditAdvert'>
+                    <Title level={2}>
+                      {name} - {titleType}
+                    </Title>
+                  </Col>
               <Paragraph>
-                <div style={{display: 'flex', flex: 'row'}}>
+                <div style={{display: 'flex', flex: 'row', margin: ' 1rem 0'}}>
                   <p>
                     <Chip
                         label={`Precio: ${price} €`}
@@ -115,41 +118,38 @@ const AdvertPage = ({history, ...props}) => {
                     </Chip>
                   </p>
                   <p>
-                    {advertState === 'reserved' ? (
-                        <Chip
-                            label={translate('advert.reserved')}
-                            color="secondary"
-                            style={{
-                              fontSize: '1rem',
-                              backgroundColor: '#BC876C',
-                              margin: '0 1rem',
-                            }}
-                        />
-                    ) : advertState === 'sold' ? (
-                        <Chip
-                            label={translate('advert.sold')}
-                            color="secondary"
-                            style={{
-                              fontSize: '1rem',
-                              backgroundColor: '#027E0B',
-                              margin: '0 1rem',
-                            }}
-                        />
-                    ) : (
-                        ''
-                    )}
+                    <Chip
+                        label={`Tags: ${tags && tags?.join(', ')}`}
+                        color="primary"
+                        style={{fontSize: '1rem', marginLeft:'1rem'}}>
+                    </Chip>
+
                   </p>
                 </div>
               </Paragraph>
-              <Row style={{marginTop: 20}}>
-                <p style={{
-                  backgroundColor: 'blue',
-                  color: 'white',
-                  borderRadius: 30,
-                  padding: '.5rem',
-                  fontSize: '1rem'
-                }}>
-                  {`Tags: ${tags && tags?.join(', ')}`}
+              <Row style={{marginTop: 3}}>
+                <p>
+                  {advertState === 'reserved' ? (
+                      <Chip
+                          label={translate('advert.reserved')}
+                          color="secondary"
+                          style={{
+                            fontSize: '1rem',
+                            backgroundColor: '#BC876C',
+                          }}
+                      />
+                  ) : advertState === 'sold' ? (
+                      <Chip
+                          label={translate('advert.sold')}
+                          color="secondary"
+                          style={{
+                            fontSize: '1rem',
+                            backgroundColor: '#027E0B',
+                          }}
+                      />
+                  ) : (
+                      ''
+                  )}
                 </p>
               </Row>
               {advert.favorites && (
@@ -169,18 +169,19 @@ const AdvertPage = ({history, ...props}) => {
               <Row style={{
                 margin: '20px 0',
               }}>
+                {userData.userId === advert.user._id && (
               <Button className="btn-favorites" onClick={handleToggleAdvert} shape='round'>
                 {isFavorited ? removeFavoriteLabel : addFavoriteLabel}
                 <StarOutlined/>
               </Button>
+                )}
               </Row>
                 </Col>
-                <Col span={12}>
+                <Col xs={{span:24}} md={{span:10}}>
                   <Image
+                      className='imageAdvertEdit'
                       src={image}
                       alt={name}
-                      width={300}
-                      height={280}
                       fallback={placeholder}
                   />
                 </Col>
@@ -228,29 +229,21 @@ const AdvertPage = ({history, ...props}) => {
               </Row>
               {userData.userId === advert.user._id && (
                 <Col
-                    span={24}
-                    style={{
-                      justifyContent: 'space-between',
-                      display: 'flex',
-                      marginTop: '20px',
-                      borderTop: '1px solid gray',
-                      padding: '1rem 0 .3rem 0'
-                    }}>
-                    <Button shape='round' onClick={goToEditAdvert}>{translate('buttonAdvert.edit')}</Button>
-                    <Button shape='round' danger onClick={showConfirmDelete}>
+                    className='btnColAdvert'
+                    span={24}>
+                    <Button className='btnAdvert' shape='round' onClick={goToEditAdvert}>{translate('buttonAdvert.edit')}</Button>
+                    <Button className='btnAdvert' shape='round' danger onClick={showConfirmDelete}>
                       {translate('buttonAdvert.delete')}
                     </Button>
-                    <Button shape='round'
-                            style={{marginRight: '20px', borderColor: 'purple'}}
+                    <Button className='btnAdvert' shape='round'
                             onClick={() => handleChangeState('reserved')}>
                       {translate('buttonAdvert.reserved')}
                     </Button>
-                    <Button shape='round'
-                            style={{marginRight: '20px'}}
+                    <Button className='btnAdvert' shape='round'
                             onClick={() => handleChangeState('sold')}>
                       {translate('buttonAdvert.sold')}
                     </Button>
-                    <Button shape='round' onClick={() => handleChangeState('default')}>
+                    <Button className='btnAdvert' shape='round' onClick={() => handleChangeState('default')}>
                       {translate('buttonAdvert.nothing')}
                     </Button>
                 </Col>)}

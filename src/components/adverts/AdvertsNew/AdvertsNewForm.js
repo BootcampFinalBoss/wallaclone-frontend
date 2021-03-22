@@ -56,7 +56,7 @@ const NewAdvertForm = () => {
   return (
     <Form onFinish={handleCreateAdvert}>
       <Row style={{ marginBottom: '3em' }}>
-        <Col span={11}>
+        <Col xs={24} md={11}>
           <Form.Item
             name="name"
             label={translate('advertsForm.formName')}
@@ -82,7 +82,7 @@ const NewAdvertForm = () => {
             <InputNumber min={MIN_PRICE} max={MAX_PRICE} />
           </Form.Item>
         </Col>
-        <Col span={11} offset={2}>
+        <Col xs={{span:24,offset:0 }}  md={{span: 11, offset: 2}}>
           <Form.Item
             name="tags"
             label="Tags"
@@ -121,10 +121,13 @@ const NewAdvertForm = () => {
             </Upload>
           </Form.Item>
           <Button
+              className='my-4'
+              size='large'
             type="primary"
             htmlType="submit"
             disabled={creating}
             shape="round"
+              block
             icon={<UploadOutlined />}>
             {translate('advertsForm.createBtn')}
           </Button>

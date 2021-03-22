@@ -90,15 +90,11 @@ const UserProfile = () => {
   };
 
   const loggedUserProfileActions = loggedUser.username === params.username && (
-    <Col
-      span={24}
-      style={{
-        justifyContent: 'space-around',
-        display: 'flex',
-        marginTop: '20px',
-        padding: '1rem 0 .3rem 0',
-      }}>
+      <>
+        <Row>
+    <Col xs={{span:24, my:2}} md={{span:10, my:2}}>
       <Button
+          style={{margin: '.3rem'}}
         onClick={() => setShowFavorites((prev) => !prev)}
         key="advert"
         type="default"
@@ -106,7 +102,10 @@ const UserProfile = () => {
         size={64}>
         {showFav}
       </Button>
+      </Col>
+      <Col xs={{span:24, my:2}} md={{span:7, my:2}}>
       <Button
+          style={{margin: '.3rem'}}
         onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
         key="edit"
         type="primary"
@@ -114,7 +113,10 @@ const UserProfile = () => {
         size={64}>
         {translate('buttonProfile.edit')}
       </Button>
+        </Col>
+  <Col xs={{span:24}} md={{span:7}}>
       <Button
+          style={{margin: '.3rem'}}
         key="delete"
         type="danger"
         shape="round"
@@ -123,6 +125,8 @@ const UserProfile = () => {
         {translate('buttonProfile.delete')}
       </Button>
     </Col>
+        </Row>
+      </>
   );
 
   return (
@@ -141,9 +145,9 @@ const UserProfile = () => {
             <span>Email</span>
             <p>{profileData?.email}</p>
           </Col>
-          <Col span={8}>
+          <Col span={6} offset={2}>
             <Image
-              style={{ minWidth: 150, padding: '0 1rem' }}
+              style={{ minWidth: 130, padding: '0 1.3rem' }}
               src={`${process.env.REACT_APP_IMAGE_AVATAR_BASE_URL}/${profileData?.avatar}`}
             />
           </Col>
