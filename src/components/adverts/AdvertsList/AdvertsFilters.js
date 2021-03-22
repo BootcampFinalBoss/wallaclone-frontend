@@ -22,7 +22,7 @@ const AdvertsFilters = ({ filters, setFilters }) => {
   };
 
   return (
-    <Col span={12} className="adverts__filters">
+    <Col xs={24} md={24} lg={17} className="adverts__filters">
       <Form
         className="adverts__form"
         onFinish={onFinish}
@@ -31,7 +31,7 @@ const AdvertsFilters = ({ filters, setFilters }) => {
         <Row gutter={[24, 0]}>
           <Col span={12}>
             <Form.Item name="name" label={translate('advertsPage.byName')}>
-              <Input placeholder="Name" value={filters.name} />
+              <Input placeholder='Name' value={filters.name} />
             </Form.Item>
             <Form.Item name="type" label={translate('advertsPage.byType')}>
               <Radio.Group
@@ -42,7 +42,7 @@ const AdvertsFilters = ({ filters, setFilters }) => {
           </Col>
           <Col span={12}>
             <Form.Item name="tags" label={translate('advertsPage.byTags')}>
-              <TagsSelect value={filters.tags} />
+              <TagsSelect value={filters.tags} placeholder={translate('advertsPage.phTags')} />
             </Form.Item>
             <Form.Item name="sort" label={translate('advertsPage.bySort')}>
               <Radio.Group
@@ -66,7 +66,7 @@ const AdvertsFilters = ({ filters, setFilters }) => {
             </Form.Item>
           </Col>
           <Col span={24}>
-            <Button type="primary" htmlType="submit" block>
+            <Button type="primary" htmlType="submit" shape="round" block>
               {translate('advertsPage.search')}
             </Button>
           </Col>

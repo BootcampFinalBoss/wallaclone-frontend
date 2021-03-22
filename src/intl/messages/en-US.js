@@ -1,4 +1,6 @@
 import { LOCALES } from '../constants';
+import {ExclamationCircleOutlined} from '@ant-design/icons';
+import React from 'react';
 
 export default {
   [LOCALES.ENGLISH]: {
@@ -11,6 +13,8 @@ export default {
       byType: 'By type',
       bySort: 'By sort',
       search: 'Search',
+      phNameData: 'Name',
+      phTags: 'Select Tags',
       createOne: 'Go create one!',
     },
     advertsList: {
@@ -27,6 +31,7 @@ export default {
     },
     advert: {
       price: 'Price',
+      description: 'Description',
       state: 'Actual state',
       changeState: 'Change state',
       reserved: 'Reserved',
@@ -54,6 +59,7 @@ export default {
     advertsCard: {
       sell: 'Sell',
       buy: 'Buy',
+      all: 'All'
     },
     loginPage: {
       title: 'Log-in to your account',
@@ -99,5 +105,31 @@ export default {
       share: 'Share',
     },
     richTextEx: 'I have <bold>{num, plural, one {# dog} other {# dogs}}</bold>',
+    deleteModal: {
+      title: 'Are you sure delete the user account?',
+      content:
+          "This action can't be reversed. Your adverts will be deleted aswell.",
+      okText: 'Yes, delete this user account',
+      cancelText: 'Cancel',
+    },
+    buttonProfile: {
+      showAdverts: 'Show User Adverts',
+      showFavorite: 'Show User Favorites',
+      edit: 'Edit',
+      delete: 'Delete'
+    },
+    profile: {
+      name: 'Name',
+      username: 'Username',
+      profileUser: 'User Profile',
+      title: 'My Profile'
+    },
+    buttonAdvert: {
+      nothing: 'Nothing',
+      sold: 'Sold',
+      reserved: 'Reserved',
+      edit: 'Edit Advert',
+      delete: 'Delete Advert'
+    },
   },
 };

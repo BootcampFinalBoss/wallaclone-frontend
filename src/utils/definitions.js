@@ -1,7 +1,12 @@
+import translate from '../intl/translate';
+const sellLabel = translate('advertsCard.sell')
+const buyLabel = translate('advertsCard.buy')
+const allLabel = translate('advertsCard.all')
+
 export const saleOptions = {
-  sell: { label: 'Sell', value: 'sell' },
-  buy: { label: 'Buy', value: 'buy' },
-  all: { label: 'All', value: null },
+  sell: { label: sellLabel, value: 'sell' },
+  buy: { label: buyLabel, value: 'buy' },
+  all: { label: allLabel, value: null },
 };
 
 export const sortOptions = {

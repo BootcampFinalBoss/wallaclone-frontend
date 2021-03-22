@@ -76,6 +76,10 @@ const Header = () => {
 };
 
 const PublicHeader = ({ menuActiveItem, handleItemClick }) => {
+  const dispatch = useDispatch();
+  const handleChangeLocale = (newLocale) => {
+    dispatch(loadLang(newLocale));
+  };
   return (
     <>
       <Menu.Item

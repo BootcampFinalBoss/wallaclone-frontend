@@ -12,6 +12,8 @@ const { REACT_APP_IMAGE_BASE_URL: IMAGE_BASE_URL } = process.env;
 const { Paragraph } = Typography;
 const { Meta } = Card;
 
+
+
 const getHeadStyle = (sale) =>
   sale
     ? {
@@ -26,23 +28,21 @@ const getHeadStyle = (sale) =>
 const AdvertCard = ({ ad, hideSeller }) => {
   const history = useHistory();
   const userData = useSelector((state) => getLoggedUser(state));
-
+    const titleType = ad?.type === 'sell' ? translate('advertsCard.sell') : translate('advertsCard.buy')
   if (!ad) return;
 
   const image = () => {
     // TODO: Check if image exists
     if ((ad.image || ad.photo) && `${IMAGE_BASE_URL}${ad.image || ad.photo}`) {
-      console.log('ImgDB');
       return (
         <img
           src={`${IMAGE_BASE_URL}/${ad.image}`}
-          className="card-img-top"
-          style={{ padding: '1rem' }}
+          className="card-img-top m-auto"
+          style={{ padding: '2rem', width:'60%', height: 320}}
           alt={ad?.name}
         />
       );
     } else {
-      console.log('ImgBad');
       return (
         <img
           src="https://placedog.net/800"
@@ -62,9 +62,9 @@ const AdvertCard = ({ ad, hideSeller }) => {
   // );
 
   return (
-    <Col key={ad._id} xs={12} className="mx-auto">
+    <Col key={ad._id} xs={24} md={12} className="mx-auto">
       <Card
-        title={ad?.type === 'sell' ? 'Sell' : 'Buy'}
+        title={titleType}
         headStyle={getHeadStyle(ad?.type === 'sell' ? true : false)}
         hoverable
         cover={image()}
@@ -79,12 +79,6 @@ const AdvertCard = ({ ad, hideSeller }) => {
           title={ad.title || ad?.name}
           description={
             <>
-              <p>
-                <Chip
-                  color="primary"
-                  label={`Tags: ${ad?.tags && ad?.tags?.join(', ')}`}
-                  style={{ fontSize: '.8rem' }}></Chip>
-              </p>
               <div style={{ display: 'flex', flex: 'row' }}>
                 <p>
                   <Chip
@@ -100,7 +94,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
                       label={translate('advert.reserved')}
                       color="secondary"
                       style={{
-                        fontSize: '1.2rem',
+                        fontSize: '1rem',
                         backgroundColor: '#BC876C',
                         margin: '0 1rem',
                       }}
@@ -110,7 +104,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
                       label={translate('advert.sold')}
                       color="secondary"
                       style={{
-                        fontSize: '1.2rem',
+                        fontSize: '1rem',
                         backgroundColor: '#027E0B',
                         margin: '0 1rem',
                       }}
@@ -120,10 +114,13 @@ const AdvertCard = ({ ad, hideSeller }) => {
                   )}
                 </p>
               </div>
+                <p style={{backgroundColor: 'blue', color:'white', borderRadius: 20, padding:'.8rem', fontSize: '1rem', width:'50%' }}>
+                    {`Tags: ${ad?.tags && ad?.tags?.join(', ')}`}
+                </p>
               <p>
                 {!hideSeller && (
-                  <Link to={`/profile/${ad.user?.username}`}>
-                    {translate('advert.seller')}: {ad.user?.username}
+                  <Link to={`/profile/${ad.user?.username}`} style={{fontSize: '1.2rem'}}>
+                   {translate('advert.seller')}: {ad.user?.username}
                   </Link>
                 )}
               </p>

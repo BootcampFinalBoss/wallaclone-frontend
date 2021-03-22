@@ -12,16 +12,13 @@ import translate from '../../../intl/translate';
 
 const { Title, Paragraph } = Typography;
 
-const noMoreMsg = 'No more adverts to load, please, refine your search or create one!';
-
 const NoMoreAdverts = ({ text }) => (
   <Col span={24} className="text-center">
     <Divider />
     <Paragraph>
       {text
         ? text
-        : noMoreMsg
-      }
+        : translate('advertsPage.pNoAdverts')}
     </Paragraph>
     <CreateNew />
   </Col>
@@ -44,12 +41,12 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
   }
 
   return (
-    <Col xs={20} className="adverts">
+    <Col xs={24} className="adverts">
       <PageHeader
         className="site-page-header"
         title={translate('advertsList.title')}
       />
-      
+
       <Row gutter={[24, 24]} style={{ marginBottom: '2em' }} justify="center">
         {adverts?.length > 1 && (
           <InfiniteScroll
@@ -104,7 +101,7 @@ const CreateNew = () => {
   if (isLoggedUser) {
     return (
       <Row justify="center">
-        <Button onClick={goCreateOne}>
+        <Button onClick={goCreateOne} shape='round'>
           {translate('advertsPage.createOne')}
         </Button>
       </Row>
@@ -113,12 +110,12 @@ const CreateNew = () => {
   return (
     <Row justify="center">
       <Paragraph>{translate('advertsList.haveAccount')}</Paragraph>
-      <Button onClick={goLogin}>
+      <Button onClick={goLogin} shape='round' className='mx-3'>
         {translate('advertsList.logAndCreateBtn')}
       </Button>
       <Divider></Divider>
       <Paragraph>{translate('advertsList.member')}</Paragraph>
-      <Button onClick={goRegister}>
+      <Button onClick={goRegister} shape='round' className='mx-3'>
         {translate('advertsList.regAndCreateBtn')}
       </Button>
     </Row>

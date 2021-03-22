@@ -12,6 +12,8 @@ export default {
       byType: 'Tipo',
       bySort: 'Orden',
       search: 'Buscar',
+      phName: 'Nombre',
+      phTags: 'Selecciona Tags',
       createOne: 'Crea tu anuncio!',
     },
     advertsList: {
@@ -27,6 +29,7 @@ export default {
     },
     advert: {
       price: 'Precio',
+      description: 'Descripción',
       state: 'Estado actual',
       changeState: 'Cambiar estado',
       reserved: 'Reservado',
@@ -51,8 +54,9 @@ export default {
       createBtn: 'Crear',
     },
     advertsCard: {
-      sell: 'Se vende',
-      buy: 'Se compra',
+      sell: 'Venta',
+      buy: 'Compra',
+      all: 'Todo'
     },
     loginPage: {
       title: 'Acceder a su cuenta',
@@ -98,5 +102,31 @@ export default {
       share: 'Compartir',
     },
     richTextEx: 'I have <bold>{num, plural, one {# dog} other {# dogs}}</bold>',
+    deleteModal: {
+      title: '¿Está seguro que desea borrar la cuenta?',
+      content:
+          "Esta acción no es reversible. Si borra el usuario dejará también borrará sus anuncios.",
+      okText: 'Si, estoy seguro',
+      cancelText: 'Cancelar',
+    },
+    buttonProfile: {
+      showAdverts: 'Mostrar Anuncios Usuario',
+      showFavorite: 'Mostrar Favoritos',
+      edit: 'Editar',
+      delete: 'Borrar'
+    },
+    profile: {
+      name: 'Nombre',
+      username: 'Usuario',
+      profileUser: 'Perfil Usuario',
+      title: 'Mi Perfil'
+    },
+    buttonAdvert: {
+      nothing: 'Nada',
+      sold: 'Vendido',
+      reserved: 'Reservado',
+      edit: 'Editar Anuncio',
+      delete: 'Borrar Anuncio'
+    },
   },
 };
