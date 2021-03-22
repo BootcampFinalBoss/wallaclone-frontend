@@ -12,13 +12,16 @@ import translate from '../../../intl/translate';
 
 const { Title, Paragraph } = Typography;
 
+const noMoreMsg = 'No more adverts to load, please, refine your search or create one!';
+
 const NoMoreAdverts = ({ text }) => (
   <Col span={24} className="text-center">
     <Divider />
     <Paragraph>
       {text
         ? text
-        : 'No more adverts to load, please, refine your search or create one!'}
+        : noMoreMsg
+      }
     </Paragraph>
     <CreateNew />
   </Col>
@@ -46,7 +49,7 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
         className="site-page-header"
         title={translate('advertsList.title')}
       />
-      ,
+      
       <Row gutter={[24, 24]} style={{ marginBottom: '2em' }} justify="center">
         {adverts?.length > 1 && (
           <InfiniteScroll

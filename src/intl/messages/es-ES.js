@@ -4,7 +4,8 @@ export default {
   [LOCALES.SPANISH]: {
     advertsPage: {
       title: 'Página de anuncios',
-      pNoAdverts: 'No hay anuncios cargados, ¡refine su búsqueda o cree un auncio!',
+      pNoAdverts:
+        'No hay anuncios cargados, ¡refine su búsqueda o cree un auncio!',
       byTags: 'Tags',
       byPrice: 'Precio',
       byName: 'Nombre',
@@ -20,6 +21,7 @@ export default {
       regAndCreateBtn: 'Regístrate y crea tu anuncio!',
       member: 'Aún no eres miembro?',
     },
+    /* 'no-more-adverts': '{noMoreMsg}',*/
     createAdvert: {
       title: 'Crear un anuncio',
     },

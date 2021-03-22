@@ -20,6 +20,8 @@ export default {
       regAndCreateBtn: 'Go register and create one!',
       member: 'You are not a member yet?',
     },
+    /* 'no-more-adverts': '{noMoreMsg}', */
+
     createAdvert: {
       title: 'Create an advert',
     },
@@ -67,6 +69,8 @@ export default {
       title: 'User Profile',
       showUserAdsBtn: 'Show User Adverts',
       showFavAdsBtn: 'Show User Favorites',
+      edit: 'Edit',
+      delete: 'Delete',
     },
     editUser: {
       title: 'Edit User',
