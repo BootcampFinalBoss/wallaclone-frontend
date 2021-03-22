@@ -38,7 +38,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
         <img
           src={`${IMAGE_BASE_URL}/${ad.image}`}
           className="card-img-top m-auto"
-          style={{ padding: '2rem', width:'60%', height: 320}}
+          style={{ padding: '2rem', width:'60%', minHeight: 320}}
           alt={ad?.name}
         />
       );
@@ -114,7 +114,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
                   )}
                 </p>
               </div>
-                <p style={{backgroundColor: 'blue', color:'white', borderRadius: 20, padding:'.8rem', fontSize: '1rem', width:'50%' }}>
+                <p style={{backgroundColor: 'blue', color:'white', borderRadius: 20, padding:'.8rem', fontSize: '1rem'}}>
                     {`Tags: ${ad?.tags && ad?.tags?.join(', ')}`}
                 </p>
               <p>

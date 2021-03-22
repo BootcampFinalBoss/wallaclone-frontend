@@ -34,6 +34,8 @@ const UserProfile = () => {
     setLoading(false);
   };
 
+  console.log(loggedUser);
+
   useEffect(() => {
     console.log(params);
     handleGetUserData();
@@ -95,9 +97,8 @@ const UserProfile = () => {
       <Card
         title={translate('profile.profileUser')}
         style={{ maxWidth: 1200, textAlign: 'center', padding:  '0 1rem', margin:'1rem 0'}}
-
         actions={[
-          <Button
+          /*<Button
             onClick={() => setShowFavorites((prev) => !prev)}
             key="advert"
             type="default"
@@ -120,8 +121,9 @@ const UserProfile = () => {
             onClick={showConfirmDelete}
             size={64}>
             {translate('buttonProfile.delete')}
-          </Button>
+          </Button>*/
         ]}
+
       >
         <Row className="text-left">
           <Col span={14}>
@@ -140,6 +142,42 @@ const UserProfile = () => {
           </Col>
         </Row>
       </Card>
+      {loggedUser.username === params.username && (
+          <Col
+              span={24}
+              style={{
+                justifyContent: 'space-around',
+                display: 'flex',
+                marginTop: '20px',
+                borderTop: '1px solid gray',
+                padding: '1rem 0 .3rem 0'
+              }}>
+      <Button
+          onClick={() => setShowFavorites((prev) => !prev)}
+          key="advert"
+          type="default"
+          shape="round"
+          size={64}>
+        {showFav}
+      </Button>
+      <Button
+          onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
+          key="edit"
+          type="primary"
+          shape="round"
+          size={64}>
+        {translate('buttonProfile.edit')}
+      </Button>
+      <Button
+          key="delete"
+          type="danger"
+          shape="round"
+          onClick={showConfirmDelete}
+          size={64}>
+        {translate('buttonProfile.delete')}
+      </Button>
+          </Col>
+      )}
       {showFavorites ? (
         <Row justify="center" style={{ marginTop: '2rem' }}>
           <Col span={20}>
@@ -160,7 +198,7 @@ const UserProfile = () => {
         </Row>
       ) : (
         <Row justify="center" style={{ marginTop: '2rem' }}>
-          <Col span={20}>
+          <Col span={24}>
             {profileData && (
               <Row gutter={[24, 24]} justify="center">
                 {profileData?.adverts.map((ad) => {
