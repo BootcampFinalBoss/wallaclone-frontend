@@ -46,9 +46,18 @@ export default {
       forgotPass: 'Forgot Password',
       loginBtn: 'Login',
     },
+    userProfile: {
+      title: 'User Profile',
+      showUserAdsBtn: 'Show User Adverts',
+      showFavAdsBtn: 'Show User Favorites',
+    },
     editUser: {
       title: 'Edit User',
-      
+      editName: 'Name',
+      editSurname: 'Surname',
+      editUser: 'Username',
+      wrongEmail: 'The input is not valid E-mail!',
+      updateBtn: 'Update',
     },
     'subscribe-invite': 'Sure, {name}. I will subscribe your channel!',
     menu: {
