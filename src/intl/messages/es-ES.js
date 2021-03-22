@@ -9,6 +9,7 @@ export default {
       byPrice: 'Precio',
       byName: 'Nombre',
       byType: 'Tipo',
+      bySort: 'Orden',
       search: 'Buscar',
       createOne: 'Crea tu anuncio!',
     },
@@ -17,10 +18,23 @@ export default {
       haveAccount: 'Tienes una cuenta?',
       logAndCreateBtn: 'Inicia sesión y crea tu anuncio!',
       regAndCreateBtn: 'Regístrate y crea tu anuncio!',
-      member: 'Aún no eres miembro?'
+      member: 'Aún no eres miembro?',
     },
     createAdvert: {
       title: 'Crear un anuncio',
+    },
+    advert: {
+      state: 'Estado actual',
+      changeState: 'Cambiar estado',
+      reserved: 'Reservado',
+      sold: 'Vendido',
+      seller: 'Vendedor',
+      detail: {
+        title: 'Detalle del anuncio',
+        removeFavorite: 'Quitar favorito',
+        addFavorite: 'Añadir favorito',
+        hasNFavorites: 'Favoritos del anuncio',
+      },
     },
     advertsForm: {
       formName: 'Nombre',
@@ -29,7 +43,7 @@ export default {
       formDesc: 'Descripción',
       formImage: 'Imagen',
       formSelectFile: 'Seleccione Archivo',
-      createBtn: 'Crear!',
+      createBtn: 'Crear',
     },
     advertsCard: {
       sell: 'Se vende',
@@ -63,6 +77,9 @@ export default {
     },
     ui: {
       loading: 'Cargando...',
+    },
+    global: {
+      share: 'Compartir',
     },
     richTextEx: 'I have <bold>{num, plural, one {# dog} other {# dogs}}</bold>',
   },

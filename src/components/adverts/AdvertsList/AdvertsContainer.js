@@ -18,6 +18,7 @@ import {
 } from '../../../store/selectors';
 
 import '../../../assets/styles/styles.css';
+import { sortOptions } from '../../../utils/definitions';
 
 const { Title, Paragraph } = Typography;
 
@@ -29,6 +30,7 @@ const defaultFilters = {
   price: pricesRange,
   tags: [],
   sale: saleOptions.all,
+  sort: sortOptions.desc,
 };
 
 const AdvertsContainer = () => {

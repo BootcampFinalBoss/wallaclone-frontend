@@ -12,6 +12,7 @@ import { Content } from 'antd/lib/layout/layout';
 import translate from '../../intl/translate';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import Swal from 'sweetalert2';
+import AdvertListUser from '../adverts/AdvertsList/AdvertListUser';
 
 const { confirm } = Modal;
 
@@ -86,7 +87,7 @@ const UserProfile = () => {
       <PageHeader className="site-page-header" title={pageTitle} />
       <Card
         title="User Profile"
-        style={{ maxWidth: 1200, textAlign: 'center', padding: '0 1rem' }}
+        style={{ maxWidth: 1200, textAlign: 'center', padding:  '0 1rem', margin:'1rem 0'}}
         actions={[
           <Button
             onClick={() => setShowFavorites((prev) => !prev)}
@@ -133,7 +134,13 @@ const UserProfile = () => {
             {profileData && (
               <Row gutter={[24, 24]} justify="center">
                 {profileData?.favorites.map((ad) => {
-                  return <AdvertCard key={ad._id} ad={ad} hideSeller={true} />;
+                  return (
+                    <AdvertCard
+                      key={`${ad._id}-favorite`}
+                      ad={ad}
+                      hideSeller={true}
+                    />
+                  );
                 })}
               </Row>
             )}
@@ -145,7 +152,13 @@ const UserProfile = () => {
             {profileData && (
               <Row gutter={[24, 24]} justify="center">
                 {profileData?.adverts.map((ad) => {
-                  return <AdvertCard key={ad._id} ad={ad} hideSeller={true} />;
+                  return (
+                    <AdvertCard
+                      key={`${ad._id}-adverts`}
+                      ad={ad}
+                      hideSeller={true}
+                    />
+                  );
                 })}
               </Row>
             )}

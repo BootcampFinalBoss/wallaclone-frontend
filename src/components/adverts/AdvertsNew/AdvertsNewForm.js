@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   Form,
@@ -14,13 +14,11 @@ import {
 import { createAdvert } from '../../../store/actions';
 import { getUi } from '../../../store/selectors';
 import TagsSelect from '../../Tags/TagSelect';
-import { InputImage } from '../../globals';
 import { definitions } from '../../../utils';
 import { UploadOutlined } from '@ant-design/icons';
 import Swal from 'sweetalert2';
 import TextArea from 'antd/es/input/TextArea';
 import translate from '../../../intl/translate';
-
 
 const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
@@ -28,6 +26,7 @@ const NewAdvertForm = () => {
   const ui = useSelector((state) => getUi(state));
   const dispatch = useDispatch();
   const fileList = [];
+  const [creating, setCreating] = useState(false);
 
   const uploadProps = {
     beforeUpload: (file) => {
@@ -37,8 +36,7 @@ const NewAdvertForm = () => {
   };
 
   const handleCreateAdvert = async (data) => {
-    console.log(data);
-    /*console.log('File', fileList);*/
+    setCreating(true);
     data.image = fileList[0];
     const res = await dispatch(createAdvert(data));
     if (res) {
@@ -55,10 +53,6 @@ const NewAdvertForm = () => {
     }
   };
 
-  const canSubmit = () => {
-    return true;
-  };
-
   return (
     <Form onFinish={handleCreateAdvert}>
       <Row style={{ marginBottom: '3em' }}>
@@ -71,7 +65,7 @@ const NewAdvertForm = () => {
                 required: true,
               },
               {
-                pattern: new RegExp(/^[a-zA-ZÀ-ÿ@~`!@#$%^&*()_=+]+$/i),
+                pattern: new RegExp(/^[a-zA-ZÀ-ÿ@~`!@#$%^&*()_=+ \d]+$/i),
                 message: "You can't use the some special characters!",
               },
             ]}>
@@ -129,10 +123,9 @@ const NewAdvertForm = () => {
           <Button
             type="primary"
             htmlType="submit"
-            disabled={!canSubmit()}
+            disabled={creating}
             shape="round"
-            icon={<UploadOutlined />}
-          >
+            icon={<UploadOutlined />}>
             {translate('advertsForm.createBtn')}
           </Button>
         </Col>

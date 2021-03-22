@@ -23,3 +23,13 @@
   border-color: #f7eb55;
   color: #cfc002;
 }
+
+.button-margin-right {
+  margin-right: 20px;
+}
+
+.share-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

@@ -19,6 +19,7 @@ export const AUTH_UPDATEPASS_FAILURE = 'auth/UPDATEPASS_FAILURE';
 
 export const ADVERTS_LOADED = 'adverts/LOADED';
 export const ADVERTS_MORE_LOADED = 'adverts/MORE_LOADED';
+export const ADVERT_RESERVED = 'advert/RESERVED';
 
 export const ADVERTS_REQUEST = 'advert/CREATED';
 export const ADVERTS_SUCCESS = 'advert/CREATED';
@@ -32,6 +33,7 @@ export const TAGS_LOADED = 'tags/LOADED';
 export const LANGS_LOADED = 'langs/LOADED';
 
 export const UI_RESET_ERROR = 'ui/RESET_ERROR';
+export const UI_STOP_LOADING = 'ui/STOP_LOADING';
 
 export const USER_REQUEST = 'user/REQUEST';
 export const USER_SUCCESS = 'user/SUCCESS';

@@ -8,7 +8,7 @@ import { loadAdverts, loadMoreAdverts } from '../../../store/actions';
 import { definitions, storage } from '../../../utils';
 import translate from '../../../intl/translate';
 const { Title, Paragraph } = Typography;
-const { MIN_PRICE, MAX_PRICE, saleOptions } = definitions;
+const { MIN_PRICE, MAX_PRICE, saleOptions, sortOptions } = definitions;
 
 const AdvertsFilters = ({ filters, setFilters }) => {
   const dispatch = useDispatch();
@@ -27,13 +27,31 @@ const AdvertsFilters = ({ filters, setFilters }) => {
         className="adverts__form"
         onFinish={onFinish}
         initialValues={filters}
-        onValuesChange={onValuesChange}
-      >
-        <Row gutter={[24, 24]}>
+        onValuesChange={onValuesChange}>
+        <Row gutter={[24, 0]}>
           <Col span={12}>
             <Form.Item name="name" label={translate('advertsPage.byName')}>
               <Input placeholder="Name" value={filters.name} />
             </Form.Item>
+            <Form.Item name="type" label={translate('advertsPage.byType')}>
+              <Radio.Group
+                options={Object.values(saleOptions)}
+                value={filters.sale}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+            <Form.Item name="tags" label={translate('advertsPage.byTags')}>
+              <TagsSelect value={filters.tags} />
+            </Form.Item>
+            <Form.Item name="sort" label={translate('advertsPage.bySort')}>
+              <Radio.Group
+                options={Object.values(sortOptions)}
+                value={filters.sort}
+              />
+            </Form.Item>
+          </Col>
+          <Col span={24}>
             <Form.Item
               name="price"
               label={
@@ -43,20 +61,8 @@ const AdvertsFilters = ({ filters, setFilters }) => {
                     {filters.price.join(' - ')}
                   </Paragraph>
                 </>
-              }
-            >
+              }>
               <Slider range min={MIN_PRICE} max={MAX_PRICE} />
-            </Form.Item>
-          </Col>
-          <Col span={12}>
-            <Form.Item name="tags" label={translate('advertsPage.byTags')}>
-              <TagsSelect value={filters.tags} />
-            </Form.Item>
-            <Form.Item name="type" label={translate('advertsPage.byType')}>
-              <Radio.Group
-                options={Object.values(saleOptions)}
-                value={filters.sale}
-              />
             </Form.Item>
           </Col>
           <Col span={24}>

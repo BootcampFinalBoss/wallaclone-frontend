@@ -9,6 +9,7 @@ export default {
       byPrice: 'By price',
       byName: 'By name',
       byType: 'By type',
+      bySort: 'By sort',
       search: 'Search',
       createOne: 'Go create one!',
     },
@@ -22,6 +23,19 @@ export default {
     createAdvert: {
       title: 'Create an advert',
     },
+    advert: {
+      state: 'Actual state',
+      changeState: 'Change state',
+      reserved: 'Reserved',
+      sold: 'Sold',
+      seller: 'Seller',
+      detail: {
+        title: 'Detail of your advert',
+        removeFavorite: 'Remove favorite',
+        addFavorite: 'Add Favorite',
+        hasNFavorites: 'Advert favorites',
+      },
+    },
     advertsForm: {
       formName: 'Name',
       formPrice: 'Price',
@@ -29,7 +43,7 @@ export default {
       formDesc: 'Description',
       formImage: 'Image',
       formSelectFile: 'Select File',
-      createBtn: 'Create!',
+      createBtn: 'Create',
     },
     userPage: {},
     advertsCard: {
@@ -64,6 +78,9 @@ export default {
     },
     ui: {
       loading: 'Loading...',
+    },
+    global: {
+      share: 'Share',
     },
     richTextEx: 'I have <bold>{num, plural, one {# dog} other {# dogs}}</bold>',
   },

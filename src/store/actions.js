@@ -253,9 +253,10 @@ export const createAdvert = (advertData) => async (
 ) => {
   try {
     const fetchedAdvert = await adverts.createAdvert(advertData);
-    console.log('createAdvert', fetchedAdvert);
     dispatch(advertCreated(fetchedAdvert?.data?.result));
-    history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
+    const { _id, name } = fetchedAdvert?.data?.result;
+    history.push(`/adverts/${name}-${_id}`);
+    dispatch(stopLoading());
     return fetchedAdvert;
   } catch (error) {
     dispatch(generateAdvertError(error));
@@ -279,10 +280,13 @@ export const editAdvert = (advertData) => async (
   try {
     const fetchedAdvert = await adverts.editAdvert(advertData);
     dispatch(advertEdited(fetchedAdvert?.data?.result));
+
+    const { _id, name } = fetchedAdvert?.data?.result;
     setTimeout(() => {
-      history.push(`/adverts/${fetchedAdvert?.data?.result?._id}`);
+      history.push(`/adverts/${name}-${_id}`);
     }, 2800);
 
+    dispatch(stopLoading());
     return fetchedAdvert;
   } catch (error) {
     dispatch(generateAdvertError(error));
@@ -298,16 +302,17 @@ export const advertDeleted = (advert) => {
   };
 };
 
-export const deleteAdvert = (advertId) => async (
+export const deleteAdvert = (advertId, userId) => async (
   dispatch,
   getState,
   { history, api },
 ) => {
-  const fetchedAdvert = await adverts.deleteAdvert(advertId);
+  const fetchedAdvert = await adverts.deleteAdvert(advertId, userId);
   dispatch(advertDeleted(fetchedAdvert.result));
   setTimeout(async () => {
     await history.push('/');
   }, 2800);
+  dispatch(stopLoading());
   return fetchedAdvert;
 };
 
@@ -316,6 +321,12 @@ export const deleteAdvert = (advertId) => async (
 export const resetError = () => {
   return {
     type: types.UI_RESET_ERROR,
+  };
+};
+
+export const stopLoading = () => {
+  return {
+    type: types.UI_STOP_LOADING,
   };
 };
 
@@ -410,7 +421,7 @@ export const editUser = (id, userData, token) => async (
     console.log(res);
     await dispatch(userEdited(res));
     setTimeout(() => {
-      history.push(`/my-profile/${id}`);
+      history.push(`/profile/${res?.data?.user?.username}`);
     }, 3000);
 
     return res;
