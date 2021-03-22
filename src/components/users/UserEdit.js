@@ -8,6 +8,8 @@ import Swal from 'sweetalert2';
 import '../../assets/styles/styles.css';
 import { editUser, getUserId } from '../../store/actions';
 import UserEditForm from './UserEditForm';
+import translate from '../../intl/translate';
+
 
 const UserEdit = ({ ...props }) => {
   let dataInitials = null;
@@ -55,7 +57,7 @@ const UserEdit = ({ ...props }) => {
 
   return (
     <div className="containerPrincipalRegister">
-      <PageHeader className="site-page-header" title="Edit User" />
+      <PageHeader className="site-page-header" title={translate('editUser.title')}/>
       <UserEditForm dataInitials={dataInitials} onFinish={onFinish} />
     </div>
   );

@@ -82,40 +82,47 @@ const UserProfile = () => {
     });
   };
 
+  const showFavsAdsBtn = 'Show User Favorites';
+  const showUserAdsBtn = 'Show User Adverts';
+
   return (
     <div className="containerPrincipalRegister">
       <PageHeader className="site-page-header" title={pageTitle} />
       <Card
-        title="User Profile"
-        style={{ maxWidth: 1200, textAlign: 'center', padding:  '0 1rem', margin:'1rem 0'}}
+        title={translate('userProfile.title')}
+        style={{ maxWidth: 1200, textAlign: 'center', padding: '0 1rem', margin:'1rem 0' }}
         actions={[
           <Button
             onClick={() => setShowFavorites((prev) => !prev)}
             key="advert"
             type="default"
-            size={64}>
-            {showFavorites ? 'Show User Adverts' : 'Show User Favorites'}
+            size={64}
+          >
+            {showFavorites ? showUserAdsBtn : showFavsAdsBtn}
           </Button>,
           <Button
             onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
             key="edit"
             type="primary"
-            size={64}>
-            Edit
+            size={64}
+          >
+            {translate('userProfile.edit')}
           </Button>,
           <Button
             key="delete"
             type="danger"
             onClick={showConfirmDelete}
-            size={64}>
-            Delete
+            size={64}
+          >
+            {translate('userProfile.delete')}
           </Button>,
-        ]}>
+        ]}
+      >
         <Row className="text-left">
           <Col span={14}>
-            <span>Name</span>
+            <span>{translate('editUser.editName')}</span>
             <p>{profileData?.name}</p>
-            <span>Username</span>
+            <span>{translate('editUser.editSurname')}</span>
             <p>{profileData?.username}</p>
             <span>Email</span>
             <p>{profileData?.email}</p>
