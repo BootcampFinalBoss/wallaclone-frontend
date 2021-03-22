@@ -10,7 +10,7 @@ import {
   Col,
   Button,
   Space,
-  Modal,
+  Modal, Descriptions,
 } from 'antd';
 
 import { StarOutlined } from '@ant-design/icons';
@@ -27,6 +27,7 @@ import {
   updateAdvertState,
 } from '../../api/adverts';
 import translate from '../../intl/translate';
+import Chip from '@material-ui/core/Chip';
 
 const { confirm } = Modal;
 
@@ -109,62 +110,115 @@ const AdvertPage = ({ history, ...props }) => {
 
     if (advert && advert.name) {
       const { name, description, price, tags, type, image } = advert;
+      const titleType = type === 'sell' ? translate('advertsCard.sell') : translate('advertsCard.buy')
 
       return (
-        <Row style={{ marginBottom: '3em' }}>
+        <Row style={{ marginBottom: '3em', border:'1px solid gray', padding: '1rem', borderRadius: 5 }}>
           <Col span={12}>
             <Title level={2}>
-              {name} - {type === 'sell' ? 'Sell' : 'Buy'}
+              {name} - {titleType}
             </Title>
-            <Paragraph>{description}</Paragraph>
-            <Statistic title="Price" value={price} />
+            <Paragraph>
+              <div style={{ display: 'flex', flex: 'row' }}>
+                <p>
+                  <Chip
+                      label={`Precio: ${price} €`}
+                      color="secondary"
+                      style={{ fontSize: '1rem' }}>
+                  </Chip>
+                </p>
+                <p>
+                  {advertState === 'reserved' ? (
+                      <Chip
+                          label={translate('advert.reserved')}
+                          color="secondary"
+                          style={{
+                            fontSize: '1rem',
+                            backgroundColor: '#BC876C',
+                            margin: '0 1rem',
+                          }}
+                      />
+                  ) : advertState === 'sold' ? (
+                      <Chip
+                          label={translate('advert.sold')}
+                          color="secondary"
+                          style={{
+                            fontSize: '1rem',
+                            backgroundColor: '#027E0B',
+                            margin: '0 1rem',
+                          }}
+                      />
+                  ) : (
+                      ''
+                  )}
+                </p>
+              </div>
+              {/*<Chip
+                  label={`Precio: ${price} €`}
+                  color="secondary"
+                  style={{ fontSize: '1rem' }}>
+              </Chip>*/}
+            </Paragraph>
             <Row style={{ marginTop: 20 }}>
-              <Paragraph style={{ marginRight: 5, marginBottom: 0 }}>
-                Tags
-              </Paragraph>
-              <Tags tags={tags} />
+              <p style={{backgroundColor: 'blue', color:'white', borderRadius: 30, padding:'.5rem', fontSize: '1rem' }}>
+                {`Tags: ${tags && tags?.join(', ')}`}
+                {/*<Chip
+                  color="primary"
+                  label={`Tags: ${ad?.tags && ad?.tags?.join(', ')}`}
+                  style={{ fontSize: '.8rem' }}></Chip>*/}
+              </p>
             </Row>
             {advert.favorites && (
               <Row
                 style={{
-                  marginTop: '20px',
+                  margin: '20px 0',
                 }}>
-                <Button className="btn-favorites" onClick={handleToggleAdvert}>
+                <Button className="btn-favorites" onClick={handleToggleAdvert} shape='round'>
                   {isFavorited ? removeFavoriteLabel : addFavoriteLabel}
                   <StarOutlined />
                 </Button>
               </Row>
             )}
+            <Descriptions
+                bordered
+                title={translate('advert.description')}
+            >
+            <Paragraph>{description}</Paragraph>
+            </Descriptions>
             <Row
               style={{
                 marginTop: '20px',
               }}>
-              <Col span={24}>
+             {/* <Col span={24}>
                 <Row>
                   <Paragraph>
                     {translate('advert.state')}: {advertState}
                   </Paragraph>
                 </Row>
-              </Col>
+              </Col>*/}
               {userData.userId === advert.user._id && (
                 <Col span={24}>
-                  <Row>
+                  {/*<Row>
                     <Paragraph>{translate('advert.changeState')}:</Paragraph>
-                  </Row>
+                  </Row>*/}
                   <Row>
-                    <Button
+                    {/*<Button style={{ marginRight: '20px' }} shape='round' onClick={goToEditAdvert}>Edit advert</Button>
+                    <Button style={{ marginRight: '20px' }} shape='round' danger onClick={showConfirmDelete}>
+                      Delete advert
+                    </Button>
+                    <Button shape='round'
                       style={{ marginRight: '20px' }}
                       onClick={() => handleChangeState('reserved')}>
                       Reserved
                     </Button>
-                    <Button
+                    <Button shape='round'
                       style={{ marginRight: '20px' }}
                       onClick={() => handleChangeState('sold')}>
                       Sold
                     </Button>
-                    <Button onClick={() => handleChangeState('default')}>
+                    <Button shape='round' onClick={() => handleChangeState('default')}>
                       Nothing
-                    </Button>
+                    </Button>*/}
                   </Row>
                 </Col>
               )}
@@ -174,22 +228,37 @@ const AdvertPage = ({ history, ...props }) => {
             <Image
               src={image}
               alt={name}
-              width={300}
-              height={300}
+              width={250}
+              height={230}
               fallback={placeholder}
             />
           </Col>
           {userData.userId === advert.user._id && (
             <Col
-              span={5}
+              span={24}
               style={{
                 justifyContent: 'space-between',
                 display: 'flex',
                 marginTop: '20px',
+                borderTop: '1px solid gray',
+                padding: '1rem 0 .3rem 0'
               }}>
-              <Button onClick={goToEditAdvert}>Edit advert</Button>
-              <Button danger onClick={showConfirmDelete}>
-                Delete advert
+              <Button shape='round' onClick={goToEditAdvert}>{translate('buttonAdvert.edit')}</Button>
+              <Button shape='round' danger onClick={showConfirmDelete}>
+                {translate('buttonAdvert.delete')}
+              </Button>
+              <Button shape='round'
+                      style={{ marginRight: '20px', borderColor: 'purple' }}
+                      onClick={() => handleChangeState('reserved')}>
+                {translate('buttonAdvert.reserved')}
+              </Button>
+              <Button shape='round'
+                      style={{ marginRight: '20px' }}
+                      onClick={() => handleChangeState('sold')}>
+                {translate('buttonAdvert.sold')}
+              </Button>
+              <Button shape='round' onClick={() => handleChangeState('default')}>
+                {translate('buttonAdvert.nothing')}
               </Button>
             </Col>
           )}

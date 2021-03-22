@@ -24,7 +24,8 @@ const UserProfile = () => {
   const [loading, setLoading] = useState(true);
   const [profileData, setProfileData] = useState(null);
   const [showFavorites, setShowFavorites] = useState(false);
-  let pageTitle = loggedUser.username === params.username ? 'My Profile' : '';
+  const myProfile = translate('profile.title')
+  let pageTitle = loggedUser.username === params.username ? myProfile : '';
 
   const handleGetUserData = async () => {
     setLoading(true);
@@ -50,6 +51,8 @@ const UserProfile = () => {
     );
   }
 
+  const showFav =  showFavorites ? translate('buttonProfile.showAdverts') : translate('buttonProfile.showFavorite')
+
   const handleDeleteUser = async () => {
     const res = await dispatch(deleteUser(profileData._id));
     if (res) {
@@ -67,14 +70,15 @@ const UserProfile = () => {
   };
 
   const showConfirmDelete = () => {
+    const msgTitle = translate('deleteModal.title')
     confirm({
-      title: 'Are you sure delete the user account?',
+      title: 'Aqui',
       icon: <ExclamationCircleOutlined />,
       content:
-        "This action can't be reversed. Your adverts will be deleted aswell.",
-      okText: 'Yes, delete this user account',
+          'aqui',
+      okText: 'aqui',
       okType: 'danger',
-      cancelText: 'No!!!!',
+      cancelText: 'No',
       onOk() {
         handleDeleteUser();
       },
@@ -86,36 +90,39 @@ const UserProfile = () => {
     <div className="containerPrincipalRegister">
       <PageHeader className="site-page-header" title={pageTitle} />
       <Card
-        title="User Profile"
+        title={translate('profile.profileUser')}
         style={{ maxWidth: 1200, textAlign: 'center', padding:  '0 1rem', margin:'1rem 0'}}
         actions={[
           <Button
             onClick={() => setShowFavorites((prev) => !prev)}
             key="advert"
             type="default"
+            shape="round"
             size={64}>
-            {showFavorites ? 'Show User Adverts' : 'Show User Favorites'}
+            {showFav}
           </Button>,
           <Button
             onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
             key="edit"
             type="primary"
+            shape="round"
             size={64}>
-            Edit
+            {translate('buttonProfile.edit')}
           </Button>,
           <Button
             key="delete"
             type="danger"
+            shape="round"
             onClick={showConfirmDelete}
             size={64}>
-            Delete
+            {translate('buttonProfile.delete')}
           </Button>,
         ]}>
         <Row className="text-left">
           <Col span={14}>
-            <span>Name</span>
+            <span>{translate('profile.name')}</span>
             <p>{profileData?.name}</p>
-            <span>Username</span>
+            <span>{translate('profile.username')}</span>
             <p>{profileData?.username}</p>
             <span>Email</span>
             <p>{profileData?.email}</p>

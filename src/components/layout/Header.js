@@ -61,8 +61,23 @@ const Header = () => {
 };
 
 const PublicHeader = ({ menuActiveItem, handleItemClick }) => {
+  const dispatch = useDispatch();
+  const handleChangeLocale = (newLocale) => {
+    dispatch(loadLang(newLocale));
+  };
   return (
     <>
+      <Menu.Item
+          onClick={() => handleChangeLocale(LOCALES.ENGLISH)}
+          name={LOCALES.ENGLISH}
+          active={menuActiveItem === LOCALES.ENGLISH}
+          color="teal"></Menu.Item>
+      <Menu.Item
+          onClick={() => handleChangeLocale(LOCALES.SPANISH)}
+          name={LOCALES.SPANISH}
+          active={menuActiveItem === LOCALES.SPANISH}
+          color="teal"></Menu.Item>
+
       <Menu.Item
         name="register"
         active={menuActiveItem === 'register'}
@@ -112,22 +127,22 @@ const PrivateHeader = ({
   return (
     <>
       <Menu.Item
+          onClick={() => handleChangeLocale(LOCALES.ENGLISH)}
+          name={LOCALES.ENGLISH}
+          active={menuActiveItem === LOCALES.ENGLISH}
+          color="teal"></Menu.Item>
+      <Menu.Item
+          onClick={() => handleChangeLocale(LOCALES.SPANISH)}
+          name={LOCALES.SPANISH}
+          active={menuActiveItem === LOCALES.SPANISH}
+          color="teal"></Menu.Item>
+      <Menu.Item
         name="advertsNew"
         active={menuActiveItem === 'advertsNew'}
         onClick={handleItemClick}
         color="teal">
         <Link to={'/adverts/new'}>{translate('menu.createAdvert')}</Link>
       </Menu.Item>
-      <Menu.Item
-        onClick={() => handleChangeLocale(LOCALES.ENGLISH)}
-        name={LOCALES.ENGLISH}
-        active={menuActiveItem === LOCALES.ENGLISH}
-        color="teal"></Menu.Item>
-      <Menu.Item
-        onClick={() => handleChangeLocale(LOCALES.SPANISH)}
-        name={LOCALES.SPANISH}
-        active={menuActiveItem === LOCALES.SPANISH}
-        color="teal"></Menu.Item>
       <Menu.Item>
         <Dropdown
           inline
