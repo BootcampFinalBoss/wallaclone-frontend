@@ -109,7 +109,7 @@ const AdvertPage = ({history, ...props}) => {
                     </Title>
                   </Col>
               <Paragraph>
-                <div style={{display: 'flex', flex: 'row', margin: ' 1rem 0'}}>
+                <div className='containerPriceTags'>
                   <p>
                     <Chip
                         label={`Precio: ${price} €`}
@@ -121,7 +121,7 @@ const AdvertPage = ({history, ...props}) => {
                     <Chip
                         label={`Tags: ${tags && tags?.join(', ')}`}
                         color="primary"
-                        style={{fontSize: '1rem', marginLeft:'1rem'}}>
+                        style={{fontSize: '1rem'}}>
                     </Chip>
 
                   </p>

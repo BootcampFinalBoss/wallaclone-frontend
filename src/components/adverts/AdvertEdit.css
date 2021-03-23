@@ -21,6 +21,28 @@
     text-align: center;
 }
 
+.containerPriceTags {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.containerPriceTags p{
+    margin: .4rem 0;
+    padding: .3rem 0;
+}
+
+@media (min-width: 564px){
+    .containerPriceTags {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .containerPriceTags p{
+        margin-left: 2px;
+        padding: .3rem 0;
+    }
+}
+
 @media (min-width: 768px) {
     .btnColAdvert {
         flex-direction: row;
@@ -33,4 +55,5 @@
     .titleEditAdvert{
         text-align: left;
     }
+
 }
