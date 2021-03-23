@@ -49,14 +49,16 @@ const Header = () => {
       <Menu.Menu position="right">
         <Menu.Item
           onClick={() => handleChangeLocale(LOCALES.ENGLISH)}
-          name={LOCALES.ENGLISH}
           active={menuActiveItem === LOCALES.ENGLISH}
-          color="teal"></Menu.Item>
+          color="teal">
+          <img src="http://banderasmundo.es/wp-content/uploads/2017/09/reino-unido.png" alt="" width='8px' height='20px'/>
+        </Menu.Item>
         <Menu.Item
           onClick={() => handleChangeLocale(LOCALES.SPANISH)}
-          name={LOCALES.SPANISH}
           active={menuActiveItem === LOCALES.SPANISH}
-          color="teal"></Menu.Item>
+          color="teal">
+          <img src="http://banderasmundo.es/wp-content/uploads/2017/09/espana.png" alt="" width='8px' height='20px'/>
+        </Menu.Item>
         {userData && userData.token ? (
           <PrivateHeader
             menuActiveItem={menuActiveItem}
