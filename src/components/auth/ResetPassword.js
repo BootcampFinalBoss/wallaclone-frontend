@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { authReset, authUpdatePassword } from '../../store/actions';
 import { getRes } from '../../store/selectors';
 import Swal from 'sweetalert2';
+import translate from '../../intl/translate';
 
 const ResetPassword = () => {
   const [form] = Form.useForm();
@@ -47,7 +48,7 @@ const ResetPassword = () => {
 
   return (
     <div className="containerPrincipalRegister">
-      <PageHeader className="site-page-header" title="Reset-Password" />,
+      <PageHeader className="site-page-header" title={translate('formForgot.titleReset')} />,
       <Form
         form={form}
         name="resetPassword"
@@ -63,10 +64,10 @@ const ResetPassword = () => {
             <Alert message={state.error.message} type="error" showIcon />
         )}
         <Row type="flex" justify="space-between" gutter={16}>
-          <Col xs={24} sm={24} md={24} lg={24} xl={24}>
+          <Col xs={24}>
             <Form.Item
               name="password"
-              label="Password"
+              label={translate('formForgot.iPass')}
               rules={[
                 {
                   required: true,
@@ -79,7 +80,7 @@ const ResetPassword = () => {
 
             <Form.Item
               name="confirm"
-              label="Confirm Password"
+              label={translate('formForgot.iPassConfirm')}
               dependencies={['password']}
               hasFeedback
               rules={[
@@ -104,8 +105,8 @@ const ResetPassword = () => {
             </Form.Item>
           </Col>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Reset Password
+            <Button type="primary" htmlType="submit" shape='round' className='my-2'>
+              {translate('formForgot.btnUpdate')}
             </Button>
           </Form.Item>
         </Row>

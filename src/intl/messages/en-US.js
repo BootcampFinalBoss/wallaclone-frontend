@@ -134,5 +134,13 @@ export default {
       edit: 'Edit Advert',
       delete: 'Delete Advert'
     },
+    formForgot: {
+      title: 'Forgot-Password',
+      titleReset: 'Reset-Password',
+      btnReset: 'Reset Password',
+      iPass: 'Password',
+      iPassConfirm: 'Password Confirm',
+      btnUpdate: 'Update Password'
+    }
   },
 };

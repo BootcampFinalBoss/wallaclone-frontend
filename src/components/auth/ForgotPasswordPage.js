@@ -5,6 +5,7 @@ import "antd/dist/antd.css";
 import "./RegisterPage.css";
 import { authForgotPassword } from "../../store/actions";
 import { useDispatch } from "react-redux";
+import translate from '../../intl/translate';
 
 const ForgotPasswordPage = () => {
   const [form] = Form.useForm();
@@ -30,7 +31,7 @@ const ForgotPasswordPage = () => {
 
   return (
     <div className="containerPrincipalRegister">
-      <PageHeader className="site-page-header" title="Forgot-Password" />,
+      <PageHeader className="site-page-header" title={translate('formForgot.title')} />,
       <Form
         form={form}
         name="forgot"
@@ -58,8 +59,8 @@ const ForgotPasswordPage = () => {
             </Form.Item>
           </Col>
           <Form.Item>
-            <Button type="primary" htmlType="submit">
-              Reset Password
+            <Button type="primary" htmlType="submit" shape='round' className='my-2'>
+                {translate('formForgot.btnReset')}
             </Button>
           </Form.Item>
         </Row>

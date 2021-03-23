@@ -130,5 +130,13 @@ export default {
       edit: 'Editar Anuncio',
       delete: 'Borrar Anuncio'
     },
+    formForgot: {
+      title: 'Recupera-Contraseña',
+      titleReset: 'Resetea-Contraseña',
+      btnReset: 'Resetea Contraseña',
+      iPass: 'Contraseña',
+      iPassConfirm: 'Confirma Contraseña',
+      btnUpdate: 'Actualiza Contraseña'
+    }
   },
 };
