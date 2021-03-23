@@ -51,12 +51,14 @@ const UserProfile = () => {
     );
   }
 
+  console.log(profileData);
   const showFav = showFavorites
     ? translate('buttonProfile.showAdverts')
     : translate('buttonProfile.showFavorite');
 
   const handleDeleteUser = async () => {
-    const res = await dispatch(deleteUser(profileData._id));
+    const res = await dispatch(deleteUser(loggedUser.userId, loggedUser.token));
+    console.log(loggedUser.token, loggedUser.userId);
     if (res) {
       if (res.status === 200) {
         Swal.fire({
@@ -106,7 +108,7 @@ const UserProfile = () => {
       <Col xs={{span:24, my:2}} md={{span:7, my:2}}>
       <Button
           style={{margin: '.3rem'}}
-        onClick={() => history.push(`/user-edit/${loggedUser.userId}`)}
+        onClick={() => history.push(`/user-edit/${profileData.username}`)}
         key="edit"
         type="primary"
         shape="round"

@@ -360,8 +360,9 @@ export const loadLang = (newLocale) => async (dispatch, getState) => {
 
 /* USER */
 
-export const userRequest = () => ({
+export const userRequest = (res) => ({
   type: types.USER_REQUEST,
+  payload: res,
 });
 
 export const userFailure = (error) => ({
@@ -372,14 +373,15 @@ export const userFailure = (error) => ({
 
 export const userSuccess = (res) => ({
   type: types.USER_SUCCESS,
-  payload: res,
+  payload: res
 });
 
-export const getUserId = (id, token) => {
+export const getUserId = (id, data) => {
   return async function (dispatch, getState, { history, api }) {
-    dispatch(userRequest(id, token.token));
+    dispatch(userRequest(id, data));
+    console.log(id, data);
     try {
-      const res = await user.getUser(id, token);
+      const res = await user.getUser(id);
       dispatch(userSuccess(res));
       dispatch(resetError());
     } catch (error) {
@@ -418,10 +420,11 @@ export const editUser = (id, userData, token) => async (
   dispatch(userEditedRequest());
   try {
     const res = await user.editUser(id, userData, token);
+    console.log(id, userData);
     console.log(res);
     await dispatch(userEdited(res));
     setTimeout(() => {
-      history.push(`/profile/${res?.data?.user?.username}`);
+      history.push(`/profile/${userData.username}`);
     }, 3000);
 
     return res;
@@ -439,12 +442,12 @@ export const userDeleted = (user) => {
   };
 };
 
-export const deleteUser = (id) => async (
+export const deleteUser = (id, token) => async (
   dispatch,
   getState,
   { history, api },
 ) => {
-  const fetchedAdvert = await user.deleteUser(id);
+  const fetchedAdvert = await user.deleteUser(id, token);
   setTimeout(() => {
     dispatch(authLogout());
   }, 3000);

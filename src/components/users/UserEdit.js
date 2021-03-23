@@ -19,25 +19,20 @@ const UserEdit = ({ ...props }) => {
   const dataUser = state.user;
 
   useEffect(() => {
-    dispatch(getUserId(id.id, token.token));
+    dispatch(getUserId(id.id, dataInitials));
   }, []);
 
-  useEffect(() => {
     if (dataUser !== null) {
       dataInitials = {
         name: dataUser.name,
         email: dataUser.email,
         username: dataUser.username,
-        avatar: dataUser.avatar,
         surname: dataUser.surname,
       };
     }
-    console.log(dataUser, dataInitials);
-  }, [dataUser, id, props.match.params.id]);
 
   const onFinish = async (data) => {
-    const res = await dispatch(editUser(id.id, data, token.token));
-    console.log(res);
+    const res = await dispatch(editUser(token.userId, data, token.token));
     if (res) {
       console.log(res);
       if (res.status === 200) {

@@ -125,11 +125,11 @@ export const reset = (state = initialState.resReset, action) => {
   switch (action.type) {
     case types.AUTH_RESET_SUCCESS || types.AUTH_UPDATEPASS_SUCCESS:
       // login
-      return action.payload; // Save the token on redux state
+      return action.payload;
 
     case types.AUTH_UPDATEPASS_REQUEST || types.AUTH_RESET_REQUEST:
       // login
-      return { ...state }; // Save the token on redux state
+      return { ...state };
     default:
       return state;
   }
@@ -140,8 +140,7 @@ export const user = (state = initialState.user, action) => {
     case types.USER_EDITED || types.USER_REQUEST || types.USER_EDITED_REQUEST:
       return { ...state, loading: true };
     case types.USER_SUCCESS:
-      // login
-      return [...state, action.payload]; // Save the token on redux state
+      return action.payload;
     case types.USER_DELETED:
       return action.payload;
     default:
