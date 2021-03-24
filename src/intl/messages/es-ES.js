@@ -5,7 +5,9 @@ export default {
     advertsPage: {
       title: 'Página de anuncios',
       pNoAdverts:
-        'No hay anuncios cargados, ¡refine su búsqueda o cree un auncio!',
+        'No hay anuncios cargados, por favor, refine su búsqueda o ¡cree un auncio!',
+      pNoMoreAdverts:
+        'No hay más anuncios para cargar, por favor, refina tu búsqueda o crea uno',
       byTags: 'Tags',
       byPrice: 'Precio',
       byName: 'Nombre',
@@ -18,10 +20,10 @@ export default {
     },
     advertsList: {
       title: 'Lista de Anuncios',
-      haveAccount: 'Tienes una cuenta?',
-      logAndCreateBtn: 'Inicia sesión y crea tu anuncio!',
-      regAndCreateBtn: 'Regístrate y crea tu anuncio!',
-      member: 'Aún no eres miembro?',
+      haveAccount: '¿Tienes una cuenta?',
+      logAndCreateBtn: '¡Inicia sesión y crea tu anuncio!',
+      regAndCreateBtn: '¡Regístrate y crea tu anuncio!',
+      member: '¿Aún no eres miembro?',
     },
     /* 'no-more-adverts': '{noMoreMsg}',*/
     createAdvert: {
@@ -29,6 +31,7 @@ export default {
     },
     advert: {
       price: 'Precio',
+      priceWithNumber: 'Precio: {price} €',
       description: 'Descripción',
       state: 'Estado actual',
       changeState: 'Cambiar estado',
@@ -39,7 +42,7 @@ export default {
         title: 'Detalle del anuncio',
         removeFavorite: 'Quitar favorito',
         addFavorite: 'Añadir favorito',
-        hasNFavorites: 'Favoritos del anuncio',
+        hasNFavorites: '{favorites} Favoritos',
       },
       editAdvertBtn: 'Editar Anuncio',
       deleteAdvertBtn: 'Borrar Anuncio',
@@ -76,9 +79,9 @@ export default {
       username: 'Usuario',
       password: 'Contraseña',
       rememberMe: 'Recordar',
-      register: 'Regístrate ahora, es gratis!',
+      register: '¡Regístrate ahora, es gratis!',
       account: '¿Aún no tiene una cuenta?',
-      forgotPass: 'Ha olvidado su contraseña?',
+      forgotPass: '¿Ha olvidado su contraseña?',
       loginBtn: 'Acceder',
     },
     userProfile: {
@@ -140,6 +143,13 @@ export default {
       reserved: 'Reservado',
       edit: 'Editar Anuncio',
       delete: 'Borrar Anuncio',
+      showAdvancedOptions: {
+        title: 'Mostrar opciones avanzadas',
+        close: 'cerrar',
+      },
+      changeState: {
+        title: 'Cambiar estado',
+      },
     },
     formForgot: {
       title: 'Recupera-Contraseña',

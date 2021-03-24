@@ -7,7 +7,9 @@ export default {
   [LOCALES.ENGLISH]: {
     advertsPage: {
       title: 'Adverts Page',
-      pNoAdverts: 'No ads loaded, refine your search or create one!',
+      pNoAdverts: 'No ads loaded, please, refine your search or create one!',
+      pNoMoreAdverts:
+        'No more ads to load, please, please, refine your search or create one!',
       byTags: 'By tags',
       byPrice: 'By price',
       byName: 'By name',
@@ -32,6 +34,7 @@ export default {
     },
     advert: {
       price: 'Price',
+      priceWithNumber: 'Price: {price} €',
       description: 'Description',
       state: 'Actual state',
       changeState: 'Change state',
@@ -42,11 +45,14 @@ export default {
         title: 'Detail of your advert',
         removeFavorite: 'Remove favorite',
         addFavorite: 'Add Favorite',
-        hasNFavorites: 'Advert favorites',
+        hasNFavorites: '{favorites} Favorites',
       },
       editAdvertBtn: 'Edit Advert',
       deleteAdvertBtn: 'Delete Advert',
       titleEdit: 'Edit the advert',
+      advancedOptions: {
+        title: 'Advanced options',
+      },
     },
     advertsForm: {
       formName: 'Name',
@@ -144,6 +150,13 @@ export default {
       reserved: 'Reserved',
       edit: 'Edit Advert',
       delete: 'Delete Advert',
+      showAdvancedOptions: {
+        title: 'Show advanced options',
+        close: 'Close',
+      },
+      changeState: {
+        title: 'Change state',
+      },
     },
     formForgot: {
       title: 'Forgot-Password',

@@ -1,31 +1,110 @@
 /* eslint-disable react/prop-types */
-import React, {useEffect, useState} from 'react';
-import {Redirect} from 'react-router-dom';
-import {Button, Col, Descriptions, Divider, Image, Modal, Row, Typography,} from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import {
+  Button,
+  Col,
+  Descriptions,
+  Image,
+  Modal,
+  Row,
+  Typography,
+  Select,
+} from 'antd';
 
-import {ExclamationCircleOutlined, FacebookFilled, StarOutlined, TwitterSquareFilled} from '@ant-design/icons';
+import {
+  ExclamationCircleOutlined,
+  FacebookFilled,
+  StarOutlined,
+  TwitterSquareFilled,
+} from '@ant-design/icons';
 import placeholder from '../../assets/photo-placeholder.png';
-import {deleteAdvert, loadAdvert} from '../../store/actions';
-import {getAdvertOnState, getLoggedUser, getUi} from '../../store/selectors';
-import {useDispatch, useSelector} from 'react-redux';
+import { deleteAdvert, loadAdvert } from '../../store/actions';
+import { getAdvertOnState, getLoggedUser, getUi } from '../../store/selectors';
+import { useDispatch, useSelector } from 'react-redux';
 import Swal from 'sweetalert2';
-import {addFavoriteAdvert, removeFavoriteAdvert, updateAdvertState,} from '../../api/adverts';
+import {
+  addFavoriteAdvert,
+  removeFavoriteAdvert,
+  updateAdvertState,
+} from '../../api/adverts';
 import translate from '../../intl/translate';
 import Chip from '@material-ui/core/Chip';
-import './AdvertEdit.css';
+import './Advert.css';
 
-const {confirm} = Modal;
+const { confirm } = Modal;
 
-const {Title, Paragraph} = Typography;
+const { Title, Paragraph } = Typography;
 
-const AdvertPage = ({history, ...props}) => {
+const AdvertOptionsModal = ({
+  showOptionsModal,
+  goToEditAdvert,
+  showConfirmDelete,
+  setShowOptionsModal,
+  handleChangeState,
+}) => {
+  return (
+    <Modal
+      visible={showOptionsModal}
+      title={translate('advert.advancedOptions.title')}
+      closable
+      onCancel={() => setShowOptionsModal(false)}
+      footer={
+        <Row justify="space-between">
+          <Col span={8} style={{ display: 'flex' }}>
+            <Button onClick={goToEditAdvert}>
+              {translate('buttonAdvert.edit')}
+            </Button>
+          </Col>
+          <Col span={8} style={{ display: 'flex', justifyContent: 'center' }}>
+            <Button danger onClick={showConfirmDelete}>
+              {translate('buttonAdvert.delete')}
+            </Button>
+          </Col>
+          <Col span={8}>
+            <Button
+              key="submit"
+              type="primary"
+              onClick={() => setShowOptionsModal(false)}>
+              {translate('buttonAdvert.showAdvancedOptions.close')}
+            </Button>
+          </Col>
+        </Row>
+      }>
+      <Row className="advert__button-col">
+        <Col span={24}>
+          <p>{translate('buttonAdvert.changeState.title')}:</p>
+          <Select
+            style={{ width: 100 }}
+            onChange={(value) => {
+              handleChangeState(value);
+            }}>
+            <Select.Option value="reserved">
+              {translate('buttonAdvert.reserved')}
+            </Select.Option>
+            <Select.Option value="sold">
+              {translate('buttonAdvert.sold')}
+            </Select.Option>
+            <Select.Option value="default">
+              {translate('buttonAdvert.nothing')}
+            </Select.Option>
+          </Select>
+        </Col>
+      </Row>
+    </Modal>
+  );
+};
+
+const AdvertPage = ({ history, ...props }) => {
   const dispatch = useDispatch();
   const ui = useSelector((state) => getUi(state));
   const userData = useSelector((state) => getLoggedUser(state));
   const getAdvertId = () => props.match.params.nameId?.split('-')[1];
   const advert = useSelector((state) => getAdvertOnState(state));
   const [isFavorited, setIsFavorited] = useState(false);
+  const [advertFavorites, setAdvertFavorites] = useState(0);
   const [advertState, setAdvertState] = useState(false);
+  const [showOptionsModal, setShowOptionsModal] = useState(false);
 
   const handleGetAdvert = async () => {
     dispatch(loadAdvert(getAdvertId()));
@@ -55,9 +134,11 @@ const AdvertPage = ({history, ...props}) => {
     if (!isFavorited) {
       await addFavoriteAdvert(advert._id, userData.userId);
       setIsFavorited(true);
+      setAdvertFavorites((prev) => prev + 1);
     } else {
       await removeFavoriteAdvert(advert._id, userData.userId);
       setIsFavorited(false);
+      setAdvertFavorites((prev) => prev - 1);
     }
   };
 
@@ -95,164 +176,135 @@ const AdvertPage = ({history, ...props}) => {
 
     if (advert && advert.name) {
       const { name, description, price, tags, type, image } = advert;
-      const advertLink = `${process.env.REACT_APP_FRONT_END}/${advert?.name}-${advert?._id}`;
-      const titleType = type === 'sell' ? translate('advertsCard.sell') : translate('advertsCard.buy');
+
+      const advertNameNoSpaces = advert?.name.replace(/\s/gi, '%20');
+
+      const advertLink = `${process.env.REACT_APP_FRONT_END}/${advertNameNoSpaces}-${advert?._id}`;
+
+      const titleType =
+        type === 'sell'
+          ? translate('advertsCard.sell')
+          : translate('advertsCard.buy');
 
       return (
-          <Row style={{marginBottom: '3em', border: '1px solid gray', padding: '1rem', borderRadius: 20}}>
-            <Col xs={24}>
-              <Row>
-                <Col xs={24} md={14}>
-                  <Col xs={{span:24}} className='titleEditAdvert'>
-                    <Title level={2}>
-                      {name} - {titleType}
-                    </Title>
-                  </Col>
-              <Paragraph>
-                <div className='containerPriceTags'>
-                  <p>
-                    <Chip
-                        label={`Precio: ${price} €`}
-                        color="secondary"
-                        style={{fontSize: '1rem'}}>
-                    </Chip>
-                  </p>
-                  <p>
-                    <Chip
-                        label={`Tags: ${tags && tags?.join(', ')}`}
-                        color="primary"
-                        style={{fontSize: '1rem'}}>
-                    </Chip>
-
-                  </p>
-                </div>
-              </Paragraph>
-              <Row style={{marginTop: 3}}>
-                <p>
-                  {advertState === 'reserved' ? (
-                      <Chip
-                          label={translate('advert.reserved')}
-                          color="secondary"
-                          style={{
-                            fontSize: '1rem',
-                            backgroundColor: '#BC876C',
-                          }}
-                      />
-                  ) : advertState === 'sold' ? (
-                      <Chip
-                          label={translate('advert.sold')}
-                          color="secondary"
-                          style={{
-                            fontSize: '1rem',
-                            backgroundColor: '#027E0B',
-                          }}
-                      />
-                  ) : (
-                      ''
-                  )}
-                </p>
-              </Row>
-              {advert.favorites && (
-                  <Row
-                      style={{
-                        margin: '20px 0',
-                      }}>
-                    <Paragraph>
-                      {translate('advert.detail.hasNFavorites')}:{' '}
-                      {advert.favorites.length}
-                    </Paragraph>
-                  {/* {userData.token && (
-
-                    )}*/}
-                  </Row>
-              )}
-              <Row style={{
-                margin: '20px 0',
-              }}>
-                {userData.userId === advert.user._id && (
-              <Button className="btn-favorites" onClick={handleToggleAdvert} shape='round'>
-                {isFavorited ? removeFavoriteLabel : addFavoriteLabel}
-                <StarOutlined/>
-              </Button>
+        <Row className="advert-container">
+          <Col span={24}>
+            <Image
+              className="advert__image"
+              src={image}
+              alt={name}
+              fallback={placeholder}
+            />
+          </Col>
+          <Col span={24}>
+            <Row>
+              <Title className="advert__title" level={2}>
+                {name} - {titleType}
+              </Title>
+            </Row>
+            <Row>
+              <div className="advert__tags">
+                <Chip
+                  label={translate('advert.priceWithNumber', { price })}
+                  color="secondary"
+                  style={{ fontSize: '1rem' }}
+                />
+                <Chip
+                  label={`Tags: ${tags && tags?.join(', ')}`}
+                  color="primary"
+                  style={{ fontSize: '1rem' }}
+                />
+                {advert.favorites && (
+                  <>
+                    <div className="advert__favorites">
+                      {translate('advert.detail.hasNFavorites', {
+                        favorites: advertFavorites,
+                      })}
+                    </div>
+                    {userData.userId === advert.user._id && (
+                      <Button
+                        className="btn-favorites"
+                        onClick={handleToggleAdvert}
+                        shape="round">
+                        {isFavorited ? removeFavoriteLabel : addFavoriteLabel}
+                        <StarOutlined />
+                      </Button>
+                    )}
+                  </>
                 )}
-              </Row>
-                </Col>
-                <Col xs={{span:24}} md={{span:10}}>
-                  <Image
-                      className='imageAdvertEdit'
-                      src={image}
-                      alt={name}
-                      fallback={placeholder}
+                {advertState === 'reserved' ? (
+                  <Chip
+                    label={translate('advert.reserved')}
+                    color="secondary"
+                    style={{
+                      fontSize: '1rem',
+                      backgroundColor: '#BC876C',
+                    }}
                   />
-                </Col>
+                ) : advertState === 'sold' ? (
+                  <Chip
+                    label={translate('advert.sold')}
+                    color="secondary"
+                    style={{
+                      fontSize: '1rem',
+                      backgroundColor: '#027E0B',
+                    }}
+                  />
+                ) : (
+                  ''
+                )}
+              </div>
+            </Row>
+            <Descriptions bordered title={translate('advert.description')}>
+              <Paragraph>{description}</Paragraph>
+            </Descriptions>
+            <Row style={{ marginTop: '20px' }} gutter={[24, 24]}>
+              <Col span={24}>
+                <Paragraph>{translate('global.share')}:</Paragraph>
+                <Row>
+                  <Button
+                    className="button-margin-right share-buttons"
+                    shape="round">
+                    <FacebookFilled />
+                    <div data-href={advertLink}>
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={`https://www.facebook.com/sharer/sharer.php?u=${advertLink}`}>
+                        {translate('global.share')}
+                      </a>
+                    </div>
+                  </Button>
+                  <Button className="share-buttons" shape="round">
+                    <TwitterSquareFilled />
+                    <a
+                      target="_blank"
+                      rel="noreferrer"
+                      className="twitter-share-button"
+                      href={`https://twitter.com/intent/tweet?text=Check%20this%20awesome%20advert!%20${advertLink?.toString()}`}>
+                      Tweet
+                    </a>
+                  </Button>
+                </Row>
+              </Col>
+            </Row>
+            {userData.userId === advert.user._id && (
+              <Row className="advert__button-col">
+                <Button
+                  className="advert__button"
+                  shape="round"
+                  onClick={() => {
+                    setShowOptionsModal(true);
+                  }}>
+                  {translate('buttonAdvert.showAdvancedOptions.title')}
+                </Button>
               </Row>
-              <Descriptions
-                  bordered
-                  title={translate('advert.description')}
-              >
-                <Paragraph>{description}</Paragraph>
-              </Descriptions>
-              <Row
-                  style={{marginTop: '20px',}}
-                  gutter={[24, 24]}>
-                    <Col span={24}>
-                        <Paragraph>{translate('global.share')}:</Paragraph>
-                        <Row>
-                            <Button className="button-margin-right share-buttons" shape='round'>
-                                <FacebookFilled/>
-                                <div
-                                    className="fb-share-button"
-                                data-href="https://developers.facebook.com/docs/plugins/"
-                                data-layout="button_count"
-                                data-size="large">
-                                <a
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
-                                  className="fb-xfbml-parse-ignore">
-                                  {translate('global.share')}
-                                </a>
-                              </div>
-                            </Button>
-                          <Button className="share-buttons" shape='round'>
-                            <TwitterSquareFilled />
-                            <a
-                              target="_blank"
-                              rel="noreferrer"
-                              className="twitter-share-button"
-                              href={`https://twitter.com/intent/tweet?text=Check%20this%20awesome%20advert!%20${advertLink}`}>
-                              Tweet
-                            </a>
-                          </Button>
-                        </Row>
-                    </Col>
-              </Row>
-              {userData.userId === advert.user._id && (
-                <Col
-                    className='btnColAdvert'
-                    span={24}>
-                    <Button className='btnAdvert' shape='round' onClick={goToEditAdvert}>{translate('buttonAdvert.edit')}</Button>
-                    <Button className='btnAdvert' shape='round' danger onClick={showConfirmDelete}>
-                      {translate('buttonAdvert.delete')}
-                    </Button>
-                    <Button className='btnAdvert' shape='round'
-                            onClick={() => handleChangeState('reserved')}>
-                      {translate('buttonAdvert.reserved')}
-                    </Button>
-                    <Button className='btnAdvert' shape='round'
-                            onClick={() => handleChangeState('sold')}>
-                      {translate('buttonAdvert.sold')}
-                    </Button>
-                    <Button className='btnAdvert' shape='round' onClick={() => handleChangeState('default')}>
-                      {translate('buttonAdvert.nothing')}
-                    </Button>
-                </Col>)}
-            </Col>
-          </Row>
-      )};
-  }
-
-
+            )}
+          </Col>
+        </Row>
+      );
+    }
+  };
 
   useEffect(() => {
     handleGetAdvert();
@@ -265,14 +317,21 @@ const AdvertPage = ({history, ...props}) => {
       setIsFavorited(true);
     }
     setAdvertState(advert?.state !== 'default' ? advert?.state : advert?.type);
+    setAdvertFavorites(advert?.favorites?.length || 0);
   }, [advert?._id, userData]);
 
   return (
     <Row justify="center">
-      <Col xs={20} lg={16}>
-        <Divider>{translate('advert.detail.title')}</Divider>
+      <Col xs={20} lg={12}>
         {renderAdvert()}
       </Col>
+      <AdvertOptionsModal
+        showOptionsModal={showOptionsModal}
+        handleChangeState={handleChangeState}
+        showConfirmDelete={showConfirmDelete}
+        goToEditAdvert={goToEditAdvert}
+        setShowOptionsModal={setShowOptionsModal}
+      />
     </Row>
   );
 };

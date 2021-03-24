@@ -72,9 +72,9 @@ const App = () => {
           <Route path="/reset/:id">
             <ResetPassword />
           </Route>
-          <Route path="/user-edit/:id">
+          <PrivateRoute path="/user-edit/:id">
             {(routerProps) => <UserEdit {...routerProps} />}
-          </Route>
+          </PrivateRoute>
           <PrivateRoute path="/adverts/new" exact component={AdvertsNew} />
           <PrivateRoute path="/adverts/edit/:id" exact>
             {(routerProps) => (

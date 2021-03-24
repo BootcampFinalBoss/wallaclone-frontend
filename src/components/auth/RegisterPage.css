@@ -1,36 +1,36 @@
-.containerPrincipalRegister{
-    min-height: 100vh;
-    width: 70%;
-    margin: 2rem auto;
+.containerPrincipalRegister {
+  min-height: 100vh;
+  width: 70%;
+  margin: 0 auto;
+  padding: 2rem 0;
 }
 
-.ant-page-header-heading-title{
-    color: rgb(5 181 173);
-    font-size: 2rem;
-    font-family: Lato,'Helvetica Neue',Arial,Helvetica,sans-serif;;
+.ant-page-header-heading-title {
+  color: rgb(5 181 173);
+  font-size: 2rem;
+  font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
 }
 
-.ant-page-header-heading-left{
-    margin: 0 auto;
+.ant-page-header-heading-left {
+  margin: 0 auto;
 }
 
-#register{
-    padding: 1.5rem;
+#register {
+  padding: 1.5rem;
 }
 
-.ant-form-item-label{
-    text-align: left !important;
+.ant-form-item-label {
+  text-align: left !important;
 }
 
-.ant-form-item-label
-{
-    display: block;
-    width: 100%;
+.ant-form-item-label {
+  display: block;
+  width: 100%;
 }
-.ant-row{
-    display: flex;
+.ant-row {
+  display: flex;
 }
 
 .ant-form-item {
-    margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 }

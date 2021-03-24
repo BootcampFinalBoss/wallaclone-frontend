@@ -85,9 +85,7 @@ const AdvertCard = ({ ad, hideSeller }) => {
                   <Chip
                     label={`${ad.price} €`}
                     color="secondary"
-                    style={{ fontSize: '1rem' }}>
-                    {ad?.price} €.
-                  </Chip>
+                    style={{ fontSize: '1rem' }}></Chip>
                 </p>
                 <p>
                   {ad.state === 'reserved' ? (

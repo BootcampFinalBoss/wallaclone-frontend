@@ -16,7 +16,11 @@ const { Title, Paragraph } = Typography;
 const NoMoreAdverts = ({ text }) => (
   <Col span={24} className="text-center">
     <Divider />
-    <Paragraph>{text ? text : translate('advertsPage.pNoAdverts')}</Paragraph>
+    <Paragraph>
+      {text
+        ? translate('advertsPage.pNoMoreAdverts')
+        : translate('advertsPage.pNoAdverts')}
+    </Paragraph>
     <CreateNew />
   </Col>
 );
@@ -50,7 +54,7 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
             next={fetchMore}
             hasMore={ui.hasMoreAdverts}
             loader={<Loader />}
-            endMessage={<NoMoreAdverts />}>
+            endMessage={<NoMoreAdverts text={true} />}>
             <Row gutter={[24, 24]} justify="center">
               {adverts?.map((ad) => {
                 return <AdvertCard key={ad._id} ad={ad} />;
@@ -62,9 +66,9 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
           adverts?.map((ad) => {
             return <AdvertCard key={ad._id} ad={ad} />;
           })}
-        {adverts?.length === 1 && <NoMoreAdverts />}
+        {adverts?.length === 1 && <NoMoreAdverts text={true} />}
         {(!adverts || adverts?.length === 0) && (
-          <Col className="text-center">
+          <Col span={24} className="text-center">
             <Paragraph>{translate('advertsPage.pNoAdverts')}</Paragraph>
             <CreateNew />
           </Col>
@@ -104,15 +108,18 @@ const CreateNew = () => {
   }
   return (
     <Row justify="center">
-      <Paragraph>{translate('advertsList.haveAccount')}</Paragraph>
-      <Button onClick={goLogin} shape="round" className="mx-3">
-        {translate('advertsList.logAndCreateBtn')}
-      </Button>
-      <Divider></Divider>
-      <Paragraph>{translate('advertsList.member')}</Paragraph>
-      <Button onClick={goRegister} shape="round" className="mx-3">
-        {translate('advertsList.regAndCreateBtn')}
-      </Button>
+      <Col xs={24} md={12}>
+        <Paragraph>{translate('advertsList.haveAccount')}</Paragraph>
+        <Button onClick={goLogin} shape="round">
+          {translate('advertsList.logAndCreateBtn')}
+        </Button>
+      </Col>
+      <Col xs={24} md={12}>
+        <Paragraph>{translate('advertsList.member')}</Paragraph>
+        <Button onClick={goRegister} shape="round">
+          {translate('advertsList.regAndCreateBtn')}
+        </Button>
+      </Col>
     </Row>
   );
 };
