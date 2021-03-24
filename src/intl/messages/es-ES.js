@@ -69,7 +69,7 @@ export default {
       confirmPass: 'Confirmar Contraseña',
       registerBtn: 'Registrar',
       checkbox: '  He leído el',
-      agreement: 'acuerdo'
+      agreement: 'acuerdo',
     },
     loginPage: {
       title: 'Acceder a su cuenta',

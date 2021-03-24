@@ -1,7 +1,7 @@
 import { LOCALES } from '../constants';
-import {ExclamationCircleOutlined} from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import React from 'react';
-import {Divider} from 'antd';
+import { Divider } from 'antd';
 
 export default {
   [LOCALES.ENGLISH]: {
@@ -56,7 +56,7 @@ export default {
       formImage: 'Image',
       formSelectFile: 'Select File',
       createBtn: 'Create',
-      updateBtn:'Update',
+      updateBtn: 'Update',
     },
     registerPage: {
       title: 'Register',
@@ -67,13 +67,13 @@ export default {
       confirmPass: 'Confirm Password',
       registerBtn: 'Register',
       checkbox: ' I have read the',
-      agreement: 'agreement'
+      agreement: 'agreement',
     },
     userPage: {},
     advertsCard: {
       sell: 'Sell',
       buy: 'Buy',
-      all: 'All'
+      all: 'All',
     },
     loginPage: {
       title: 'Log-in to your account',
@@ -122,7 +122,7 @@ export default {
     deleteModal: {
       title: 'Are you sure delete the user account?',
       content:
-          "This action can't be reversed. Your adverts will be deleted aswell.",
+        "This action can't be reversed. Your adverts will be deleted aswell.",
       okText: 'Yes, delete this user account',
       cancelText: 'Cancel',
     },
@@ -130,20 +130,20 @@ export default {
       showAdverts: 'Show User Adverts',
       showFavorite: 'Show User Favorites',
       edit: 'Edit',
-      delete: 'Delete'
+      delete: 'Delete',
     },
     profile: {
       name: 'Name',
       username: 'Username',
       profileUser: 'User Profile',
-      title: 'My Profile'
+      title: 'My Profile',
     },
     buttonAdvert: {
       nothing: 'Nothing',
       sold: 'Sold',
       reserved: 'Reserved',
       edit: 'Edit Advert',
-      delete: 'Delete Advert'
+      delete: 'Delete Advert',
     },
     formForgot: {
       title: 'Forgot-Password',
@@ -151,7 +151,7 @@ export default {
       btnReset: 'Reset Password',
       iPass: 'Password',
       iPassConfirm: 'Password Confirm',
-      btnUpdate: 'Update Password'
-    }
+      btnUpdate: 'Update Password',
+    },
   },
 };
