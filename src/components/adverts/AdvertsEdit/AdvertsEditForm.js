@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Form, Row, Col, Button, Input, InputNumber, Radio } from 'antd';
+import { Form, Row, Col, Button, Input, InputNumber, Radio, Modal } from 'antd';
 // import NewAdvertForm from './NewAdvertForm';
 import { editAdvert } from '../../../store/actions';
 import TagsSelect from '../../Tags/TagSelect';
@@ -22,17 +22,16 @@ const AdvertsEditForm = ({ advert }) => {
   };
 
   const onFinish = async (data) => {
-    console.log(data);
     const res = await dispatch(editAdvert({ ...data, _id: advert._id }));
     if (res) {
       if (res.status === 200) {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
+        const confirmModal = Modal.success({
           title: res.data.message,
-          showConfirmButton: false,
-          timer: 2400,
+          footer: null,
         });
+        setTimeout(() => {
+          confirmModal.destroy();
+        }, 2400);
         return;
       }
     }

@@ -30,6 +30,7 @@ import Header from '../layout/Header';
 import Footer from '../layout/Footer';
 import { Content } from 'antd/lib/layout/layout';
 import CommonErrorPage from '../errors/CommonErrorPage';
+import OnlyPublicRoute from '../auth/OnlyPublicRoute';
 
 const App = () => {
   const location = useLocation();
@@ -52,10 +53,13 @@ const App = () => {
           <Route path="/" exact>
             <Redirect to="/adverts" />
           </Route>
-          <Route path="/register" exact component={RegisterPage}></Route>
-          <Route path="/login" exact>
+          <OnlyPublicRoute
+            path="/register"
+            exact
+            component={RegisterPage}></OnlyPublicRoute>
+          <OnlyPublicRoute path="/login" exact>
             {(routerProps) => <LoginPage {...routerProps} />}
-          </Route>
+          </OnlyPublicRoute>
           <Route path="/forgot-password" exact>
             <ForgotPasswordPage />
           </Route>

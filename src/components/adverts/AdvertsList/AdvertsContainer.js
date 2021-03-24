@@ -19,6 +19,7 @@ import {
 
 import '../../../assets/styles/styles.css';
 import { sortOptions } from '../../../utils/definitions';
+import LoaderWithContainer from '../../globals/Loader';
 
 const { Title, Paragraph } = Typography;
 
@@ -74,11 +75,7 @@ const AdvertsContainer = () => {
         <Col span={24}>
           <Row justify="center" align="middle">
             <AdvertsFilters filters={filters} setFilters={setFilters} />
-            {ui.loading === true && (
-              <Paragraph className="general-error-text">
-                {translate('ui.loading')}
-              </Paragraph>
-            )}
+            {ui.loading === true && <LoaderWithContainer />}
             <AdvertsList adverts={adverts} ui={ui} fetchMore={fetchMore} />
           </Row>
         </Col>

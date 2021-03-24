@@ -33,27 +33,8 @@ export const auth = (state = initialState.auth, action) => {
 export const adverts = (state = initialState.adverts, action) => {
   switch (action.type) {
     case types.ADVERTS_LOADED:
-      if (
-        action.payload?.length === 0 ||
-        action.payload?.length < LIMIT_ADVERTS_API
-      ) {
-        initialState.ui.hasMoreAdverts = false;
-      } else {
-        initialState.ui.hasMoreAdverts = true;
-        initialState.ui.advertsIndex += LIMIT_ADVERTS_API;
-      }
-      initialState.ui.loading = false;
       return action.payload; // On new load, save the passed adverts on the state
     case types.ADVERTS_MORE_LOADED:
-      if (
-        action.payload?.length === 0 ||
-        action.payload?.length < LIMIT_ADVERTS_API
-      ) {
-        initialState.ui.hasMoreAdverts = false;
-        return [...state];
-      } else {
-        initialState.ui.advertsIndex += LIMIT_ADVERTS_API;
-      }
       initialState.ui.loading = false;
       return [...state, ...action.payload]; // On new load, save the passed adverts on the state
     case types.ADVERT_CREATED:
@@ -116,6 +97,20 @@ export const ui = (state = initialState.ui, action) => {
     case types.ADVERT_DELETED:
     case types.UI_STOP_LOADING:
       return { ...state, loading: false };
+    case types.ADVERTS_LOADED:
+    case types.ADVERTS_MORE_LOADED:
+      if (
+        action.payload?.length === 0 ||
+        action.payload?.length < LIMIT_ADVERTS_API
+      ) {
+        return { ...state, hasMoreAdverts: false };
+      } else {
+        return {
+          ...state,
+          hasMoreAdverts: true,
+          advertsIndex: state.advertsIndex + LIMIT_ADVERTS_API,
+        };
+      }
     default:
       return state;
   }

@@ -5,14 +5,14 @@ import { Redirect, Route, useLocation } from 'react-router-dom';
 
 import { getLoggedUser } from '../../store/selectors';
 
-const PrivateRoute = ({ ...props }) => {
+const OnlyPublicRoute = ({ ...props }) => {
   const auth = useSelector((state) => getLoggedUser(state));
   const location = useLocation();
   return auth?.token ? (
-    <Route {...props}>{props.children}</Route>
+    <Redirect to={{ pathname: '/adverts', state: { from: location } }} />
   ) : (
-    <Redirect to={{ pathname: '/login', state: { from: location } }} />
+    <Route {...props}>{props.children}</Route>
   );
 };
 
-export default PrivateRoute;
+export default OnlyPublicRoute;

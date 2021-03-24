@@ -2,24 +2,23 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { PageHeader, Form } from 'antd';
+import { PageHeader } from 'antd';
 import 'antd/dist/antd.css';
-import Swal from 'sweetalert2';
 import '../../assets/styles/styles.css';
 import { editUser, getUserId } from '../../store/actions';
 import UserEditForm from './UserEditForm';
 import translate from '../../intl/translate';
+import { getLoggedUser, getUserData } from '../../store/selectors';
 
-const UserEdit = ({ ...props }) => {
+const UserEdit = () => {
   let dataInitials = null;
-  const id = useParams();
+  const params = useParams();
   const dispatch = useDispatch();
-  const state = useSelector((state) => state);
-  const token = state.auth;
-  const dataUser = state.user;
+  const auth = useSelector((state) => getLoggedUser(state));
+  const dataUser = useSelector((state) => getUserData(state));
 
   useEffect(() => {
-    dispatch(getUserId(id.id, dataInitials));
+    dispatch(getUserId(params.id, dataInitials));
   }, []);
 
   if (dataUser !== null) {
@@ -32,17 +31,17 @@ const UserEdit = ({ ...props }) => {
   }
 
   const onFinish = async (data) => {
-    const res = await dispatch(editUser(token.userId, data, token.token));
+    const { userId, token } = auth;
+    const res = await dispatch(editUser(userId, data, token));
     if (res) {
-      console.log(res);
       if (res.status === 200) {
-        Swal.fire({
-          position: 'center',
-          icon: 'success',
+        const confirmModal = Modal.success({
           title: res.data,
-          showConfirmButton: false,
-          timer: 2500,
+          footer: null,
         });
+        setTimeout(() => {
+          confirmModal.destroy();
+        }, 2400);
         return;
       }
     }
