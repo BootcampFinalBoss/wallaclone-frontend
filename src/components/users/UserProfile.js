@@ -147,7 +147,7 @@ const UserProfile = () => {
           <Col span={6} offset={2}>
             <Image
               style={{ minWidth: 130, padding: '0 1.3rem' }}
-              src={`${process.env.REACT_APP_IMAGE_AVATAR_BASE_URL}/${profileData?.avatar}`}
+              src='https://res.cloudinary.com/diregndkr/image/upload/v1616622688/avatar/avatar_loekir.png'
             />
           </Col>
         </Row>
