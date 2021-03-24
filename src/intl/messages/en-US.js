@@ -58,6 +58,17 @@ export default {
       createBtn: 'Create',
       updateBtn:'Update',
     },
+    registerPage: {
+      title: 'Register',
+      registerName: 'Name',
+      surname: 'Surname',
+      username: 'Username',
+      password: 'Password',
+      confirmPass: 'Confirm Password',
+      registerBtn: 'Register',
+      checkbox: ' I have read the',
+      agreement: 'agreement'
+    },
     userPage: {},
     advertsCard: {
       sell: 'Sell',

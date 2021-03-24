@@ -53,12 +53,23 @@ export default {
       formImage: 'Imagen',
       formSelectFile: 'Seleccione Archivo',
       createBtn: 'Crear',
-      updateBtn:'Actualizar',
+      updateBtn: 'Actualizar',
     },
     advertsCard: {
       sell: 'Venta',
       buy: 'Compra',
-      all: 'Todo'
+      all: 'Todo',
+    },
+    registerPage: {
+      title: 'Registro',
+      registerName: 'Nombre',
+      surname: 'Apellidos',
+      username: 'Usuario',
+      password: 'Contraseña',
+      confirmPass: 'Confirmar Contraseña',
+      registerBtn: 'Registrar',
+      checkbox: '  He leído el',
+      agreement: 'acuerdo'
     },
     loginPage: {
       title: 'Acceder a su cuenta',
@@ -107,7 +118,7 @@ export default {
     deleteModal: {
       title: '¿Está seguro que desea borrar la cuenta?',
       content:
-          "Esta acción no es reversible. Si borra el usuario dejará también borrará sus anuncios.",
+        'Esta acción no es reversible. Si borra el usuario dejará también borrará sus anuncios.',
       okText: 'Si, estoy seguro',
       cancelText: 'Cancelar',
     },
@@ -115,20 +126,20 @@ export default {
       showAdverts: 'Mostrar Anuncios Usuario',
       showFavorite: 'Mostrar Favoritos',
       edit: 'Editar',
-      delete: 'Borrar'
+      delete: 'Borrar',
     },
     profile: {
       name: 'Nombre',
       username: 'Usuario',
       profileUser: 'Perfil Usuario',
-      title: 'Mi Perfil'
+      title: 'Mi Perfil',
     },
     buttonAdvert: {
       nothing: 'Nada',
       sold: 'Vendido',
       reserved: 'Reservado',
       edit: 'Editar Anuncio',
-      delete: 'Borrar Anuncio'
+      delete: 'Borrar Anuncio',
     },
     formForgot: {
       title: 'Recupera-Contraseña',
@@ -136,7 +147,7 @@ export default {
       btnReset: 'Resetea Contraseña',
       iPass: 'Contraseña',
       iPassConfirm: 'Confirma Contraseña',
-      btnUpdate: 'Actualiza Contraseña'
-    }
+      btnUpdate: 'Actualiza Contraseña',
+    },
   },
 };

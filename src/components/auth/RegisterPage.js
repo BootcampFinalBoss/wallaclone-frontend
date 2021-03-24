@@ -14,6 +14,8 @@ import { UploadOutlined } from "@ant-design/icons";
 import "antd/dist/antd.css";
 import "./RegisterPage.css";
 import Swal from 'sweetalert2'
+import translate from '../../intl/translate';
+
 
 import { authRegister } from "../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
@@ -43,7 +45,7 @@ const RegisterPage = () => {
   };
   return (
     <div className="containerPrincipalRegister">
-      <PageHeader className="site-page-header" title="Register" />,
+      <PageHeader className="site-page-header" title={translate('registerPage.title')} />
       <Form
         form={form}
         name="register"
@@ -55,7 +57,7 @@ const RegisterPage = () => {
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Form.Item
               name="name"
-              label="Name"
+              label={translate('registerPage.registerName')}
               rules={[
                 {
                   required: true,
@@ -67,14 +69,14 @@ const RegisterPage = () => {
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
-            <Form.Item name="surname" label="Surname">
+            <Form.Item name="surname" label={translate('registerPage.surname')}>
               <Input />
             </Form.Item>
           </Col>
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Form.Item
               name="username"
-              label="Username"
+              label={translate('registerPage.username')}
               rules={[
                 {
                   required: true,
@@ -118,7 +120,7 @@ const RegisterPage = () => {
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Form.Item
               name="password"
-              label="Password"
+              label={translate('registerPage.password')}
               rules={[
                 {
                   min: 8,
@@ -134,7 +136,7 @@ const RegisterPage = () => {
           <Col xs={24} sm={24} md={12} lg={12} xl={12}>
             <Form.Item
               name="confirm"
-              label="Confirm Password"
+              label={translate('registerPage.confirmPass')}
               dependencies={['password']}
               hasFeedback
               rules={[
@@ -171,12 +173,12 @@ const RegisterPage = () => {
             ]}
           >
             <Checkbox>
-              I have read the <a href="">agreement</a>
+             {translate('registerPage.checkbox')} <a href="">{translate('registerPage.agreement')}</a>
             </Checkbox>
           </Form.Item>
           <Form.Item>
             <Button type="primary" htmlType="submit">
-              Register
+              {translate('registerPage.registerBtn')}
             </Button>
           </Form.Item>
         </Row>
