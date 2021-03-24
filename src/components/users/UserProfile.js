@@ -36,7 +36,6 @@ const UserProfile = () => {
   };
 
   useEffect(() => {
-    console.log(params);
     handleGetUserData();
   }, [params]);
 
@@ -156,7 +155,7 @@ const UserProfile = () => {
 
       {showFavorites ? (
         <Row justify="center" style={{ marginTop: '2rem' }}>
-          <Col span={20}>
+          <Col span={24}>
             {profileData && (
               <Row gutter={[24, 24]} justify="center">
                 {profileData?.favorites.map((ad) => {

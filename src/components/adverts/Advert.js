@@ -201,19 +201,7 @@ const AdvertPage = ({ history, ...props }) => {
               <Title className="advert__title" level={2}>
                 {name} - {titleType}
               </Title>
-            </Row>
-            <Row>
               <div className="advert__tags">
-                <Chip
-                  label={translate('advert.priceWithNumber', { price })}
-                  color="secondary"
-                  style={{ fontSize: '1rem' }}
-                />
-                <Chip
-                  label={`Tags: ${tags && tags?.join(', ')}`}
-                  color="primary"
-                  style={{ fontSize: '1rem' }}
-                />
                 {advert.favorites && (
                   <>
                     <div className="advert__favorites">
@@ -221,15 +209,6 @@ const AdvertPage = ({ history, ...props }) => {
                         favorites: advertFavorites,
                       })}
                     </div>
-                    {userData.userId === advert.user._id && (
-                      <Button
-                        className="btn-favorites"
-                        onClick={handleToggleAdvert}
-                        shape="round">
-                        {isFavorited ? removeFavoriteLabel : addFavoriteLabel}
-                        <StarOutlined />
-                      </Button>
-                    )}
                   </>
                 )}
                 {advertState === 'reserved' ? (
@@ -255,8 +234,16 @@ const AdvertPage = ({ history, ...props }) => {
                 )}
               </div>
             </Row>
+            <Row style={{ position: 'relative' }}>
+              <Title level={3} style={{ marginBottom: '2rem' }}>
+                {translate('advert.priceWithNumber', { price })}
+              </Title>
+            </Row>
             <Descriptions bordered title={translate('advert.description')}>
               <Paragraph>{description}</Paragraph>
+            </Descriptions>
+            <Descriptions bordered title="Tags" style={{ marginTop: '2rem' }}>
+              <Paragraph>{tags?.join(', ')}</Paragraph>
             </Descriptions>
             <Row style={{ marginTop: '20px' }} gutter={[24, 24]}>
               <Col span={24}>
@@ -285,6 +272,15 @@ const AdvertPage = ({ history, ...props }) => {
                       Tweet
                     </a>
                   </Button>
+                  {userData.userId && (
+                    <Button
+                      className="btn-favorites"
+                      onClick={handleToggleAdvert}
+                      shape="round">
+                      {isFavorited ? removeFavoriteLabel : addFavoriteLabel}
+                      <StarOutlined />
+                    </Button>
+                  )}
                 </Row>
               </Col>
             </Row>

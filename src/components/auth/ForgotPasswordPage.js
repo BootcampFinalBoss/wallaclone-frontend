@@ -1,10 +1,10 @@
-import React from "react";
-import { Form, Button, Input, Row, Col, PageHeader } from "antd";
+import React from 'react';
+import { Form, Button, Input, Row, Col, PageHeader } from 'antd';
 import Swal from 'sweetalert2';
-import "antd/dist/antd.css";
-import "./RegisterPage.css";
-import { authForgotPassword } from "../../store/actions";
-import { useDispatch } from "react-redux";
+import 'antd/dist/antd.css';
+import './RegisterPage.css';
+import { authForgotPassword } from '../../store/actions';
+import { useDispatch } from 'react-redux';
 import translate from '../../intl/translate';
 
 const ForgotPasswordPage = () => {
@@ -12,26 +12,28 @@ const ForgotPasswordPage = () => {
   const dispatch = useDispatch();
 
   const onFinish = async (data) => {
-    console.log("submit", data);
     const res = await dispatch(authForgotPassword(data));
-      console.log(res);
-    if(res){
-        if(res.status === 200){
-            Swal.fire({
-                position: 'center',
-                icon: 'success',
-                title: res.data.msg,
-                text:'Revisa la bandeja de entrada el correo indicado.',
-                showConfirmButton: true,
-            })
-        }
-        return;
+    if (res) {
+      if (res.status === 200) {
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
+          title: res.data.msg,
+          text: 'Revisa la bandeja de entrada el correo indicado.',
+          showConfirmButton: true,
+        });
+      }
+      return;
     }
   };
 
   return (
     <div className="containerPrincipalRegister">
-      <PageHeader className="site-page-header" title={translate('formForgot.title')} />,
+      <PageHeader
+        className="site-page-header"
+        title={translate('formForgot.title')}
+      />
+      ,
       <Form
         form={form}
         name="forgot"
@@ -46,21 +48,24 @@ const ForgotPasswordPage = () => {
               label="E-mail"
               rules={[
                 {
-                  type: "email",
-                  message: "The input is not valid E-mail!",
+                  type: 'email',
+                  message: 'The input is not valid E-mail!',
                 },
                 {
                   required: true,
-                  message: "Please input your E-mail!",
+                  message: 'Please input your E-mail!',
                 },
-              ]}
-            >
+              ]}>
               <Input />
             </Form.Item>
           </Col>
           <Form.Item>
-            <Button type="primary" htmlType="submit" shape='round' className='my-2'>
-                {translate('formForgot.btnReset')}
+            <Button
+              type="primary"
+              htmlType="submit"
+              shape="round"
+              className="my-2">
+              {translate('formForgot.btnReset')}
             </Button>
           </Form.Item>
         </Row>

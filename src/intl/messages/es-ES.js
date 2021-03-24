@@ -16,7 +16,7 @@ export default {
       search: 'Buscar',
       phName: 'Nombre',
       phTags: 'Selecciona Tags',
-      createOne: 'Crea tu anuncio!',
+      createOne: '¡Crea tu anuncio!',
     },
     advertsList: {
       title: 'Lista de Anuncios',
@@ -47,6 +47,9 @@ export default {
       editAdvertBtn: 'Editar Anuncio',
       deleteAdvertBtn: 'Borrar Anuncio',
       titleEdit: 'Editar el anuncio',
+      advancedOptions: {
+        title: 'Opciones avanzadas',
+      },
     },
     advertsForm: {
       formName: 'Nombre',

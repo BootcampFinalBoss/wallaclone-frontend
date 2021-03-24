@@ -30,7 +30,6 @@ client.login = (credentials) => {
 
 client.register = (data) =>
   client.post('/user/', data).then((res) => {
-    console.log(res, res.status);
     return res;
   });
 

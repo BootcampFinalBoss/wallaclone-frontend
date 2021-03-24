@@ -29,7 +29,6 @@ export const authRegister = (data) => {
     try {
       const res = await api.auth.register(data);
       dispatch(authRegisterSuccess(res));
-      console.log(res);
       dispatch(resetError());
       setTimeout(() => {
         history.push('/login');
@@ -110,7 +109,6 @@ export const authForgotPassword = (email) => {
     try {
       const res = await auth.forgot(email);
       dispatch(authForgotPasswordSuccess());
-      console.log(res);
       //history.push("/adverts");
       return res;
     } catch (error) {
@@ -141,7 +139,6 @@ export const authReset = (token, data) => {
       const res = await auth.getResetPassword(token, data);
       dispatch(authResetSuccess(res));
     } catch (error) {
-      console.log(error);
       dispatch(authResetFailure(error.response.data));
       setTimeout(() => {
         dispatch(resetError());
@@ -171,7 +168,6 @@ export const authUpdatePassword = (token, data) => {
     dispatch(authUpdateResetRequest(token.id, data));
     try {
       const res = await auth.updatePasswordReset(token, data);
-      console.log(res);
       dispatch(authUpdateResetSuccess(res));
       setTimeout(() => {
         history.push('/login');
@@ -179,7 +175,6 @@ export const authUpdatePassword = (token, data) => {
       return res;
     } catch (error) {
       dispatch(authUpdateResetFailure(error));
-      console.log(error);
     }
   };
 };
@@ -382,7 +377,6 @@ export const userSuccess = (res) => ({
 export const getUserId = (id, data) => {
   return async function (dispatch, getState, { history, api }) {
     dispatch(userRequest(id, data));
-    console.log(id, data);
     try {
       const res = await user.getUser(id);
       dispatch(userSuccess(res));
@@ -423,8 +417,6 @@ export const editUser = (id, userData, token) => async (
   dispatch(userEditedRequest());
   try {
     const res = await user.editUser(id, userData, token);
-    console.log(id, userData);
-    console.log(res);
     await dispatch(userEdited(res));
     setTimeout(() => {
       history.push(`/profile/${userData.username}`);

@@ -50,7 +50,6 @@ const AdvertsContainer = () => {
   };
 
   if (ui.error) {
-    console.log('redirect to error page');
     history.push('/500');
   }
 

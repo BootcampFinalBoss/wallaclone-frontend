@@ -25,3 +25,8 @@
   display: flex;
   width: min-content;
 }
+
+.login__remember-me .ant-form-item-control-input-content {
+  display: flex;
+  justify-content: flex-end;
+}

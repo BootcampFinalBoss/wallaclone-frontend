@@ -1,7 +1,16 @@
 /* eslint-disable react/prop-types */
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Form, Row, Col, Button, Input, InputNumber, Radio, Modal } from 'antd';
+import {
+  Form,
+  Row,
+  Col,
+  Button,
+  Input,
+  InputNumber,
+  Radio,
+  Upload,
+} from 'antd';
 // import NewAdvertForm from './NewAdvertForm';
 import { editAdvert } from '../../../store/actions';
 import TagsSelect from '../../Tags/TagSelect';
@@ -16,12 +25,21 @@ const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 const AdvertsEditForm = ({ advert }) => {
   const dispatch = useDispatch();
   const [form] = Form.useForm();
+  const fileList = [];
+
+  const uploadProps = {
+    beforeUpload: (file) => {
+      fileList.push(file);
+      return false;
+    },
+  };
 
   const canSubmit = () => {
     return true;
   };
 
   const onFinish = async (data) => {
+    data.image = fileList[0];
     const res = await dispatch(editAdvert({ ...data, _id: advert._id }));
     if (res) {
       if (res.status === 200) {
@@ -101,6 +119,11 @@ const AdvertsEditForm = ({ advert }) => {
           </Form.Item>
           <Form.Item name="photo" label={translate('advertsForm.formImage')}>
             <InputImage type="file" />
+          </Form.Item>
+          <Form.Item name="image" label={translate('advertsForm.formImage')}>
+            <Upload {...uploadProps}>
+              <Button>{translate('advertsForm.formSelectFile')}</Button>
+            </Upload>
           </Form.Item>
           <Button
             className="my-4"

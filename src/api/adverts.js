@@ -9,10 +9,6 @@ export const getAdverts = (filters) => {
 export const getAdvert = (id) =>
   client.get(`/adverts/${id}`).then((response) => {
     if (response.data.result) {
-      console.log(
-        response.data.result.image,
-        `${REACT_APP_IMAGE_BASE_URL}/${response.data.result.image}`,
-      );
       response.data.result.image = `${REACT_APP_IMAGE_BASE_URL}/${response.data.result.image}`;
     }
     return response;
@@ -30,8 +26,15 @@ export const createAdvert = (advert) => {
   });
 };
 
-export const editAdvert = (advert) =>
-  client.put(`/adverts/${advert._id}`, advert);
+export const editAdvert = (advert) => {
+  const formData = new FormData();
+  Object.entries(advert).forEach(([key, value]) => formData.append(key, value));
+  return client.put(`/adverts/${advert._id}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
+};
 
 export const addFavoriteAdvert = (advertId, userId) =>
   client.post(`/adverts/favorite/${advertId}`, userId);

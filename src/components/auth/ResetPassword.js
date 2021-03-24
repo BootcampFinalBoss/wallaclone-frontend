@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {Form, Button, Input, Row, Col, PageHeader, Alert} from 'antd';
+import { Form, Button, Input, Row, Col, PageHeader, Alert } from 'antd';
 import 'antd/dist/antd.css';
 import './RegisterPage.css';
 import { useDispatch, useSelector } from 'react-redux';
@@ -21,25 +21,23 @@ const ResetPassword = () => {
     dispatch(authReset(token.id));
   }, []);
 
-  if(reset !== undefined && reset !== null){
-    mesaggeCheck = reset.data.message
-    console.log(mesaggeCheck);
-
+  if (reset !== undefined && reset !== null) {
+    mesaggeCheck = reset.data.message;
   }
 
   const onFinish = async (data) => {
-    console.log(token);
-    console.log('submit', data);
     const passUpdate = data.password;
-    const res = await dispatch(authUpdatePassword(token.id, { password: passUpdate }));
-    if(res){
-      if (res.status === 200){
+    const res = await dispatch(
+      authUpdatePassword(token.id, { password: passUpdate }),
+    );
+    if (res) {
+      if (res.status === 200) {
         Swal.fire({
           position: 'center',
           icon: 'success',
           title: res.data.message,
           showConfirmButton: false,
-          timer: 2800
+          timer: 2800,
         });
         return;
       }
@@ -48,7 +46,11 @@ const ResetPassword = () => {
 
   return (
     <div className="containerPrincipalRegister">
-      <PageHeader className="site-page-header" title={translate('formForgot.titleReset')} />,
+      <PageHeader
+        className="site-page-header"
+        title={translate('formForgot.titleReset')}
+      />
+      ,
       <Form
         form={form}
         name="resetPassword"
@@ -56,12 +58,10 @@ const ResetPassword = () => {
         scrollToFirstError
         //style={{ border: "1px solid gray" }}
       >
-        {reset && (
-            <Alert message={mesaggeCheck} type="info" showIcon />
-        ) }
+        {reset && <Alert message={mesaggeCheck} type="info" showIcon />}
 
         {state.error && (
-            <Alert message={state.error.message} type="error" showIcon />
+          <Alert message={state.error.message} type="error" showIcon />
         )}
         <Row type="flex" justify="space-between" gutter={16}>
           <Col xs={24}>
@@ -105,7 +105,11 @@ const ResetPassword = () => {
             </Form.Item>
           </Col>
           <Form.Item>
-            <Button type="primary" htmlType="submit" shape='round' className='my-2'>
+            <Button
+              type="primary"
+              htmlType="submit"
+              shape="round"
+              className="my-2">
               {translate('formForgot.btnUpdate')}
             </Button>
           </Form.Item>
