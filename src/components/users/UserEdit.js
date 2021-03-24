@@ -9,6 +9,7 @@ import { editUser, getUserId } from '../../store/actions';
 import UserEditForm from './UserEditForm';
 import translate from '../../intl/translate';
 import { getLoggedUser, getUserData } from '../../store/selectors';
+import Swal from 'sweetalert2';
 
 const UserEdit = () => {
   let dataInitials = null;
