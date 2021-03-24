@@ -13,6 +13,7 @@ import translate from '../../intl/translate';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
 import Swal from 'sweetalert2';
 import AdvertListUser from '../adverts/AdvertsList/AdvertListUser';
+import LoaderWithContainer from '../globals/Loader';
 
 const { confirm } = Modal;
 
@@ -46,19 +47,17 @@ const UserProfile = () => {
   if (loading) {
     return (
       <Content>
-        <Title level={1}>{translate('ui.loading')}</Title>
+        <LoaderWithContainer />
       </Content>
     );
   }
 
-  console.log(profileData);
   const showFav = showFavorites
     ? translate('buttonProfile.showAdverts')
     : translate('buttonProfile.showFavorite');
 
   const handleDeleteUser = async () => {
     const res = await dispatch(deleteUser(loggedUser.userId, loggedUser.token));
-    console.log(loggedUser.token, loggedUser.userId);
     if (res) {
       if (res.status === 200) {
         Swal.fire({
@@ -75,7 +74,6 @@ const UserProfile = () => {
   const msgTitle = translate('deleteModal.title');
 
   const showConfirmDelete = () => {
-    console.log(msgTitle);
     confirm({
       title: 'Are you sure delete the user account?',
       icon: <ExclamationCircleOutlined />,
@@ -92,43 +90,43 @@ const UserProfile = () => {
   };
 
   const loggedUserProfileActions = loggedUser.username === params.username && (
-      <>
-        <Row>
-    <Col xs={{span:24, my:2}} md={{span:10, my:2}}>
-      <Button
-          style={{margin: '.3rem'}}
-        onClick={() => setShowFavorites((prev) => !prev)}
-        key="advert"
-        type="default"
-        shape="round"
-        size={64}>
-        {showFav}
-      </Button>
-      </Col>
-      <Col xs={{span:24, my:2}} md={{span:7, my:2}}>
-      <Button
-          style={{margin: '.3rem'}}
-        onClick={() => history.push(`/user-edit/${profileData.username}`)}
-        key="edit"
-        type="primary"
-        shape="round"
-        size={64}>
-        {translate('buttonProfile.edit')}
-      </Button>
+    <>
+      <Row>
+        <Col xs={{ span: 24, my: 2 }} md={{ span: 10, my: 2 }}>
+          <Button
+            style={{ margin: '.3rem' }}
+            onClick={() => setShowFavorites((prev) => !prev)}
+            key="advert"
+            type="default"
+            shape="round"
+            size={64}>
+            {showFav}
+          </Button>
         </Col>
-  <Col xs={{span:24}} md={{span:7}}>
-      <Button
-          style={{margin: '.3rem'}}
-        key="delete"
-        type="danger"
-        shape="round"
-        onClick={showConfirmDelete}
-        size={64}>
-        {translate('buttonProfile.delete')}
-      </Button>
-    </Col>
-        </Row>
-      </>
+        <Col xs={{ span: 24, my: 2 }} md={{ span: 7, my: 2 }}>
+          <Button
+            style={{ margin: '.3rem' }}
+            onClick={() => history.push(`/user-edit/${profileData.username}`)}
+            key="edit"
+            type="primary"
+            shape="round"
+            size={64}>
+            {translate('buttonProfile.edit')}
+          </Button>
+        </Col>
+        <Col xs={{ span: 24 }} md={{ span: 7 }}>
+          <Button
+            style={{ margin: '.3rem' }}
+            key="delete"
+            type="danger"
+            shape="round"
+            onClick={showConfirmDelete}
+            size={64}>
+            {translate('buttonProfile.delete')}
+          </Button>
+        </Col>
+      </Row>
+    </>
   );
 
   return (

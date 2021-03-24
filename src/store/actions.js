@@ -78,6 +78,9 @@ export const authLogout = () => {
     try {
       await auth.logout();
       history.push('/login');
+      dispatch({
+        type: types.AUTH_LOGOUT,
+      });
     } catch (error) {
       console.error(error);
       dispatch(authLoginFailure(error.response.data));
@@ -373,7 +376,7 @@ export const userFailure = (error) => ({
 
 export const userSuccess = (res) => ({
   type: types.USER_SUCCESS,
-  payload: res
+  payload: res,
 });
 
 export const getUserId = (id, data) => {

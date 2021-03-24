@@ -9,6 +9,7 @@ import InfiniteScroll from 'react-infinite-scroll-component';
 import AdvertCard from './AdvertCard';
 import { getLoggedUser } from '../../../store/selectors';
 import translate from '../../../intl/translate';
+import { Loader } from '../../globals/Loader';
 
 const { Title, Paragraph } = Typography;
 
@@ -28,9 +29,8 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
           className="site-page-header"
           title={translate('advertsList.title')}
         />
-        ,
         <Row gutter={[24, 24]} style={{ marginBottom: '2em' }} justify="center">
-          <Title level={2}>{translate('ui.loading')}</Title>
+          <Loader />
         </Row>
       </Col>
     );
@@ -49,7 +49,7 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
             dataLength={adverts?.length || 10} // This is important field to render the next data
             next={fetchMore}
             hasMore={ui.hasMoreAdverts}
-            loader={translate('ui.loading')}
+            loader={<Loader />}
             endMessage={<NoMoreAdverts />}>
             <Row gutter={[24, 24]} justify="center">
               {adverts?.map((ad) => {
@@ -91,9 +91,9 @@ const CreateNew = () => {
   const goLogin = () => {
     history.push('/login');
   };
-  const { token: isLoggedUser } = useSelector((state) => getLoggedUser(state));
+  const auth = useSelector((state) => getLoggedUser(state));
 
-  if (isLoggedUser) {
+  if (auth?.token) {
     return (
       <Row justify="center">
         <Button onClick={goCreateOne} shape="round">
