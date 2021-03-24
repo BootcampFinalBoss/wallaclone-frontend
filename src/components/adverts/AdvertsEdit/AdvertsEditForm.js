@@ -40,6 +40,7 @@ const AdvertsEditForm = ({ advert }) => {
 
   const onFinish = async (data) => {
     data.image = fileList[0];
+
     const res = await dispatch(editAdvert({ ...data, _id: advert._id }));
     if (res) {
       if (res.status === 200) {
@@ -58,6 +59,7 @@ const AdvertsEditForm = ({ advert }) => {
   useEffect(() => {
     form.setFieldsValue(advert);
   }, [advert]);
+  console.log(advert);
 
   return (
     <Form form={form} initialValues={advert} onFinish={onFinish}>
@@ -70,7 +72,8 @@ const AdvertsEditForm = ({ advert }) => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <Input placeholder="Name" />
           </Form.Item>
           <Form.Item
@@ -80,7 +83,8 @@ const AdvertsEditForm = ({ advert }) => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <InputNumber min={MIN_PRICE} max={MAX_PRICE} />
           </Form.Item>
         </Col>
@@ -92,7 +96,8 @@ const AdvertsEditForm = ({ advert }) => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <TagsSelect />
           </Form.Item>
           <Form.Item
@@ -102,7 +107,8 @@ const AdvertsEditForm = ({ advert }) => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <Radio.Group options={[saleOptions.sell, saleOptions.buy]} />
           </Form.Item>
         </Col>
@@ -114,10 +120,19 @@ const AdvertsEditForm = ({ advert }) => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <TextArea placeholder="Name" />
           </Form.Item>
-          <Form.Item name="image" label={translate('advertsForm.formImage')}>
+          <Form.Item
+            name="image"
+            label={translate('advertsForm.formImage')}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
             <Upload {...uploadProps}>
               <Button>{translate('advertsForm.formSelectFile')}</Button>
             </Upload>
@@ -129,7 +144,8 @@ const AdvertsEditForm = ({ advert }) => {
             shape="round"
             htmlType="submit"
             disabled={!canSubmit()}
-            block>
+            block
+          >
             {translate('advertsForm.updateBtn')}
           </Button>
         </Col>
