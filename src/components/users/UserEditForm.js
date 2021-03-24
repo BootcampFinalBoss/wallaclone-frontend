@@ -1,15 +1,20 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Form, Button, Input, Row, Col, Alert } from 'antd';
 import { getUi } from '../../store/selectors';
 import translate from '../../intl/translate';
 
-
 const UserEditForm = ({ dataInitials, onFinish }) => {
   const { error } = useSelector((state) => getUi(state));
+  const [form] = Form.useForm();
+
+  useEffect(() => {
+    form.setFieldsValue(dataInitials);
+  }, [dataInitials]);
+
   return (
-    <Form initialValues={dataInitials} onFinish={onFinish}>
+    <Form form={form} initialValues={dataInitials} onFinish={onFinish}>
       {error && <Alert message={error.error.message} type="error" showIcon />}
       <Row type="flex" justify="space-between" gutter={16}>
         <Col xs={24} md={12} lg={12} xl={12}>
@@ -43,15 +48,15 @@ const UserEditForm = ({ dataInitials, onFinish }) => {
             <Input />
           </Form.Item>
         </Col>
-          <Button
-              type="primary"
-              htmlType="submit"
-              className="my-4"
-              size='large'
-              shape='round'
+        <Button
+          type="primary"
+          htmlType="submit"
+          className="my-4"
+          size="large"
+          shape="round"
           block>
-            {translate('editUser.updateBtn')}
-          </Button>
+          {translate('editUser.updateBtn')}
+        </Button>
       </Row>
     </Form>
   );

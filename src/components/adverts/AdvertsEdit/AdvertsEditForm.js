@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Form, Row, Col, Button, Input, InputNumber, Radio } from 'antd';
 // import NewAdvertForm from './NewAdvertForm';
@@ -15,6 +15,7 @@ const { saleOptions, MIN_PRICE, MAX_PRICE } = definitions;
 
 const AdvertsEditForm = ({ advert }) => {
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
 
   const canSubmit = () => {
     return true;
@@ -37,8 +38,12 @@ const AdvertsEditForm = ({ advert }) => {
     }
   };
 
+  useEffect(() => {
+    form.setFieldsValue(advert);
+  }, [advert]);
+
   return (
-    <Form initialValues={advert} onFinish={onFinish}>
+    <Form form={form} initialValues={advert} onFinish={onFinish}>
       <Row style={{ marginBottom: '3em' }}>
         <Col xs={24} md={11}>
           <Form.Item
@@ -62,7 +67,7 @@ const AdvertsEditForm = ({ advert }) => {
             <InputNumber min={MIN_PRICE} max={MAX_PRICE} />
           </Form.Item>
         </Col>
-        <Col xs={{span:24,offset:0 }}  md={{span: 11, offset: 2}}>
+        <Col xs={{ span: 24, offset: 0 }} md={{ span: 11, offset: 2 }}>
           <Form.Item
             name="tags"
             label={translate('advertsPage.byTags')}
@@ -86,28 +91,28 @@ const AdvertsEditForm = ({ advert }) => {
         </Col>
         <Col span={24}>
           <Form.Item
-              name="description"
-              label={translate('advertsForm.formDesc')}
-              rules={[
-                {
-                  required: true,
-                },
-              ]}>
+            name="description"
+            label={translate('advertsForm.formDesc')}
+            rules={[
+              {
+                required: true,
+              },
+            ]}>
             <TextArea placeholder="Name" />
           </Form.Item>
           <Form.Item name="photo" label={translate('advertsForm.formImage')}>
             <InputImage type="file" />
           </Form.Item>
-              <Button
-                  className='my-4'
-                  size='large'
-                  type="primary"
-                  shape='round'
-                  htmlType="submit"
-                  disabled={!canSubmit()}
-              block>
-                {translate('advertsForm.updateBtn')}
-              </Button>
+          <Button
+            className="my-4"
+            size="large"
+            type="primary"
+            shape="round"
+            htmlType="submit"
+            disabled={!canSubmit()}
+            block>
+            {translate('advertsForm.updateBtn')}
+          </Button>
         </Col>
       </Row>
     </Form>

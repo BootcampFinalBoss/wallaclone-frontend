@@ -50,8 +50,7 @@ const AdvertsList = ({ adverts, ui, fetchMore }) => {
             next={fetchMore}
             hasMore={ui.hasMoreAdverts}
             loader={translate('ui.loading')}
-            endMessage={<NoMoreAdverts />}
-            style={{ width: '100%' }}>
+            endMessage={<NoMoreAdverts />}>
             <Row gutter={[24, 24]} justify="center">
               {adverts?.map((ad) => {
                 return <AdvertCard key={ad._id} ad={ad} />;

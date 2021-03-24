@@ -34,6 +34,15 @@
   align-items: center;
 }
 
+.infinite-scroll-component__outerdiv {
+  width: 100%;
+}
+
+.infinite-scroll-component {
+  height: auto;
+  width: 100%;
+}
+
 @media (max-width: 768px) {
   .ui.buttons > .ui.dropdown:last-child .menu,
   .ui.menu .right.dropdown.item .menu,

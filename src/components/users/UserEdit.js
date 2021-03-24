@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { PageHeader } from 'antd';
+import { PageHeader, Form } from 'antd';
 import 'antd/dist/antd.css';
 import Swal from 'sweetalert2';
 import '../../assets/styles/styles.css';
@@ -22,14 +22,14 @@ const UserEdit = ({ ...props }) => {
     dispatch(getUserId(id.id, dataInitials));
   }, []);
 
-    if (dataUser !== null) {
-      dataInitials = {
-        name: dataUser.name,
-        email: dataUser.email,
-        username: dataUser.username,
-        surname: dataUser.surname,
-      };
-    }
+  if (dataUser !== null) {
+    dataInitials = {
+      name: dataUser.name,
+      email: dataUser.email,
+      username: dataUser.username,
+      surname: dataUser.surname,
+    };
+  }
 
   const onFinish = async (data) => {
     const res = await dispatch(editUser(token.userId, data, token.token));
