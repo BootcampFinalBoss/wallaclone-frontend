@@ -117,9 +117,6 @@ const AdvertsEditForm = ({ advert }) => {
             ]}>
             <TextArea placeholder="Name" />
           </Form.Item>
-          <Form.Item name="photo" label={translate('advertsForm.formImage')}>
-            <InputImage type="file" />
-          </Form.Item>
           <Form.Item name="image" label={translate('advertsForm.formImage')}>
             <Upload {...uploadProps}>
               <Button>{translate('advertsForm.formSelectFile')}</Button>
