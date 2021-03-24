@@ -1,3 +1,9 @@
+.containerPrincipal {
+  min-height: 300px;
+  width: 70%;
+  margin: 2rem auto;
+}
+
 .ant-card-cover {
   min-height: 200px;
 }

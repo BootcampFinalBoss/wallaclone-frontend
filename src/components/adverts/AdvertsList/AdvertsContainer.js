@@ -17,7 +17,7 @@ import {
   getTagsOnState,
 } from '../../../store/selectors';
 
-import '../../../assets/styles/styles.css';
+import '../../../css/styles.css';
 import { sortOptions } from '../../../utils/definitions';
 import LoaderWithContainer from '../../globals/Loader';
 

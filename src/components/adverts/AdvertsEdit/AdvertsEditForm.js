@@ -25,13 +25,13 @@ const AdvertsEditForm = ({ advert }) => {
     const res = await dispatch(editAdvert({ ...data, _id: advert._id }));
     if (res) {
       if (res.status === 200) {
-        const confirmModal = Modal.success({
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
           title: res.data.message,
-          footer: null,
+          showConfirmButton: false,
+          timer: 2400,
         });
-        setTimeout(() => {
-          confirmModal.destroy();
-        }, 2400);
         return;
       }
     }

@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { PageHeader } from 'antd';
 import 'antd/dist/antd.css';
-import '../../assets/styles/styles.css';
+import '../../css/styles.css';
 import { editUser, getUserId } from '../../store/actions';
 import UserEditForm from './UserEditForm';
 import translate from '../../intl/translate';
@@ -35,13 +35,13 @@ const UserEdit = () => {
     const res = await dispatch(editUser(userId, data, token));
     if (res) {
       if (res.status === 200) {
-        const confirmModal = Modal.success({
+        Swal.fire({
+          position: 'center',
+          icon: 'success',
           title: res.data,
-          footer: null,
+          showConfirmButton: false,
+          timer: 2500,
         });
-        setTimeout(() => {
-          confirmModal.destroy();
-        }, 2400);
         return;
       }
     }
