@@ -30,8 +30,8 @@ const defaultFilters = {
   name: '',
   price: pricesRange,
   tags: [],
-  sale: saleOptions.all,
-  sort: sortOptions.desc,
+  sale: saleOptions.all.value,
+  sort: sortOptions.desc.value,
 };
 
 const AdvertsContainer = () => {
