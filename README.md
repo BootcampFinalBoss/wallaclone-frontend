@@ -1,3 +1,13 @@
+## Welcome to Wallacone Project
+
+The Wallaclone application allows us to create users and manage the purchase and sale of items.
+
+### Repositories
+
+* BACKEND: https://github.com/BootcampFinalBoss/wallaclone-backend
+* FRONTEND: https://github.com/BootcampFinalBoss/wallaclone-frontend
+* URL: https://wallaclone-frontend.herokuapp.com/adverts
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
