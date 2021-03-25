@@ -111,7 +111,7 @@ export const ui = (state = initialState.ui, action) => {
         return {
           ...state,
           hasMoreAdverts: true,
-          advertsIndex: state.advertsIndex + LIMIT_ADVERTS_API,
+          advertsIndex: LIMIT_ADVERTS_API,
           loading: false,
         };
       }
