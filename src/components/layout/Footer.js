@@ -1,7 +1,6 @@
-import React from "react";
-import Card from "react-bootstrap/Card";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "./footer.css";
+import React from 'react';
+import Card from 'react-bootstrap/Card';
+import './footer.css';
 
 class Footer extends React.Component {
   render() {
