@@ -16,7 +16,7 @@
   min-height: calc(95vh - 90px);
 }
 .infinite-scroll-component {
-  overflow-y: auto !important;
+  overflow-y: hidden !important;
   overflow-x: hidden !important;
 }
 
