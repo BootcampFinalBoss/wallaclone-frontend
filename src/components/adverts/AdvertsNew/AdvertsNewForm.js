@@ -123,11 +123,6 @@ const NewAdvertForm = () => {
           <Form.Item
             name="image"
             label={translate('advertsForm.formImage')}
-            rules={[
-              {
-                required: true,
-              },
-            ]}
           >
             <Upload {...uploadProps}>
               <Button>{translate('advertsForm.formSelectFile')}</Button>
