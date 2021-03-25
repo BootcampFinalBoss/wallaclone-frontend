@@ -189,6 +189,10 @@ export const generateAdvertError = (error) => {
   };
 };
 
+export const advertsRequest = (token, username) => ({
+  type: types.ADVERTS_REQUEST,
+});
+
 export const advertsLoaded = (adverts) => {
   return {
     type: types.ADVERTS_LOADED,
@@ -196,11 +200,20 @@ export const advertsLoaded = (adverts) => {
   };
 };
 
-export const loadAdverts = (filters) => async (dispatch, getState) => {
-  storage.set('filters', filters);
-  const formattedFilters = formatFilters(filters);
-  const fetchedAdverts = await adverts.getAdverts(formattedFilters);
-  dispatch(advertsLoaded(fetchedAdverts?.data?.result || []));
+export const loadAdverts = (filters) => {
+  return async function (dispatch, getState, { history, api }) {
+    dispatch(advertsRequest());
+    storage.set('filters', filters);
+    const formattedFilters = formatFilters(filters);
+    try {
+      const fetchedAdverts = await adverts.getAdverts(formattedFilters);
+      dispatch(advertsLoaded(fetchedAdverts?.data?.result || []));
+      return history.push('/adverts');
+    } catch (error) {
+      console.error(error);
+      dispatch(generateAdvertError('Error on loading adverts!'));
+    }
+  };
 };
 
 export const advertsMoreLoaded = (adverts) => {
@@ -210,10 +223,18 @@ export const advertsMoreLoaded = (adverts) => {
   };
 };
 
-export const loadMoreAdverts = (filters) => async (dispatch, getState) => {
-  const formattedFilters = formatFilters(filters);
-  const fetchedAdverts = await adverts.getAdverts(formattedFilters);
-  dispatch(advertsMoreLoaded(fetchedAdverts?.data?.result));
+export const loadMoreAdverts = (filters) => {
+  return async function (dispatch, getState, { history, api }) {
+    const formattedFilters = formatFilters(filters);
+    try {
+      const fetchedAdverts = await adverts.getAdverts(formattedFilters);
+      dispatch(advertsMoreLoaded(fetchedAdverts?.data?.result));
+      return history.push('/adverts');
+    } catch (error) {
+      console.error(error);
+      dispatch(generateAdvertError('Error on loading adverts!'));
+    }
+  };
 };
 
 export const advertLoaded = (advert) => {

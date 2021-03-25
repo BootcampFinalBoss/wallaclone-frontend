@@ -35,12 +35,11 @@ export const adverts = (state = initialState.adverts, action) => {
     case types.ADVERTS_LOADED:
       return action.payload; // On new load, save the passed adverts on the state
     case types.ADVERTS_MORE_LOADED:
-      initialState.ui.loading = false;
       return [...state, ...action.payload]; // On new load, save the passed adverts on the state
     case types.ADVERT_CREATED:
       if (!state) {
         // check if there is adverts already on state
-        return [action.payload.advert]; // If not, save the passed advert on an array
+        return [action.payload]; // If not, save the passed advert on an array
       } // otherwise, concat the adverts on state with the new advert
       return [...state, action.payload];
     default:
@@ -102,12 +101,18 @@ export const ui = (state = initialState.ui, action) => {
         action.payload?.length === 0 ||
         action.payload?.length < LIMIT_ADVERTS_API
       ) {
-        return { ...state, hasMoreAdverts: false, advertsIndex: 0 };
+        return {
+          ...state,
+          hasMoreAdverts: false,
+          advertsIndex: 0,
+          loading: false,
+        };
       } else {
         return {
           ...state,
           hasMoreAdverts: true,
           advertsIndex: 0,
+          loading: false,
         };
       }
     case types.ADVERTS_MORE_LOADED:
@@ -115,12 +120,13 @@ export const ui = (state = initialState.ui, action) => {
         action.payload?.length === 0 ||
         action.payload?.length < LIMIT_ADVERTS_API
       ) {
-        return { ...state, hasMoreAdverts: false };
+        return { ...state, hasMoreAdverts: false, loading: false };
       } else {
         return {
           ...state,
           hasMoreAdverts: true,
           advertsIndex: state.advertsIndex + LIMIT_ADVERTS_API,
+          loading: false,
         };
       }
     default:

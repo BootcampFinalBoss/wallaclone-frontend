@@ -22,7 +22,7 @@ export const ADVERTS_MORE_LOADED = 'adverts/MORE_LOADED';
 export const ADVERT_RESERVED = 'advert/RESERVED';
 
 export const ADVERTS_REQUEST = 'advert/CREATED';
-export const ADVERTS_SUCCESS = 'advert/CREATED';
+export const ADVERTS_SUCCESS = 'advert/SUCCESS';
 export const ADVERT_CREATED = 'advert/CREATED';
 export const ADVERT_DELETED = 'advert/DELETED';
 export const ADVERT_LOADED = 'advert/LOADED';
