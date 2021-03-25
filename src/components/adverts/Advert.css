@@ -42,7 +42,7 @@
   align-items: center;
   position: absolute;
   right: 0;
-  top: 0;
+  top: -20px;
 }
 
 .advert-container .advert__tags .MuiChip-colorPrimary {

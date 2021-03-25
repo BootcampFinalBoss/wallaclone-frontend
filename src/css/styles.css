@@ -27,7 +27,6 @@
 .btn-favorites {
   display: flex;
   align-items: center;
-  margin-left: 10px;
 }
 
 .btn-favorites:hover,
@@ -48,11 +47,13 @@
 
 .infinite-scroll-component__outerdiv {
   width: 100%;
+  margin: 0 -20px;
 }
 
 .infinite-scroll-component {
   height: auto;
   width: 100%;
+  padding: 0 10px;
 }
 
 .loader-container {

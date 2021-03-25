@@ -242,11 +242,12 @@ const AdvertPage = ({ history, ...props }) => {
             <Descriptions bordered title={translate('advert.description')}>
               <Paragraph>{description}</Paragraph>
             </Descriptions>
-            <Descriptions bordered title="Tags" style={{ marginTop: '2rem' }}>
-              <Paragraph>{tags?.join(', ')}</Paragraph>
-            </Descriptions>
+            <Paragraph style={{ marginTop: '2rem' }}>
+              <b>Tags: </b>
+              {tags?.join(', ')}
+            </Paragraph>
             <Row style={{ marginTop: '20px' }} gutter={[24, 24]}>
-              <Col span={24}>
+              <Col span={24} className="advert__buttons">
                 <Paragraph>{translate('global.share')}:</Paragraph>
                 <Row>
                   <Button
@@ -262,7 +263,9 @@ const AdvertPage = ({ history, ...props }) => {
                       </a>
                     </div>
                   </Button>
-                  <Button className="share-buttons" shape="round">
+                  <Button
+                    className="button-margin-right share-buttons"
+                    shape="round">
                     <TwitterSquareFilled />
                     <a
                       target="_blank"
