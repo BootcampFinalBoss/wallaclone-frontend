@@ -68,7 +68,8 @@ const NewAdvertForm = () => {
                 pattern: new RegExp(/^[a-zA-ZÀ-ÿ@~`!@#$%^&*()_=+ \d]+$/i),
                 message: "You can't use the some special characters!",
               },
-            ]}>
+            ]}
+          >
             <Input placeholder="Name" />
           </Form.Item>
           <Form.Item
@@ -78,11 +79,12 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <InputNumber min={MIN_PRICE} max={MAX_PRICE} />
           </Form.Item>
         </Col>
-        <Col xs={{span:24,offset:0 }}  md={{span: 11, offset: 2}}>
+        <Col xs={{ span: 24, offset: 0 }} md={{ span: 11, offset: 2 }}>
           <Form.Item
             name="tags"
             label="Tags"
@@ -90,7 +92,8 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <TagsSelect />
           </Form.Item>
           <Form.Item
@@ -100,7 +103,8 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <Radio.Group options={[saleOptions.sell, saleOptions.buy]} />
           </Form.Item>
         </Col>
@@ -112,23 +116,33 @@ const NewAdvertForm = () => {
               {
                 required: true,
               },
-            ]}>
+            ]}
+          >
             <TextArea maxLength={150} placeholder="Name" />
           </Form.Item>
-          <Form.Item name="image" label={translate('advertsForm.formImage')}>
+          <Form.Item
+            name="image"
+            label={translate('advertsForm.formImage')}
+            rules={[
+              {
+                required: true,
+              },
+            ]}
+          >
             <Upload {...uploadProps}>
               <Button>{translate('advertsForm.formSelectFile')}</Button>
             </Upload>
           </Form.Item>
           <Button
-              className='my-4'
-              size='large'
+            className="my-4"
+            size="large"
             type="primary"
             htmlType="submit"
             disabled={creating}
             shape="round"
-              block
-            icon={<UploadOutlined />}>
+            block
+            icon={<UploadOutlined />}
+          >
             {translate('advertsForm.createBtn')}
           </Button>
         </Col>
