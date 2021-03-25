@@ -98,6 +98,18 @@ export const ui = (state = initialState.ui, action) => {
     case types.UI_STOP_LOADING:
       return { ...state, loading: false };
     case types.ADVERTS_LOADED:
+      if (
+        action.payload?.length === 0 ||
+        action.payload?.length < LIMIT_ADVERTS_API
+      ) {
+        return { ...state, hasMoreAdverts: false, advertsIndex: 0 };
+      } else {
+        return {
+          ...state,
+          hasMoreAdverts: true,
+          advertsIndex: 0,
+        };
+      }
     case types.ADVERTS_MORE_LOADED:
       if (
         action.payload?.length === 0 ||
