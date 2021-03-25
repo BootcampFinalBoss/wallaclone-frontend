@@ -7,8 +7,14 @@
 
 .ant-page-header-heading-title {
   color: rgb(5 181 173);
-  font-size: 2rem;
+  font-size: 1.7rem;
   font-family: Lato, 'Helvetica Neue', Arial, Helvetica, sans-serif;
+}
+
+@media (min-width: 767px) {
+  .ant-page-header-heading-title {
+    font-size: 2rem;
+  }
 }
 
 .ant-page-header-heading-left {
