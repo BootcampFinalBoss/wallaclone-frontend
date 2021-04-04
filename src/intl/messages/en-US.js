@@ -123,6 +123,7 @@ export default {
     },
     global: {
       share: 'Share',
+      contact: 'Contact',
     },
     richTextEx: 'I have <bold>{num, plural, one {# dog} other {# dogs}}</bold>',
     deleteModal: {

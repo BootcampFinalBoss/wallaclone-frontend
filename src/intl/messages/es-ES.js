@@ -118,7 +118,8 @@ export default {
       loading: 'Cargando...',
     },
     global: {
-      share: 'Compartir',
+      share: 'Publicar',
+      contact: 'Contacto',
     },
     richTextEx: 'I have <bold>{num, plural, one {# dog} other {# dogs}}</bold>',
     deleteModal: {

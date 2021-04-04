@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+import client from '../../api/client';
 import React, { useEffect, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import {
@@ -17,6 +18,7 @@ import {
   FacebookFilled,
   StarOutlined,
   TwitterSquareFilled,
+  CommentOutlined
 } from '@ant-design/icons';
 import placeholder from '../../assets/photo-placeholder.png';
 import { deleteAdvert, loadAdvert } from '../../store/actions';
@@ -104,7 +106,7 @@ const AdvertPage = ({ history, ...props }) => {
   const [isFavorited, setIsFavorited] = useState(false);
   const [advertFavorites, setAdvertFavorites] = useState(0);
   const [advertState, setAdvertState] = useState(false);
-  const [showOptionsModal, setShowOptionsModal] = useState(false);
+  const [showOptionsModal, setShowOptionsModal] = useState(false);  
 
   const handleGetAdvert = async () => {
     dispatch(loadAdvert(getAdvertId()));
@@ -140,6 +142,25 @@ const AdvertPage = ({ history, ...props }) => {
       setIsFavorited(false);
       setAdvertFavorites((prev) => prev - 1);
     }
+  };
+
+  const handleContactAdvert = async () => {
+   const {_id} = advert;
+   const {username} = userData;
+   const res = await client.post(`/advert/contact/${_id}`, {username});
+   if(res){
+     if(res.status === 200){
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: res.data.msg,
+        showConfirmButton: false,
+        timer: 2400,
+      });
+      return;
+     }
+   }
+      
   };
 
   const handleChangeState = async (newState) => {
@@ -277,11 +298,21 @@ const AdvertPage = ({ history, ...props }) => {
                   </Button>
                   {userData.userId && (
                     <Button
-                      className="btn-favorites"
+                      className="btn-favorites button-margin-right"
                       onClick={handleToggleAdvert}
                       shape="round">
                       {isFavorited ? removeFavoriteLabel : addFavoriteLabel}
                       <StarOutlined />
+                    </Button>
+                  )}
+                  {userData.userId && (
+                    <Button
+                      className="btn-favorites"
+                      onClick={handleContactAdvert}
+                      shape="round"
+                      >
+                        {translate('global.contact')}
+                      <CommentOutlined />
                     </Button>
                   )}
                 </Row>
